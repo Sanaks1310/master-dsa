@@ -58,6 +58,37 @@ const ChartContainer = React.forwardRef<
 });
 ChartContainer.displayName = "Chart";
 
+// Validate CSS color format to prevent CSS injection attacks
+const isValidCssColor = (color: string): boolean => {
+  // Allow hex colors: #RGB, #RRGGBB, #RRGGBBAA
+  const hexPattern = /^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/;
+  // Allow rgb/rgba: rgb(r, g, b) or rgba(r, g, b, a)
+  const rgbPattern = /^rgba?\(\s*\d{1,3}\s*,\s*\d{1,3}\s*,\s*\d{1,3}\s*(,\s*(0|1|0?\.\d+))?\s*\)$/;
+  // Allow hsl/hsla: hsl(h, s%, l%) or hsla(h, s%, l%, a)
+  const hslPattern = /^hsla?\(\s*\d{1,3}\s*,\s*\d{1,3}%\s*,\s*\d{1,3}%\s*(,\s*(0|1|0?\.\d+))?\s*\)$/;
+  // Allow CSS variable references
+  const cssVarPattern = /^var\(--[a-zA-Z0-9-]+\)$/;
+  // Allow named colors (common set)
+  const namedColors = [
+    'transparent', 'currentColor', 'inherit',
+    'black', 'white', 'red', 'green', 'blue', 'yellow', 'orange', 'purple', 'pink', 'gray', 'grey',
+    'cyan', 'magenta', 'lime', 'navy', 'teal', 'maroon', 'olive', 'silver', 'aqua', 'fuchsia'
+  ];
+  
+  return (
+    hexPattern.test(color) ||
+    rgbPattern.test(color) ||
+    hslPattern.test(color) ||
+    cssVarPattern.test(color) ||
+    namedColors.includes(color.toLowerCase())
+  );
+};
+
+// Sanitize CSS key to only allow alphanumeric characters and hyphens
+const sanitizeCssKey = (key: string): string => {
+  return key.replace(/[^a-zA-Z0-9-]/g, '');
+};
+
 const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
   const colorConfig = Object.entries(config).filter(([_, config]) => config.theme || config.color);
 
@@ -75,8 +106,14 @@ ${prefix} [data-chart=${id}] {
 ${colorConfig
   .map(([key, itemConfig]) => {
     const color = itemConfig.theme?.[theme as keyof typeof itemConfig.theme] || itemConfig.color;
-    return color ? `  --color-${key}: ${color};` : null;
+    const sanitizedKey = sanitizeCssKey(key);
+    // Only include color if it passes validation
+    if (color && isValidCssColor(color)) {
+      return `  --color-${sanitizedKey}: ${color};`;
+    }
+    return null;
   })
+  .filter(Boolean)
   .join("\n")}
 }
 `,
