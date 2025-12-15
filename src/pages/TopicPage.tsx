@@ -1,11 +1,20 @@
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Clock, CheckCircle, XCircle, Zap, BookOpen, Code, Play, Wrench } from 'lucide-react';
+import { ArrowLeft, Clock, CheckCircle, XCircle, Zap, BookOpen, Code, Play, Wrench, GitBranch } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import CodeBlock from '@/components/CodeBlock';
 import ArrayVisualizer from '@/components/ArrayVisualizer';
 import ArrayAnimation from '@/components/ArrayAnimation';
+import AlgorithmAnimation from '@/components/AlgorithmAnimation';
+import FlowchartDiagram from '@/components/FlowchartDiagram';
 import { getTopicById, getCategoryByTopicId } from '@/data/dsaTopics';
 import { getTopicContent } from '@/data/topicContents';
+import { 
+  algorithmAnimationSteps, 
+  dataStructureAnimationSteps, 
+  pseudoCodeAnimationSteps, 
+  programmingConstructsAnimationSteps,
+  topicFlowcharts 
+} from '@/data/topicAnimations';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
@@ -43,6 +52,16 @@ const insertionAnimationSteps = [
     values: [1, 3, 4, 5, 7, 9],
   },
 ];
+
+const getTopicAnimation = (topicId: string) => {
+  switch (topicId) {
+    case 'what-is-algorithm': return algorithmAnimationSteps;
+    case 'what-is-data-structure': return dataStructureAnimationSteps;
+    case 'pseudo-code': return pseudoCodeAnimationSteps;
+    case 'programming-constructs': return programmingConstructsAnimationSteps;
+    default: return null;
+  }
+};
 
 const TopicPage = () => {
   const { topicId } = useParams<{ topicId: string }>();
@@ -243,6 +262,19 @@ const TopicPage = () => {
                 </div>
               </section>
 
+              {/* Flowchart Section */}
+              {topicFlowcharts[content.id] && (
+                <section>
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="w-10 h-10 rounded-lg bg-purple/20 flex items-center justify-center">
+                      <GitBranch className="w-5 h-5 text-purple" />
+                    </div>
+                    <h2 className="text-2xl font-bold text-foreground">Flowchart</h2>
+                  </div>
+                  <FlowchartDiagram {...topicFlowcharts[content.id]} />
+                </section>
+              )}
+
               {/* Animation Section */}
               <section>
                 <div className="flex items-center gap-3 mb-6">
@@ -251,23 +283,33 @@ const TopicPage = () => {
                   </div>
                   <h2 className="text-2xl font-bold text-foreground">How It Works - Animation</h2>
                 </div>
-                <ArrayAnimation
-                  title="Array Insertion Animation"
-                  description="Watch how insertion works in an array - elements are shifted to make room for the new element."
-                  steps={insertionAnimationSteps}
-                />
+                {getTopicAnimation(content.id) ? (
+                  <AlgorithmAnimation
+                    title={`${topic.title} Animation`}
+                    description="Watch step-by-step how this concept works"
+                    steps={getTopicAnimation(content.id)!}
+                  />
+                ) : (
+                  <ArrayAnimation
+                    title="Array Insertion Animation"
+                    description="Watch how insertion works in an array - elements are shifted to make room for the new element."
+                    steps={insertionAnimationSteps}
+                  />
+                )}
               </section>
 
-              {/* Interactive Visualizer */}
-              <section>
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-10 h-10 rounded-lg bg-cyan/20 flex items-center justify-center">
-                    <Wrench className="w-5 h-5 text-cyan" />
+              {/* Interactive Visualizer - Only for arrays */}
+              {content.id === 'arrays' && (
+                <section>
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="w-10 h-10 rounded-lg bg-cyan/20 flex items-center justify-center">
+                      <Wrench className="w-5 h-5 text-cyan" />
+                    </div>
+                    <h2 className="text-2xl font-bold text-foreground">Build Your Own Array</h2>
                   </div>
-                  <h2 className="text-2xl font-bold text-foreground">Build Your Own Array</h2>
-                </div>
-                <ArrayVisualizer />
-              </section>
+                  <ArrayVisualizer />
+                </section>
+              )}
 
               {/* Applications */}
               <section>
