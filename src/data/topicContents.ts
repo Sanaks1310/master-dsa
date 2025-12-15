@@ -28,8 +28,16 @@ import { bstContent } from './topics/bstContent';
 import { heapContent } from './topics/heapContent';
 import { hashTableContent } from './topics/hashTableContent';
 import { graphContent } from './topics/graphContent';
+import { algorithmContent } from './topics/algorithmContent';
+import { dataStructureContent } from './topics/dataStructureContent';
+import { pseudoCodeContent } from './topics/pseudoCodeContent';
+import { programmingConstructsContent } from './topics/programmingConstructsContent';
 
 export const topicContents: Record<string, TopicContent> = {
+  'what-is-algorithm': algorithmContent,
+  'what-is-data-structure': dataStructureContent,
+  'pseudo-code': pseudoCodeContent,
+  'programming-constructs': programmingConstructsContent,
   arrays: {
     id: 'arrays',
     definition: 'An array is a linear data structure that stores a collection of elements of the same data type in contiguous memory locations. Each element can be accessed directly using its index, making arrays one of the most fundamental and widely used data structures in programming.',
