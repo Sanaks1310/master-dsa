@@ -32,12 +32,24 @@ import { algorithmContent } from './topics/algorithmContent';
 import { dataStructureContent } from './topics/dataStructureContent';
 import { pseudoCodeContent } from './topics/pseudoCodeContent';
 import { programmingConstructsContent } from './topics/programmingConstructsContent';
+import { timeComplexityContent } from './topics/timeComplexityContent';
+import { spaceComplexityContent } from './topics/spaceComplexityContent';
+import { bigOContent } from './topics/bigOContent';
+import { caseAnalysisContent } from './topics/caseAnalysisContent';
+import { recursionBasicsContent } from './topics/recursionBasicsContent';
+import { iterationVsRecursionContent } from './topics/iterationVsRecursionContent';
 
 export const topicContents: Record<string, TopicContent> = {
   'what-is-algorithm': algorithmContent,
   'what-is-data-structure': dataStructureContent,
   'pseudo-code': pseudoCodeContent,
   'programming-constructs': programmingConstructsContent,
+  'time-complexity': timeComplexityContent,
+  'space-complexity': spaceComplexityContent,
+  'big-o-notation': bigOContent,
+  'case-analysis': caseAnalysisContent,
+  'recursion-basics': recursionBasicsContent,
+  'iteration-vs-recursion': iterationVsRecursionContent,
   arrays: {
     id: 'arrays',
     definition: 'An array is a linear data structure that stores a collection of elements of the same data type in contiguous memory locations. Each element can be accessed directly using its index, making arrays one of the most fundamental and widely used data structures in programming.',

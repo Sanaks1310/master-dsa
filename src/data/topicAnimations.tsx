@@ -430,4 +430,188 @@ export const topicFlowcharts: Record<string, { title: string; description: strin
     style C fill:#a855f7,color:#fff
     style I fill:#f97316,color:#fff`,
   },
+  'time-complexity': {
+    title: 'Time Complexity Growth',
+    description: 'How different complexities scale with input size',
+    diagram: `flowchart LR
+    A[Input Size n] --> B{Algorithm Type}
+    B --> C[O-1: Constant]
+    B --> D[O-log n: Logarithmic]
+    B --> E[O-n: Linear]
+    B --> F[O-n²: Quadratic]
+    C --> G[1 operation]
+    D --> H[10 ops for n=1000]
+    E --> I[1000 ops for n=1000]
+    F --> J[1,000,000 ops!]
+    
+    style C fill:#22c55e,color:#fff
+    style D fill:#06b6d4,color:#fff
+    style E fill:#f97316,color:#fff
+    style F fill:#ef4444,color:#fff`,
+  },
+  'space-complexity': {
+    title: 'Space Usage Comparison',
+    description: 'Memory usage patterns for different approaches',
+    diagram: `flowchart TD
+    A[Algorithm] --> B{Extra Space?}
+    B -->|Fixed| C[O-1 Constant]
+    B -->|Grows| D{How much?}
+    D -->|With input| E[O-n Linear]
+    D -->|Squared| F[O-n² Quadratic]
+    C --> G[In-place sort]
+    E --> H[Copy array]
+    F --> I[2D matrix]
+    
+    style C fill:#22c55e,color:#fff
+    style E fill:#f97316,color:#fff
+    style F fill:#ef4444,color:#fff`,
+  },
+  'big-o-notation': {
+    title: 'Big-O Comparison Chart',
+    description: 'Visual comparison of growth rates',
+    diagram: `flowchart TD
+    A[Big-O Notation] --> B[O-1 Constant]
+    A --> C[O-log n Logarithmic]
+    A --> D[O-n Linear]
+    A --> E[O-n log n Linearithmic]
+    A --> F[O-n² Quadratic]
+    A --> G[O-2ⁿ Exponential]
+    B --> H[Best: Hash lookup]
+    C --> I[Great: Binary search]
+    D --> J[Good: Linear search]
+    E --> K[OK: Merge sort]
+    F --> L[Slow: Bubble sort]
+    G --> M[Avoid: Naive fib]
+    
+    style B fill:#22c55e,color:#fff
+    style C fill:#06b6d4,color:#fff
+    style D fill:#a855f7,color:#fff
+    style F fill:#f97316,color:#fff
+    style G fill:#ef4444,color:#fff`,
+  },
+  'recursion-basics': {
+    title: 'Recursion Flow',
+    description: 'How recursive calls work',
+    diagram: `flowchart TD
+    A[Call factorial-5] --> B{n <= 1?}
+    B -->|No| C[5 × factorial-4]
+    C --> D[4 × factorial-3]
+    D --> E[3 × factorial-2]
+    E --> F[2 × factorial-1]
+    F --> G{n <= 1?}
+    G -->|Yes| H[Return 1]
+    H --> I[Return 2×1=2]
+    I --> J[Return 3×2=6]
+    J --> K[Return 4×6=24]
+    K --> L[Return 5×24=120]
+    
+    style A fill:#8b5cf6,color:#fff
+    style H fill:#22c55e,color:#fff
+    style L fill:#06b6d4,color:#fff`,
+  },
 };
+
+// Time Complexity Animation Steps
+export const timeComplexityAnimationSteps = [
+  {
+    description: 'O(1) Constant: Same time for any input size',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="text-lg font-semibold text-green">O(1) - Constant Time</div>
+        <div className="flex gap-4 items-end">
+          {[10, 100, 1000].map((n) => (
+            <div key={n} className="flex flex-col items-center">
+              <div className="w-12 h-8 bg-green/30 border-2 border-green rounded" />
+              <span className="text-xs mt-1">n={n}</span>
+            </div>
+          ))}
+        </div>
+        <div className="text-sm text-muted-foreground">Array access: arr[0] always takes 1 step</div>
+      </div>
+    ),
+  },
+  {
+    description: 'O(n) Linear: Time grows with input',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="text-lg font-semibold text-cyan">O(n) - Linear Time</div>
+        <div className="flex gap-4 items-end">
+          <div className="flex flex-col items-center">
+            <div className="w-12 h-4 bg-cyan/30 border-2 border-cyan rounded" />
+            <span className="text-xs mt-1">n=10</span>
+          </div>
+          <div className="flex flex-col items-center">
+            <div className="w-12 h-12 bg-cyan/30 border-2 border-cyan rounded" />
+            <span className="text-xs mt-1">n=100</span>
+          </div>
+          <div className="flex flex-col items-center">
+            <div className="w-12 h-24 bg-cyan/30 border-2 border-cyan rounded" />
+            <span className="text-xs mt-1">n=1000</span>
+          </div>
+        </div>
+        <div className="text-sm text-muted-foreground">Loop through array once</div>
+      </div>
+    ),
+  },
+  {
+    description: 'O(n²) Quadratic: Time grows squared!',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="text-lg font-semibold text-orange">O(n²) - Quadratic Time</div>
+        <div className="flex gap-4 items-end">
+          <div className="flex flex-col items-center">
+            <div className="w-12 h-6 bg-orange/30 border-2 border-orange rounded" />
+            <span className="text-xs mt-1">n=10</span>
+          </div>
+          <div className="flex flex-col items-center">
+            <div className="w-12 h-16 bg-orange/30 border-2 border-orange rounded" />
+            <span className="text-xs mt-1">n=100</span>
+          </div>
+          <div className="flex flex-col items-center">
+            <div className="w-12 h-32 bg-destructive/30 border-2 border-destructive rounded animate-pulse" />
+            <span className="text-xs mt-1">n=1000</span>
+          </div>
+        </div>
+        <div className="text-sm text-muted-foreground">Nested loops: n × n operations</div>
+      </div>
+    ),
+  },
+];
+
+// Recursion Animation Steps
+export const recursionAnimationSteps = [
+  {
+    description: 'Calculate factorial(4): Start the journey',
+    visual: (
+      <div className="flex flex-col items-center gap-2">
+        <div className="px-4 py-2 bg-purple/30 border-2 border-purple rounded-lg font-mono">factorial(4)</div>
+        <div className="text-sm text-muted-foreground">4! = 4 × 3 × 2 × 1 = ?</div>
+      </div>
+    ),
+  },
+  {
+    description: 'Recursive calls go DOWN the stack',
+    visual: (
+      <div className="flex flex-col items-center gap-1">
+        {[4, 3, 2, 1].map((n, i) => (
+          <div key={n} className={`px-4 py-1 rounded font-mono text-sm ${i === 3 ? 'bg-green/30 border-green' : 'bg-muted border-border'} border`}>
+            factorial({n}) {i === 3 && '→ returns 1'}
+          </div>
+        ))}
+        <div className="text-xs text-muted-foreground mt-2">Base case reached!</div>
+      </div>
+    ),
+  },
+  {
+    description: 'Results bubble UP the stack',
+    visual: (
+      <div className="flex flex-col items-center gap-1">
+        <div className="px-4 py-1 rounded font-mono text-sm bg-green/30 border-green border">factorial(4) → 24 ✓</div>
+        <div className="px-4 py-1 rounded font-mono text-sm bg-cyan/20 border-cyan border">factorial(3) → 6</div>
+        <div className="px-4 py-1 rounded font-mono text-sm bg-cyan/20 border-cyan border">factorial(2) → 2</div>
+        <div className="px-4 py-1 rounded font-mono text-sm bg-muted border-border border">factorial(1) → 1</div>
+        <div className="text-lg font-bold text-green mt-2">Result: 24</div>
+      </div>
+    ),
+  },
+];
