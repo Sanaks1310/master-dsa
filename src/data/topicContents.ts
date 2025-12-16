@@ -38,6 +38,11 @@ import { bigOContent } from './topics/bigOContent';
 import { caseAnalysisContent } from './topics/caseAnalysisContent';
 import { recursionBasicsContent } from './topics/recursionBasicsContent';
 import { iterationVsRecursionContent } from './topics/iterationVsRecursionContent';
+import { arrayContent } from './topics/arrayContent';
+import { stringsContent } from './topics/stringsContent';
+import { singlyLinkedListContent } from './topics/singlyLinkedListContent';
+import { doublyLinkedListContent } from './topics/doublyLinkedListContent';
+import { circularLinkedListContent } from './topics/circularLinkedListContent';
 
 export const topicContents: Record<string, TopicContent> = {
   'what-is-algorithm': algorithmContent,
@@ -50,7 +55,24 @@ export const topicContents: Record<string, TopicContent> = {
   'case-analysis': caseAnalysisContent,
   'recursion-basics': recursionBasicsContent,
   'iteration-vs-recursion': iterationVsRecursionContent,
-  arrays: {
+  'arrays': arrayContent,
+  'strings': stringsContent,
+  'singly-linked-list': singlyLinkedListContent,
+  'doubly-linked-list': doublyLinkedListContent,
+  'circular-linked-list': circularLinkedListContent,
+  'linked-lists': linkedListContent,
+  'stacks': stackContent,
+  'simple-queue': queueContent,
+  'circular-queue': queueContent,
+  'deque': queueContent,
+  'priority-queue': queueContent,
+  'queues': queueContent,
+  'trees': treeContent,
+  'binary-search-trees': bstContent,
+  'heaps': heapContent,
+  'hash-tables': hashTableContent,
+  'graphs': graphContent,
+};
     id: 'arrays',
     definition: 'An array is a linear data structure that stores a collection of elements of the same data type in contiguous memory locations. Each element can be accessed directly using its index, making arrays one of the most fundamental and widely used data structures in programming.',
     keyPoints: [
