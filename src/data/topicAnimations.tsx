@@ -657,6 +657,160 @@ export const topicFlowcharts: Record<string, { title: string; description: strin
     style C fill:#06b6d4,color:#fff
     style D fill:#f97316,color:#fff`,
   },
+  // Level 3 - Searching & Sorting
+  'linear-search': {
+    title: 'Linear Search Flow',
+    description: 'Sequential search through array',
+    diagram: `flowchart TD
+    A[Start] --> B[i = 0]
+    B --> C{i < n?}
+    C -->|Yes| D{arr-i == target?}
+    D -->|Yes| E[Return i - Found!]
+    D -->|No| F[i = i + 1]
+    F --> C
+    C -->|No| G[Return -1 - Not Found]
+    
+    style A fill:#22c55e,color:#fff
+    style E fill:#22c55e,color:#fff
+    style G fill:#ef4444,color:#fff
+    style D fill:#8b5cf6,color:#fff`,
+  },
+  'binary-search': {
+    title: 'Binary Search Flow',
+    description: 'Divide and conquer search in sorted array',
+    diagram: `flowchart TD
+    A[Start] --> B[left=0, right=n-1]
+    B --> C{left <= right?}
+    C -->|Yes| D[mid = left+right / 2]
+    D --> E{arr-mid == target?}
+    E -->|Yes| F[Return mid - Found!]
+    E -->|No| G{arr-mid < target?}
+    G -->|Yes| H[left = mid + 1]
+    G -->|No| I[right = mid - 1]
+    H --> C
+    I --> C
+    C -->|No| J[Return -1 - Not Found]
+    
+    style F fill:#22c55e,color:#fff
+    style J fill:#ef4444,color:#fff
+    style E fill:#8b5cf6,color:#fff`,
+  },
+  'bubble-sort': {
+    title: 'Bubble Sort Flow',
+    description: 'Compare adjacent elements and swap',
+    diagram: `flowchart TD
+    A[Start] --> B[i = 0]
+    B --> C{i < n-1?}
+    C -->|Yes| D[j = 0]
+    D --> E{j < n-i-1?}
+    E -->|Yes| F{arr-j > arr-j+1?}
+    F -->|Yes| G[Swap arr-j, arr-j+1]
+    F -->|No| H[j++]
+    G --> H
+    H --> E
+    E -->|No| I[i++]
+    I --> C
+    C -->|No| J[Array Sorted!]
+    
+    style A fill:#22c55e,color:#fff
+    style J fill:#22c55e,color:#fff
+    style F fill:#a855f7,color:#fff`,
+  },
+  'selection-sort': {
+    title: 'Selection Sort Flow',
+    description: 'Find minimum and place at correct position',
+    diagram: `flowchart TD
+    A[Start] --> B[i = 0]
+    B --> C{i < n-1?}
+    C -->|Yes| D[minIdx = i]
+    D --> E[j = i + 1]
+    E --> F{j < n?}
+    F -->|Yes| G{arr-j < arr-minIdx?}
+    G -->|Yes| H[minIdx = j]
+    G -->|No| I[j++]
+    H --> I
+    I --> F
+    F -->|No| J[Swap arr-i with arr-minIdx]
+    J --> K[i++]
+    K --> C
+    C -->|No| L[Array Sorted!]
+    
+    style A fill:#22c55e,color:#fff
+    style L fill:#22c55e,color:#fff`,
+  },
+  'insertion-sort': {
+    title: 'Insertion Sort Flow',
+    description: 'Insert each element at correct position',
+    diagram: `flowchart TD
+    A[Start] --> B[i = 1]
+    B --> C{i < n?}
+    C -->|Yes| D[key = arr-i, j = i-1]
+    D --> E{j >= 0 AND arr-j > key?}
+    E -->|Yes| F[arr-j+1 = arr-j]
+    F --> G[j--]
+    G --> E
+    E -->|No| H[arr-j+1 = key]
+    H --> I[i++]
+    I --> C
+    C -->|No| J[Array Sorted!]
+    
+    style A fill:#22c55e,color:#fff
+    style J fill:#22c55e,color:#fff`,
+  },
+  'merge-sort': {
+    title: 'Merge Sort Flow',
+    description: 'Divide, sort, and merge',
+    diagram: `flowchart TD
+    A[Array] --> B{Size > 1?}
+    B -->|Yes| C[Split into halves]
+    C --> D[Left Half]
+    C --> E[Right Half]
+    D --> F[Sort Left - Recursive]
+    E --> G[Sort Right - Recursive]
+    F --> H[Merge Sorted Halves]
+    G --> H
+    H --> I[Sorted Array]
+    B -->|No| I
+    
+    style A fill:#06b6d4,color:#fff
+    style I fill:#22c55e,color:#fff
+    style H fill:#f97316,color:#fff`,
+  },
+  'quick-sort': {
+    title: 'Quick Sort Flow',
+    description: 'Partition around pivot and sort',
+    diagram: `flowchart TD
+    A[Array] --> B{low < high?}
+    B -->|Yes| C[Choose Pivot]
+    C --> D[Partition Array]
+    D --> E[Elements < pivot on left]
+    D --> F[Elements > pivot on right]
+    E --> G[Sort Left - Recursive]
+    F --> H[Sort Right - Recursive]
+    G --> I[Array Sorted]
+    H --> I
+    B -->|No| I
+    
+    style A fill:#06b6d4,color:#fff
+    style I fill:#22c55e,color:#fff
+    style C fill:#f97316,color:#fff`,
+  },
+  'heap-sort': {
+    title: 'Heap Sort Flow',
+    description: 'Build heap and extract max repeatedly',
+    diagram: `flowchart TD
+    A[Array] --> B[Build Max Heap]
+    B --> C{Heap size > 1?}
+    C -->|Yes| D[Swap root with last]
+    D --> E[Reduce heap size]
+    E --> F[Heapify root]
+    F --> C
+    C -->|No| G[Array Sorted!]
+    
+    style A fill:#06b6d4,color:#fff
+    style G fill:#22c55e,color:#fff
+    style B fill:#a855f7,color:#fff`,
+  },
 };
 
 // Time Complexity Animation Steps
@@ -1056,6 +1210,392 @@ export const stackAnimationSteps = [
           <div className="px-4 py-2 bg-muted border border-border rounded text-sm">Type "A"</div>
         </div>
         <div className="text-sm text-muted-foreground">Ctrl+Z pops "Type C" to undo!</div>
+      </div>
+    ),
+  },
+];
+
+// Linear Search Animation Steps
+export const linearSearchAnimationSteps = [
+  {
+    description: 'Search for 40 in array [10, 25, 30, 40, 50]',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="text-lg font-semibold text-cyan">Find: 40</div>
+        <div className="flex gap-1">
+          {[10, 25, 30, 40, 50].map((val, i) => (
+            <div key={i} className="w-12 h-12 bg-muted border-2 border-border rounded flex items-center justify-center font-bold text-foreground">
+              {val}
+            </div>
+          ))}
+        </div>
+      </div>
+    ),
+  },
+  {
+    description: 'Check index 0: Is 10 == 40? NO',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="flex gap-1">
+          {[10, 25, 30, 40, 50].map((val, i) => (
+            <div key={i} className={`w-12 h-12 ${i === 0 ? 'bg-orange/30 border-orange' : 'bg-muted border-border'} border-2 rounded flex items-center justify-center font-bold text-foreground`}>
+              {val}
+            </div>
+          ))}
+        </div>
+        <div className="text-sm text-orange">10 ≠ 40 ✗ Move to next</div>
+      </div>
+    ),
+  },
+  {
+    description: 'Check index 1, 2: Still not found',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="flex gap-1">
+          {[10, 25, 30, 40, 50].map((val, i) => (
+            <div key={i} className={`w-12 h-12 ${i <= 2 ? 'bg-muted/50 border-border' : 'bg-muted border-border'} border-2 rounded flex items-center justify-center font-bold ${i <= 2 ? 'text-muted-foreground' : 'text-foreground'}`}>
+              {val}
+            </div>
+          ))}
+        </div>
+        <div className="text-sm text-muted-foreground">Checked: 10 ✗, 25 ✗, 30 ✗</div>
+      </div>
+    ),
+  },
+  {
+    description: 'Check index 3: Is 40 == 40? YES! Found!',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="flex gap-1">
+          {[10, 25, 30, 40, 50].map((val, i) => (
+            <div key={i} className={`w-12 h-12 ${i === 3 ? 'bg-green/30 border-green animate-pulse' : 'bg-muted/50 border-border'} border-2 rounded flex items-center justify-center font-bold text-foreground`}>
+              {val}
+            </div>
+          ))}
+        </div>
+        <div className="bg-green/20 px-4 py-2 rounded text-green font-bold">Found at index 3! ✓</div>
+      </div>
+    ),
+  },
+];
+
+// Binary Search Animation Steps
+export const binarySearchAnimationSteps = [
+  {
+    description: 'Search for 40 in sorted array [10, 20, 30, 40, 50, 60, 70]',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="text-lg font-semibold text-cyan">Find: 40 (Binary Search)</div>
+        <div className="flex gap-1">
+          {[10, 20, 30, 40, 50, 60, 70].map((val, i) => (
+            <div key={i} className="flex flex-col items-center">
+              <div className="w-10 h-10 bg-muted border-2 border-border rounded flex items-center justify-center font-bold text-foreground text-sm">
+                {val}
+              </div>
+              <span className="text-xs text-muted-foreground">[{i}]</span>
+            </div>
+          ))}
+        </div>
+        <div className="text-sm text-muted-foreground">left=0, right=6</div>
+      </div>
+    ),
+  },
+  {
+    description: 'Mid = 3, arr[3] = 40. Is 40 == 40? YES!',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="flex gap-1">
+          {[10, 20, 30, 40, 50, 60, 70].map((val, i) => (
+            <div key={i} className={`w-10 h-10 ${i === 3 ? 'bg-green/30 border-green animate-bounce' : 'bg-muted/50 border-border'} border-2 rounded flex items-center justify-center font-bold text-foreground text-sm`}>
+              {val}
+            </div>
+          ))}
+        </div>
+        <div className="bg-green/20 px-4 py-2 rounded text-green font-bold">Found at index 3 in 1 step! ✓</div>
+        <div className="text-sm text-muted-foreground">Binary search: O(log n) vs Linear: O(n)</div>
+      </div>
+    ),
+  },
+];
+
+// Bubble Sort Animation Steps
+export const bubbleSortAnimationSteps = [
+  {
+    description: 'Initial array: [64, 34, 25, 12, 22]',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="text-lg font-semibold text-purple">Bubble Sort</div>
+        <div className="flex gap-2">
+          {[64, 34, 25, 12, 22].map((val, i) => (
+            <div key={i} className="w-12 h-12 bg-purple/20 border-2 border-purple rounded flex items-center justify-center font-bold text-foreground">
+              {val}
+            </div>
+          ))}
+        </div>
+      </div>
+    ),
+  },
+  {
+    description: 'Compare 64 and 34: 64 > 34, swap!',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="flex gap-2">
+          {[34, 64, 25, 12, 22].map((val, i) => (
+            <div key={i} className={`w-12 h-12 ${i <= 1 ? 'bg-orange/30 border-orange' : 'bg-muted border-border'} border-2 rounded flex items-center justify-center font-bold text-foreground`}>
+              {val}
+            </div>
+          ))}
+        </div>
+        <div className="text-sm text-orange">64 ↔ 34 swapped</div>
+      </div>
+    ),
+  },
+  {
+    description: 'After pass 1: 64 bubbled to end',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="flex gap-2">
+          {[34, 25, 12, 22, 64].map((val, i) => (
+            <div key={i} className={`w-12 h-12 ${i === 4 ? 'bg-green/30 border-green' : 'bg-muted border-border'} border-2 rounded flex items-center justify-center font-bold text-foreground`}>
+              {val}
+            </div>
+          ))}
+        </div>
+        <div className="text-sm text-green">64 is in correct position ✓</div>
+      </div>
+    ),
+  },
+  {
+    description: 'Final sorted array',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="flex gap-2">
+          {[12, 22, 25, 34, 64].map((val, i) => (
+            <div key={i} className="w-12 h-12 bg-green/30 border-2 border-green rounded flex items-center justify-center font-bold text-foreground animate-pulse" style={{ animationDelay: `${i * 0.1}s` }}>
+              {val}
+            </div>
+          ))}
+        </div>
+        <div className="text-lg text-green font-bold">Sorted! ✓</div>
+      </div>
+    ),
+  },
+];
+
+// Selection Sort Animation Steps
+export const selectionSortAnimationSteps = [
+  {
+    description: 'Initial array: [64, 25, 12, 22, 11]',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="text-lg font-semibold text-orange">Selection Sort</div>
+        <div className="flex gap-2">
+          {[64, 25, 12, 22, 11].map((val, i) => (
+            <div key={i} className="w-12 h-12 bg-orange/20 border-2 border-orange rounded flex items-center justify-center font-bold text-foreground">
+              {val}
+            </div>
+          ))}
+        </div>
+      </div>
+    ),
+  },
+  {
+    description: 'Find minimum: 11 is smallest',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="flex gap-2">
+          {[64, 25, 12, 22, 11].map((val, i) => (
+            <div key={i} className={`w-12 h-12 ${i === 4 ? 'bg-cyan/30 border-cyan animate-pulse' : 'bg-muted border-border'} border-2 rounded flex items-center justify-center font-bold text-foreground`}>
+              {val}
+            </div>
+          ))}
+        </div>
+        <div className="text-sm text-cyan">Minimum found: 11</div>
+      </div>
+    ),
+  },
+  {
+    description: 'Swap 64 and 11',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="flex gap-2">
+          {[11, 25, 12, 22, 64].map((val, i) => (
+            <div key={i} className={`w-12 h-12 ${i === 0 ? 'bg-green/30 border-green' : 'bg-muted border-border'} border-2 rounded flex items-center justify-center font-bold text-foreground`}>
+              {val}
+            </div>
+          ))}
+        </div>
+        <div className="text-sm text-green">11 is now in correct position ✓</div>
+      </div>
+    ),
+  },
+  {
+    description: 'Final sorted array',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="flex gap-2">
+          {[11, 12, 22, 25, 64].map((val, i) => (
+            <div key={i} className="w-12 h-12 bg-green/30 border-2 border-green rounded flex items-center justify-center font-bold text-foreground">
+              {val}
+            </div>
+          ))}
+        </div>
+        <div className="text-lg text-green font-bold">Sorted! ✓</div>
+      </div>
+    ),
+  },
+];
+
+// Merge Sort Animation Steps
+export const mergeSortAnimationSteps = [
+  {
+    description: 'Divide array into halves',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="text-lg font-semibold text-cyan">Merge Sort - Divide</div>
+        <div className="flex gap-1">
+          {[38, 27, 43, 3, 9, 82, 10].map((val, i) => (
+            <div key={i} className="w-10 h-10 bg-cyan/20 border border-cyan rounded flex items-center justify-center font-bold text-sm">
+              {val}
+            </div>
+          ))}
+        </div>
+        <div className="text-2xl">↓</div>
+        <div className="flex gap-8">
+          <div className="flex gap-1">
+            {[38, 27, 43].map((val, i) => (
+              <div key={i} className="w-10 h-10 bg-purple/20 border border-purple rounded flex items-center justify-center font-bold text-sm">
+                {val}
+              </div>
+            ))}
+          </div>
+          <div className="flex gap-1">
+            {[3, 9, 82, 10].map((val, i) => (
+              <div key={i} className="w-10 h-10 bg-orange/20 border border-orange rounded flex items-center justify-center font-bold text-sm">
+                {val}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    ),
+  },
+  {
+    description: 'Keep dividing until single elements',
+    visual: (
+      <div className="flex flex-col items-center gap-2">
+        <div className="flex gap-2 flex-wrap justify-center">
+          {[38, 27, 43, 3, 9, 82, 10].map((val, i) => (
+            <div key={i} className="w-10 h-10 bg-muted border border-border rounded flex items-center justify-center font-bold text-sm">
+              {val}
+            </div>
+          ))}
+        </div>
+        <div className="text-sm text-muted-foreground">Each element is now "sorted"</div>
+      </div>
+    ),
+  },
+  {
+    description: 'Merge pairs in sorted order',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="text-lg font-semibold text-green">Merge - Conquer</div>
+        <div className="flex gap-4 flex-wrap justify-center">
+          <div className="flex gap-1">
+            {[27, 38].map((val, i) => (
+              <div key={i} className="w-10 h-10 bg-green/20 border border-green rounded flex items-center justify-center font-bold text-sm">
+                {val}
+              </div>
+            ))}
+          </div>
+          <div className="flex gap-1">
+            {[3, 43].map((val, i) => (
+              <div key={i} className="w-10 h-10 bg-green/20 border border-green rounded flex items-center justify-center font-bold text-sm">
+                {val}
+              </div>
+            ))}
+          </div>
+          <div className="flex gap-1">
+            {[9, 82].map((val, i) => (
+              <div key={i} className="w-10 h-10 bg-green/20 border border-green rounded flex items-center justify-center font-bold text-sm">
+                {val}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    ),
+  },
+  {
+    description: 'Final merged sorted array',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="flex gap-1">
+          {[3, 9, 10, 27, 38, 43, 82].map((val, i) => (
+            <div key={i} className="w-10 h-10 bg-green/30 border-2 border-green rounded flex items-center justify-center font-bold text-sm animate-pulse" style={{ animationDelay: `${i * 0.1}s` }}>
+              {val}
+            </div>
+          ))}
+        </div>
+        <div className="text-lg text-green font-bold">Sorted! O(n log n) ✓</div>
+      </div>
+    ),
+  },
+];
+
+// Quick Sort Animation Steps
+export const quickSortAnimationSteps = [
+  {
+    description: 'Choose pivot (last element): 5',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="text-lg font-semibold text-green">Quick Sort</div>
+        <div className="flex gap-2">
+          {[10, 7, 8, 9, 1, 5].map((val, i) => (
+            <div key={i} className={`w-12 h-12 ${i === 5 ? 'bg-orange/30 border-orange' : 'bg-muted border-border'} border-2 rounded flex items-center justify-center font-bold text-foreground`}>
+              {val}
+            </div>
+          ))}
+        </div>
+        <div className="text-sm text-orange">Pivot = 5</div>
+      </div>
+    ),
+  },
+  {
+    description: 'Partition: elements < 5 go left, > 5 go right',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="flex gap-4">
+          <div className="flex gap-1 px-2 py-1 bg-cyan/10 rounded">
+            <div className="w-10 h-10 bg-cyan/30 border border-cyan rounded flex items-center justify-center font-bold text-sm">1</div>
+          </div>
+          <div className="w-10 h-10 bg-orange/30 border-2 border-orange rounded flex items-center justify-center font-bold">5</div>
+          <div className="flex gap-1 px-2 py-1 bg-pink/10 rounded">
+            {[10, 7, 8, 9].map((val, i) => (
+              <div key={i} className="w-10 h-10 bg-pink/30 border border-pink rounded flex items-center justify-center font-bold text-sm">
+                {val}
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="text-sm">
+          <span className="text-cyan">Left (&lt;5)</span> | <span className="text-orange">Pivot</span> | <span className="text-pink">Right (&gt;5)</span>
+        </div>
+      </div>
+    ),
+  },
+  {
+    description: 'Recursively sort left and right partitions',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="flex gap-2">
+          {[1, 5, 7, 8, 9, 10].map((val, i) => (
+            <div key={i} className="w-12 h-12 bg-green/30 border-2 border-green rounded flex items-center justify-center font-bold text-foreground">
+              {val}
+            </div>
+          ))}
+        </div>
+        <div className="text-lg text-green font-bold">Sorted! ✓</div>
       </div>
     ),
   },
