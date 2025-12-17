@@ -13,6 +13,13 @@ import {
   dataStructureAnimationSteps, 
   pseudoCodeAnimationSteps, 
   programmingConstructsAnimationSteps,
+  timeComplexityAnimationSteps,
+  recursionAnimationSteps,
+  arrayAnimationSteps,
+  stringAnimationSteps,
+  linkedListAnimationSteps,
+  stackAnimationSteps,
+  queueAnimationSteps,
   topicFlowcharts 
 } from '@/data/topicAnimations';
 import { Button } from '@/components/ui/button';
@@ -59,6 +66,23 @@ const getTopicAnimation = (topicId: string) => {
     case 'what-is-data-structure': return dataStructureAnimationSteps;
     case 'pseudo-code': return pseudoCodeAnimationSteps;
     case 'programming-constructs': return programmingConstructsAnimationSteps;
+    case 'time-complexity': return timeComplexityAnimationSteps;
+    case 'space-complexity': return timeComplexityAnimationSteps;
+    case 'big-o-notation': return timeComplexityAnimationSteps;
+    case 'recursion-basics': return recursionAnimationSteps;
+    case 'iteration-vs-recursion': return recursionAnimationSteps;
+    case 'arrays': return arrayAnimationSteps;
+    case 'strings': return stringAnimationSteps;
+    case 'linked-lists': return linkedListAnimationSteps;
+    case 'singly-linked-list': return linkedListAnimationSteps;
+    case 'doubly-linked-list': return linkedListAnimationSteps;
+    case 'circular-linked-list': return linkedListAnimationSteps;
+    case 'stacks': return stackAnimationSteps;
+    case 'queues': return queueAnimationSteps;
+    case 'simple-queue': return queueAnimationSteps;
+    case 'circular-queue': return queueAnimationSteps;
+    case 'deque': return queueAnimationSteps;
+    case 'priority-queue': return queueAnimationSteps;
     default: return null;
   }
 };
@@ -263,7 +287,7 @@ const TopicPage = () => {
               </section>
 
               {/* Flowchart Section */}
-              {topicFlowcharts[content.id] && (
+              {topicId && topicFlowcharts[topicId] && (
                 <section>
                   <div className="flex items-center gap-3 mb-6">
                     <div className="w-10 h-10 rounded-lg bg-purple/20 flex items-center justify-center">
@@ -271,7 +295,7 @@ const TopicPage = () => {
                     </div>
                     <h2 className="text-2xl font-bold text-foreground">Flowchart</h2>
                   </div>
-                  <FlowchartDiagram {...topicFlowcharts[content.id]} />
+                  <FlowchartDiagram {...topicFlowcharts[topicId]} />
                 </section>
               )}
 
@@ -283,11 +307,11 @@ const TopicPage = () => {
                   </div>
                   <h2 className="text-2xl font-bold text-foreground">How It Works - Animation</h2>
                 </div>
-                {getTopicAnimation(content.id) ? (
+                {topicId && getTopicAnimation(topicId) ? (
                   <AlgorithmAnimation
                     title={`${topic.title} Animation`}
                     description="Watch step-by-step how this concept works"
-                    steps={getTopicAnimation(content.id)!}
+                    steps={getTopicAnimation(topicId)!}
                   />
                 ) : (
                   <ArrayAnimation
@@ -299,7 +323,7 @@ const TopicPage = () => {
               </section>
 
               {/* Interactive Visualizer - Only for arrays */}
-              {content.id === 'arrays' && (
+              {topicId === 'arrays' && (
                 <section>
                   <div className="flex items-center gap-3 mb-6">
                     <div className="w-10 h-10 rounded-lg bg-cyan/20 flex items-center justify-center">
