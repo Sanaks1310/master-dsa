@@ -20,6 +20,12 @@ import {
   linkedListAnimationSteps,
   stackAnimationSteps,
   queueAnimationSteps,
+  linearSearchAnimationSteps,
+  binarySearchAnimationSteps,
+  bubbleSortAnimationSteps,
+  selectionSortAnimationSteps,
+  mergeSortAnimationSteps,
+  quickSortAnimationSteps,
   topicFlowcharts 
 } from '@/data/topicAnimations';
 import { Button } from '@/components/ui/button';
@@ -83,6 +89,14 @@ const getTopicAnimation = (topicId: string) => {
     case 'circular-queue': return queueAnimationSteps;
     case 'deque': return queueAnimationSteps;
     case 'priority-queue': return queueAnimationSteps;
+    case 'linear-search': return linearSearchAnimationSteps;
+    case 'binary-search': return binarySearchAnimationSteps;
+    case 'bubble-sort': return bubbleSortAnimationSteps;
+    case 'selection-sort': return selectionSortAnimationSteps;
+    case 'insertion-sort': return selectionSortAnimationSteps;
+    case 'merge-sort': return mergeSortAnimationSteps;
+    case 'quick-sort': return quickSortAnimationSteps;
+    case 'heap-sort': return selectionSortAnimationSteps;
     default: return null;
   }
 };

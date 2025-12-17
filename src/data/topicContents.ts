@@ -43,18 +43,29 @@ import { stringsContent } from './topics/stringsContent';
 import { singlyLinkedListContent } from './topics/singlyLinkedListContent';
 import { doublyLinkedListContent } from './topics/doublyLinkedListContent';
 import { circularLinkedListContent } from './topics/circularLinkedListContent';
+import { linearSearchContent } from './topics/linearSearchContent';
+import { binarySearchContent } from './topics/binarySearchContent';
+import { bubbleSortContent } from './topics/bubbleSortContent';
+import { selectionSortContent } from './topics/selectionSortContent';
+import { insertionSortContent } from './topics/insertionSortContent';
+import { mergeSortContent } from './topics/mergeSortContent';
+import { quickSortContent } from './topics/quickSortContent';
+import { heapSortContent } from './topics/heapSortContent';
 
 export const topicContents: Record<string, TopicContent> = {
+  // Level 0 - Prerequisites
   'what-is-algorithm': algorithmContent,
   'what-is-data-structure': dataStructureContent,
   'pseudo-code': pseudoCodeContent,
   'programming-constructs': programmingConstructsContent,
+  // Level 1 - DSA Basics
   'time-complexity': timeComplexityContent,
   'space-complexity': spaceComplexityContent,
   'big-o-notation': bigOContent,
   'case-analysis': caseAnalysisContent,
   'recursion-basics': recursionBasicsContent,
   'iteration-vs-recursion': iterationVsRecursionContent,
+  // Level 2 - Linear Data Structures
   'arrays': arrayContent,
   'strings': stringsContent,
   'singly-linked-list': singlyLinkedListContent,
@@ -67,6 +78,16 @@ export const topicContents: Record<string, TopicContent> = {
   'deque': queueContent,
   'priority-queue': queueContent,
   'queues': queueContent,
+  // Level 3 - Searching & Sorting
+  'linear-search': linearSearchContent,
+  'binary-search': binarySearchContent,
+  'bubble-sort': bubbleSortContent,
+  'selection-sort': selectionSortContent,
+  'insertion-sort': insertionSortContent,
+  'merge-sort': mergeSortContent,
+  'quick-sort': quickSortContent,
+  'heap-sort': heapSortContent,
+  // Level 4 - Non-Linear Data Structures
   'trees': treeContent,
   'binary-search-trees': bstContent,
   'heaps': heapContent,
