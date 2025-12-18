@@ -51,6 +51,13 @@ import { insertionSortContent } from './topics/insertionSortContent';
 import { mergeSortContent } from './topics/mergeSortContent';
 import { quickSortContent } from './topics/quickSortContent';
 import { heapSortContent } from './topics/heapSortContent';
+import { treeTerminologyContent } from './topics/treeTerminologyContent';
+import { binaryTreeContent } from './topics/binaryTreeContent';
+import { bfsContent } from './topics/bfsContent';
+import { dfsContent } from './topics/dfsContent';
+import { graphBasicsContent } from './topics/graphBasicsContent';
+import { cycleDetectionContent } from './topics/cycleDetectionContent';
+import { topologicalSortContent } from './topics/topologicalSortContent';
 
 export const topicContents: Record<string, TopicContent> = {
   // Level 0 - Prerequisites
@@ -88,11 +95,18 @@ export const topicContents: Record<string, TopicContent> = {
   'quick-sort': quickSortContent,
   'heap-sort': heapSortContent,
   // Level 4 - Non-Linear Data Structures
+  'tree-terminology': treeTerminologyContent,
+  'binary-tree': binaryTreeContent,
   'trees': treeContent,
   'binary-search-trees': bstContent,
   'heaps': heapContent,
   'hash-tables': hashTableContent,
+  'graph-basics': graphBasicsContent,
   'graphs': graphContent,
+  'bfs': bfsContent,
+  'dfs': dfsContent,
+  'cycle-detection': cycleDetectionContent,
+  'topological-sort': topologicalSortContent,
 };
 
 export const getTopicContent = (id: string): TopicContent | undefined => {
