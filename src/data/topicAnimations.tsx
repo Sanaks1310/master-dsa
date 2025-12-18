@@ -1714,3 +1714,142 @@ export const recursionAnimationSteps = [
     ),
   },
 ];
+
+// BFS Animation Steps
+export const bfsAnimationSteps = [
+  {
+    description: 'Start BFS from vertex 0',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="text-lg font-semibold text-orange">Breadth-First Search</div>
+        <div className="relative w-48 h-32">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-10 h-10 bg-orange/30 border-2 border-orange rounded-full flex items-center justify-center font-bold">0</div>
+          <div className="absolute top-12 left-4 w-10 h-10 bg-muted border-2 border-border rounded-full flex items-center justify-center font-bold">1</div>
+          <div className="absolute top-12 right-4 w-10 h-10 bg-muted border-2 border-border rounded-full flex items-center justify-center font-bold">2</div>
+          <div className="absolute bottom-0 left-1/4 w-10 h-10 bg-muted border-2 border-border rounded-full flex items-center justify-center font-bold">3</div>
+          <div className="absolute bottom-0 right-1/4 w-10 h-10 bg-muted border-2 border-border rounded-full flex items-center justify-center font-bold">4</div>
+        </div>
+        <div className="text-sm">Queue: [0] | Visited: {0}</div>
+      </div>
+    ),
+  },
+  {
+    description: 'Visit level 1: neighbors of 0',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="relative w-48 h-32">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-10 h-10 bg-green/30 border-2 border-green rounded-full flex items-center justify-center font-bold">0</div>
+          <div className="absolute top-12 left-4 w-10 h-10 bg-orange/30 border-2 border-orange rounded-full flex items-center justify-center font-bold animate-pulse">1</div>
+          <div className="absolute top-12 right-4 w-10 h-10 bg-orange/30 border-2 border-orange rounded-full flex items-center justify-center font-bold animate-pulse">2</div>
+          <div className="absolute bottom-0 left-1/4 w-10 h-10 bg-muted border-2 border-border rounded-full flex items-center justify-center font-bold">3</div>
+          <div className="absolute bottom-0 right-1/4 w-10 h-10 bg-muted border-2 border-border rounded-full flex items-center justify-center font-bold">4</div>
+        </div>
+        <div className="text-sm">Queue: [1, 2] | Level 1</div>
+      </div>
+    ),
+  },
+  {
+    description: 'BFS complete - all nodes visited level by level',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="flex gap-2">
+          {[0, 1, 2, 3, 4].map((val, i) => (
+            <div key={i} className="w-10 h-10 bg-green/30 border-2 border-green rounded-full flex items-center justify-center font-bold animate-pulse" style={{ animationDelay: `${i * 0.1}s` }}>
+              {val}
+            </div>
+          ))}
+        </div>
+        <div className="text-lg text-green font-bold">Order: 0 → 1 → 2 → 3 → 4</div>
+      </div>
+    ),
+  },
+];
+
+// DFS Animation Steps
+export const dfsAnimationSteps = [
+  {
+    description: 'Start DFS from vertex 0',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="text-lg font-semibold text-pink">Depth-First Search</div>
+        <div className="relative w-48 h-32">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-10 h-10 bg-pink/30 border-2 border-pink rounded-full flex items-center justify-center font-bold">0</div>
+          <div className="absolute top-12 left-4 w-10 h-10 bg-muted border-2 border-border rounded-full flex items-center justify-center font-bold">1</div>
+          <div className="absolute top-12 right-4 w-10 h-10 bg-muted border-2 border-border rounded-full flex items-center justify-center font-bold">2</div>
+          <div className="absolute bottom-0 left-1/4 w-10 h-10 bg-muted border-2 border-border rounded-full flex items-center justify-center font-bold">3</div>
+        </div>
+        <div className="text-sm">Stack: [0] | Go deep first!</div>
+      </div>
+    ),
+  },
+  {
+    description: 'Go deep: 0 → 1 → 3',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="relative w-48 h-32">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-10 h-10 bg-green/30 border-2 border-green rounded-full flex items-center justify-center font-bold">0</div>
+          <div className="absolute top-12 left-4 w-10 h-10 bg-green/30 border-2 border-green rounded-full flex items-center justify-center font-bold">1</div>
+          <div className="absolute top-12 right-4 w-10 h-10 bg-muted border-2 border-border rounded-full flex items-center justify-center font-bold">2</div>
+          <div className="absolute bottom-0 left-1/4 w-10 h-10 bg-pink/30 border-2 border-pink rounded-full flex items-center justify-center font-bold animate-pulse">3</div>
+        </div>
+        <div className="text-sm">Path: 0 → 1 → 3 (deepest)</div>
+      </div>
+    ),
+  },
+  {
+    description: 'Backtrack and visit 2',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="flex gap-2">
+          {[0, 1, 3, 2].map((val, i) => (
+            <div key={i} className="w-10 h-10 bg-green/30 border-2 border-green rounded-full flex items-center justify-center font-bold">
+              {val}
+            </div>
+          ))}
+        </div>
+        <div className="text-lg text-green font-bold">Order: 0 → 1 → 3 → 2</div>
+      </div>
+    ),
+  },
+];
+
+// Tree Animation Steps
+export const treeAnimationSteps = [
+  {
+    description: 'Tree structure: Root, children, leaves',
+    visual: (
+      <div className="flex flex-col items-center gap-2">
+        <div className="text-lg font-semibold text-cyan">Binary Tree</div>
+        <div className="w-12 h-12 bg-cyan/30 border-2 border-cyan rounded-full flex items-center justify-center font-bold">
+          1
+          <span className="absolute -top-5 text-xs text-cyan">root</span>
+        </div>
+        <div className="flex gap-12">
+          <div className="w-10 h-10 bg-purple/30 border-2 border-purple rounded-full flex items-center justify-center font-bold">2</div>
+          <div className="w-10 h-10 bg-purple/30 border-2 border-purple rounded-full flex items-center justify-center font-bold">3</div>
+        </div>
+        <div className="flex gap-4">
+          <div className="w-8 h-8 bg-green/30 border border-green rounded-full flex items-center justify-center text-sm">4</div>
+          <div className="w-8 h-8 bg-green/30 border border-green rounded-full flex items-center justify-center text-sm">5</div>
+        </div>
+        <div className="text-xs text-muted-foreground">Leaves: nodes with no children</div>
+      </div>
+    ),
+  },
+  {
+    description: 'Inorder traversal: Left → Root → Right',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="text-lg font-semibold text-orange">Inorder: 4, 2, 5, 1, 3</div>
+        <div className="flex gap-2">
+          {[4, 2, 5, 1, 3].map((val, i) => (
+            <div key={i} className="w-10 h-10 bg-orange/30 border-2 border-orange rounded flex items-center justify-center font-bold" style={{ animationDelay: `${i * 0.2}s` }}>
+              {val}
+            </div>
+          ))}
+        </div>
+      </div>
+    ),
+  },
+];
+
