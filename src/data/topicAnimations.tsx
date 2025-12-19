@@ -811,6 +811,218 @@ export const topicFlowcharts: Record<string, { title: string; description: strin
     style G fill:#22c55e,color:#fff
     style B fill:#a855f7,color:#fff`,
   },
+  // Level 4 - Non-Linear Data Structures
+  'tree-terminology': {
+    title: 'Tree Terminology Overview',
+    description: 'Understanding tree structure and terminology',
+    diagram: `flowchart TD
+    A[Root Node] --> B[Left Child]
+    A --> C[Right Child]
+    B --> D[Leaf]
+    B --> E[Leaf]
+    C --> F[Internal Node]
+    F --> G[Leaf]
+    
+    subgraph Terms
+    H[Height: Longest path from root to leaf]
+    I[Depth: Distance from root to node]
+    J[Degree: Number of children]
+    end
+    
+    style A fill:#f97316,color:#fff
+    style D fill:#22c55e,color:#fff
+    style E fill:#22c55e,color:#fff
+    style G fill:#22c55e,color:#fff
+    style F fill:#06b6d4,color:#fff`,
+  },
+  'binary-tree': {
+    title: 'Binary Tree Traversals',
+    description: 'Different ways to traverse a binary tree',
+    diagram: `flowchart TD
+    A[Binary Tree Traversals] --> B[Inorder: Left-Root-Right]
+    A --> C[Preorder: Root-Left-Right]
+    A --> D[Postorder: Left-Right-Root]
+    A --> E[Level Order: BFS]
+    
+    B --> F[Used for BST sorted output]
+    C --> G[Used to copy tree]
+    D --> H[Used to delete tree]
+    E --> I[Used for level-by-level processing]
+    
+    style A fill:#8b5cf6,color:#fff
+    style B fill:#22c55e,color:#fff
+    style C fill:#06b6d4,color:#fff
+    style D fill:#f97316,color:#fff
+    style E fill:#ec4899,color:#fff`,
+  },
+  'binary-search-trees': {
+    title: 'BST Operations Flow',
+    description: 'Search, insert, and delete in BST',
+    diagram: `flowchart TD
+    A[BST Operation] --> B{Search/Insert/Delete}
+    B -->|Search| C{key == node.val?}
+    C -->|Yes| D[Found!]
+    C -->|No| E{key < node.val?}
+    E -->|Yes| F[Go Left]
+    E -->|No| G[Go Right]
+    F --> C
+    G --> C
+    B -->|Insert| H[Find correct position]
+    H --> I[Add new node as leaf]
+    B -->|Delete| J{Has children?}
+    J -->|0| K[Just remove]
+    J -->|1| L[Replace with child]
+    J -->|2| M[Replace with inorder successor]
+    
+    style D fill:#22c55e,color:#fff
+    style I fill:#06b6d4,color:#fff
+    style C fill:#a855f7,color:#fff`,
+  },
+  'heaps': {
+    title: 'Heap Operations Flow',
+    description: 'Insert and extract operations in heap',
+    diagram: `flowchart TD
+    A[Heap Operations] --> B[Insert]
+    A --> C[Extract Max/Min]
+    B --> D[Add at end]
+    D --> E[Bubble UP]
+    E --> F{Parent violates heap?}
+    F -->|Yes| G[Swap with parent]
+    G --> F
+    F -->|No| H[Done!]
+    C --> I[Remove root]
+    I --> J[Move last to root]
+    J --> K[Bubble DOWN]
+    K --> L{Children violate heap?}
+    L -->|Yes| M[Swap with larger/smaller child]
+    M --> L
+    L -->|No| H
+    
+    style A fill:#f97316,color:#fff
+    style H fill:#22c55e,color:#fff
+    style E fill:#06b6d4,color:#fff
+    style K fill:#06b6d4,color:#fff`,
+  },
+  'graph-basics': {
+    title: 'Graph Representations',
+    description: 'Adjacency Matrix vs Adjacency List',
+    diagram: `flowchart TD
+    A[Graph Representation] --> B[Adjacency Matrix]
+    A --> C[Adjacency List]
+    B --> D[2D Array: matrix-i-j = 1 if edge]
+    C --> E[Array of Lists]
+    D --> F[Space: O-V²]
+    D --> G[Edge check: O-1]
+    E --> H[Space: O-V+E]
+    E --> I[Edge check: O-V]
+    
+    subgraph "Best For"
+    B --> J[Dense graphs]
+    C --> K[Sparse graphs]
+    end
+    
+    style A fill:#ec4899,color:#fff
+    style B fill:#06b6d4,color:#fff
+    style C fill:#22c55e,color:#fff`,
+  },
+  'bfs': {
+    title: 'BFS Algorithm Flow',
+    description: 'Breadth-First Search traversal',
+    diagram: `flowchart TD
+    A[Start BFS] --> B[Create Queue]
+    B --> C[Enqueue start vertex]
+    C --> D[Mark start as visited]
+    D --> E{Queue empty?}
+    E -->|No| F[Dequeue vertex v]
+    F --> G[Process v]
+    G --> H[For each neighbor u of v]
+    H --> I{u visited?}
+    I -->|No| J[Mark u visited]
+    J --> K[Enqueue u]
+    I -->|Yes| L[Skip u]
+    K --> H
+    L --> H
+    H --> E
+    E -->|Yes| M[BFS Complete!]
+    
+    style A fill:#f97316,color:#fff
+    style M fill:#22c55e,color:#fff
+    style F fill:#06b6d4,color:#fff`,
+  },
+  'dfs': {
+    title: 'DFS Algorithm Flow',
+    description: 'Depth-First Search traversal',
+    diagram: `flowchart TD
+    A[Start DFS] --> B{Use Stack or Recursion}
+    B -->|Stack| C[Push start vertex]
+    B -->|Recursion| D[Call DFS on start]
+    C --> E{Stack empty?}
+    E -->|No| F[Pop vertex v]
+    F --> G{v visited?}
+    G -->|No| H[Mark v visited]
+    H --> I[Process v]
+    I --> J[Push all neighbors]
+    J --> E
+    G -->|Yes| E
+    D --> K[Mark current visited]
+    K --> L[Process current]
+    L --> M[For each unvisited neighbor]
+    M --> N[Recursively call DFS]
+    N --> M
+    E -->|Yes| O[DFS Complete!]
+    
+    style A fill:#ec4899,color:#fff
+    style O fill:#22c55e,color:#fff
+    style H fill:#06b6d4,color:#fff`,
+  },
+  'cycle-detection': {
+    title: 'Cycle Detection Flow',
+    description: 'Detecting cycles in directed and undirected graphs',
+    diagram: `flowchart TD
+    A[Cycle Detection] --> B{Graph Type}
+    B -->|Undirected| C[Use DFS with parent tracking]
+    B -->|Directed| D[Use DFS with color/state]
+    C --> E[For each unvisited node]
+    E --> F[DFS from node]
+    F --> G{Neighbor visited AND not parent?}
+    G -->|Yes| H[Cycle Found!]
+    G -->|No| I[Continue DFS]
+    D --> J[WHITE: Unvisited]
+    D --> K[GRAY: In current path]
+    D --> L[BLACK: Fully processed]
+    K --> M{Found GRAY neighbor?}
+    M -->|Yes| H
+    M -->|No| N[Mark BLACK when done]
+    
+    style H fill:#ef4444,color:#fff
+    style A fill:#06b6d4,color:#fff
+    style J fill:#94a3b8,color:#000
+    style K fill:#a855f7,color:#fff
+    style L fill:#1e293b,color:#fff`,
+  },
+  'topological-sort': {
+    title: 'Topological Sort Flow',
+    description: 'Linear ordering of DAG vertices',
+    diagram: `flowchart TD
+    A[Topological Sort] --> B{Method}
+    B -->|Kahn's Algorithm| C[Find vertices with 0 in-degree]
+    B -->|DFS Based| D[DFS and add to stack on completion]
+    C --> E[Add to result]
+    E --> F[Remove edges from these vertices]
+    F --> G[Update in-degrees]
+    G --> H{Any 0 in-degree left?}
+    H -->|Yes| C
+    H -->|No| I{All vertices processed?}
+    I -->|Yes| J[Topological Order Found!]
+    I -->|No| K[Cycle Exists - No valid order]
+    D --> L[Run DFS on all unvisited]
+    L --> M[Push to stack when DFS completes]
+    M --> N[Pop stack for result]
+    
+    style J fill:#22c55e,color:#fff
+    style K fill:#ef4444,color:#fff
+    style A fill:#8b5cf6,color:#fff`,
+  },
 };
 
 // Time Complexity Animation Steps
