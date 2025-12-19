@@ -26,6 +26,9 @@ import {
   selectionSortAnimationSteps,
   mergeSortAnimationSteps,
   quickSortAnimationSteps,
+  bfsAnimationSteps,
+  dfsAnimationSteps,
+  treeAnimationSteps,
   topicFlowcharts 
 } from '@/data/topicAnimations';
 import { Button } from '@/components/ui/button';
@@ -97,6 +100,16 @@ const getTopicAnimation = (topicId: string) => {
     case 'merge-sort': return mergeSortAnimationSteps;
     case 'quick-sort': return quickSortAnimationSteps;
     case 'heap-sort': return selectionSortAnimationSteps;
+    // Level 4 - Non-Linear Data Structures
+    case 'tree-terminology': return treeAnimationSteps;
+    case 'binary-tree': return treeAnimationSteps;
+    case 'binary-search-trees': return treeAnimationSteps;
+    case 'heaps': return treeAnimationSteps;
+    case 'graph-basics': return bfsAnimationSteps;
+    case 'bfs': return bfsAnimationSteps;
+    case 'dfs': return dfsAnimationSteps;
+    case 'cycle-detection': return dfsAnimationSteps;
+    case 'topological-sort': return dfsAnimationSteps;
     default: return null;
   }
 };
