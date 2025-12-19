@@ -58,6 +58,10 @@ import { dfsContent } from './topics/dfsContent';
 import { graphBasicsContent } from './topics/graphBasicsContent';
 import { cycleDetectionContent } from './topics/cycleDetectionContent';
 import { topologicalSortContent } from './topics/topologicalSortContent';
+import { divideAndConquerContent } from './topics/divideAndConquerContent';
+import { greedyAlgorithmsContent } from './topics/greedyAlgorithmsContent';
+import { backtrackingContent } from './topics/backtrackingContent';
+import { dynamicProgrammingContent } from './topics/dynamicProgrammingContent';
 
 export const topicContents: Record<string, TopicContent> = {
   // Level 0 - Prerequisites
@@ -107,6 +111,11 @@ export const topicContents: Record<string, TopicContent> = {
   'dfs': dfsContent,
   'cycle-detection': cycleDetectionContent,
   'topological-sort': topologicalSortContent,
+  // Level 5 - Algorithm Techniques
+  'divide-and-conquer': divideAndConquerContent,
+  'greedy-algorithms': greedyAlgorithmsContent,
+  'backtracking': backtrackingContent,
+  'dynamic-programming': dynamicProgrammingContent,
 };
 
 export const getTopicContent = (id: string): TopicContent | undefined => {
