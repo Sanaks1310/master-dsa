@@ -29,6 +29,10 @@ import {
   bfsAnimationSteps,
   dfsAnimationSteps,
   treeAnimationSteps,
+  divideAndConquerAnimationSteps,
+  greedyAnimationSteps,
+  backtrackingAnimationSteps,
+  dynamicProgrammingAnimationSteps,
   topicFlowcharts 
 } from '@/data/topicAnimations';
 import { Button } from '@/components/ui/button';
@@ -110,6 +114,11 @@ const getTopicAnimation = (topicId: string) => {
     case 'dfs': return dfsAnimationSteps;
     case 'cycle-detection': return dfsAnimationSteps;
     case 'topological-sort': return dfsAnimationSteps;
+    // Level 5 - Algorithm Techniques
+    case 'divide-and-conquer': return divideAndConquerAnimationSteps;
+    case 'greedy-algorithms': return greedyAnimationSteps;
+    case 'backtracking': return backtrackingAnimationSteps;
+    case 'dynamic-programming': return dynamicProgrammingAnimationSteps;
     default: return null;
   }
 };

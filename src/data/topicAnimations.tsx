@@ -1023,6 +1023,136 @@ export const topicFlowcharts: Record<string, { title: string; description: strin
     style K fill:#ef4444,color:#fff
     style A fill:#8b5cf6,color:#fff`,
   },
+  // Level 5 - Algorithm Techniques
+  'divide-and-conquer': {
+    title: 'Divide and Conquer Flow',
+    description: 'Break problem into smaller subproblems, solve, and combine',
+    diagram: `flowchart TD
+    A[Original Problem] --> B[DIVIDE into subproblems]
+    B --> C[Subproblem 1]
+    B --> D[Subproblem 2]
+    B --> E[Subproblem n]
+    C --> F{Base case?}
+    D --> F
+    E --> F
+    F -->|Yes| G[Solve directly]
+    F -->|No| H[Recursively divide]
+    H --> B
+    G --> I[CONQUER: Solve subproblems]
+    I --> J[COMBINE results]
+    J --> K[Final Solution]
+    
+    subgraph Examples
+    L[Merge Sort]
+    M[Quick Sort]
+    N[Binary Search]
+    end
+    
+    style A fill:#06b6d4,color:#fff
+    style K fill:#22c55e,color:#fff
+    style B fill:#a855f7,color:#fff
+    style J fill:#f97316,color:#fff`,
+  },
+  'greedy-algorithms': {
+    title: 'Greedy Algorithm Flow',
+    description: 'Make locally optimal choice at each step',
+    diagram: `flowchart TD
+    A[Greedy Algorithm] --> B[Start with empty solution]
+    B --> C{Candidates available?}
+    C -->|Yes| D[Select best candidate]
+    D --> E{Is it feasible?}
+    E -->|Yes| F[Add to solution]
+    E -->|No| G[Discard candidate]
+    F --> H{Solution complete?}
+    G --> C
+    H -->|No| C
+    H -->|Yes| I[Return solution]
+    C -->|No| J[No solution possible]
+    
+    subgraph "Key Property"
+    K[Greedy Choice Property]
+    L[Optimal Substructure]
+    end
+    
+    subgraph Examples
+    M[Coin Change]
+    N[Activity Selection]
+    O[Huffman Coding]
+    end
+    
+    style A fill:#22c55e,color:#fff
+    style I fill:#22c55e,color:#fff
+    style D fill:#f97316,color:#fff
+    style J fill:#ef4444,color:#fff`,
+  },
+  'backtracking': {
+    title: 'Backtracking Flow',
+    description: 'Explore all possibilities with pruning',
+    diagram: `flowchart TD
+    A[Backtracking] --> B[Choose a candidate]
+    B --> C{Valid choice?}
+    C -->|Yes| D[Add to solution]
+    D --> E{Solution complete?}
+    E -->|Yes| F[Record solution]
+    E -->|No| G[Recursively explore]
+    G --> H{More candidates?}
+    H -->|Yes| B
+    H -->|No| I[BACKTRACK]
+    I --> J[Remove last choice]
+    J --> K[Try next candidate]
+    C -->|No| K
+    K --> H
+    F --> L[Return or continue]
+    
+    subgraph Examples
+    M[N-Queens]
+    N[Sudoku Solver]
+    O[Maze Path]
+    P[Subset Sum]
+    end
+    
+    style A fill:#a855f7,color:#fff
+    style I fill:#ef4444,color:#fff
+    style F fill:#22c55e,color:#fff
+    style J fill:#f97316,color:#fff`,
+  },
+  'dynamic-programming': {
+    title: 'Dynamic Programming Flow',
+    description: 'Solve by storing subproblem results',
+    diagram: `flowchart TD
+    A[Dynamic Programming] --> B{Approach}
+    B -->|Top-Down| C[Memoization]
+    B -->|Bottom-Up| D[Tabulation]
+    
+    C --> E[Check if solved]
+    E -->|In cache| F[Return cached result]
+    E -->|Not cached| G[Solve recursively]
+    G --> H[Store in cache]
+    H --> I[Return result]
+    
+    D --> J[Initialize base cases]
+    J --> K[Fill table iteratively]
+    K --> L[Use smaller subproblems]
+    L --> M[Build up to final answer]
+    
+    subgraph "Key Properties"
+    N[Overlapping Subproblems]
+    O[Optimal Substructure]
+    end
+    
+    subgraph Examples
+    P[Fibonacci]
+    Q[Knapsack]
+    R[LCS]
+    S[Edit Distance]
+    end
+    
+    style A fill:#f97316,color:#fff
+    style F fill:#22c55e,color:#fff
+    style M fill:#22c55e,color:#fff
+    style C fill:#06b6d4,color:#fff
+    style D fill:#a855f7,color:#fff`,
+  },
 };
 
 // Time Complexity Animation Steps
@@ -2059,6 +2189,388 @@ export const treeAnimationSteps = [
               {val}
             </div>
           ))}
+        </div>
+      </div>
+    ),
+  },
+];
+
+// Level 5 - Divide and Conquer Animation Steps
+export const divideAndConquerAnimationSteps = [
+  {
+    description: 'Problem: Sort array [38, 27, 43, 3, 9, 82, 10]',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="text-lg font-semibold text-cyan">Divide & Conquer: Merge Sort</div>
+        <div className="flex gap-1">
+          {[38, 27, 43, 3, 9, 82, 10].map((num, i) => (
+            <div key={i} className="w-10 h-10 bg-cyan/20 border-2 border-cyan rounded flex items-center justify-center font-bold text-sm">
+              {num}
+            </div>
+          ))}
+        </div>
+        <div className="text-sm text-muted-foreground">Original unsorted array</div>
+      </div>
+    ),
+  },
+  {
+    description: 'DIVIDE: Split array into two halves',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="text-lg font-semibold text-purple">Step 1: DIVIDE</div>
+        <div className="flex gap-8">
+          <div className="flex flex-col items-center">
+            <div className="flex gap-1">
+              {[38, 27, 43, 3].map((num, i) => (
+                <div key={i} className="w-8 h-8 bg-purple/20 border-2 border-purple rounded flex items-center justify-center font-bold text-xs">
+                  {num}
+                </div>
+              ))}
+            </div>
+            <span className="text-xs mt-1">Left half</span>
+          </div>
+          <div className="flex flex-col items-center">
+            <div className="flex gap-1">
+              {[9, 82, 10].map((num, i) => (
+                <div key={i} className="w-8 h-8 bg-orange/20 border-2 border-orange rounded flex items-center justify-center font-bold text-xs">
+                  {num}
+                </div>
+              ))}
+            </div>
+            <span className="text-xs mt-1">Right half</span>
+          </div>
+        </div>
+      </div>
+    ),
+  },
+  {
+    description: 'DIVIDE: Keep splitting until single elements',
+    visual: (
+      <div className="flex flex-col items-center gap-3">
+        <div className="text-sm font-semibold text-foreground">Recursive Division</div>
+        <div className="flex gap-2">
+          {[38, 27, 43, 3, 9, 82, 10].map((num, i) => (
+            <div key={i} className="w-8 h-8 bg-green/20 border-2 border-green rounded-full flex items-center justify-center font-bold text-xs animate-pulse" style={{ animationDelay: `${i * 0.1}s` }}>
+              {num}
+            </div>
+          ))}
+        </div>
+        <div className="text-xs text-muted-foreground">Base case: single elements (already sorted!)</div>
+      </div>
+    ),
+  },
+  {
+    description: 'CONQUER: Merge sorted subarrays',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="text-lg font-semibold text-orange">Step 2: CONQUER (Merge)</div>
+        <div className="flex gap-4">
+          <div className="flex gap-1">
+            {[3, 27, 38, 43].map((num, i) => (
+              <div key={i} className="w-8 h-8 bg-green/30 border-2 border-green rounded flex items-center justify-center font-bold text-xs">
+                {num}
+              </div>
+            ))}
+          </div>
+          <span className="text-lg">+</span>
+          <div className="flex gap-1">
+            {[9, 10, 82].map((num, i) => (
+              <div key={i} className="w-8 h-8 bg-green/30 border-2 border-green rounded flex items-center justify-center font-bold text-xs">
+                {num}
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="text-xs text-muted-foreground">Merge sorted halves</div>
+      </div>
+    ),
+  },
+  {
+    description: 'COMBINE: Final sorted array!',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="text-lg font-semibold text-green">Final Result</div>
+        <div className="flex gap-1">
+          {[3, 9, 10, 27, 38, 43, 82].map((num, i) => (
+            <div key={i} className="w-10 h-10 bg-green/30 border-2 border-green rounded flex items-center justify-center font-bold text-sm animate-bounce" style={{ animationDelay: `${i * 0.05}s` }}>
+              {num}
+            </div>
+          ))}
+        </div>
+        <div className="bg-green/20 px-4 py-2 rounded-lg text-sm">Time: O(n log n) | Space: O(n)</div>
+      </div>
+    ),
+  },
+];
+
+// Level 5 - Greedy Algorithm Animation Steps
+export const greedyAnimationSteps = [
+  {
+    description: 'Problem: Give change for 41¢ using fewest coins',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="text-lg font-semibold text-green">Greedy: Coin Change</div>
+        <div className="text-4xl font-bold text-foreground">41¢</div>
+        <div className="flex gap-2">
+          {['25¢', '10¢', '5¢', '1¢'].map((coin, i) => (
+            <div key={i} className="w-12 h-12 bg-muted border-2 border-border rounded-full flex items-center justify-center text-sm font-bold">
+              {coin}
+            </div>
+          ))}
+        </div>
+        <div className="text-sm text-muted-foreground">Available coins</div>
+      </div>
+    ),
+  },
+  {
+    description: 'Greedy choice: Take largest coin ≤ remaining (25¢)',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="text-sm">Remaining: <span className="text-green font-bold">41¢</span></div>
+        <div className="w-14 h-14 bg-green/30 border-2 border-green rounded-full flex items-center justify-center text-lg font-bold animate-pulse">
+          25¢
+        </div>
+        <div className="text-sm">25¢ ≤ 41¢ ✓ Take it!</div>
+        <div className="bg-muted/50 px-4 py-2 rounded-lg font-mono text-sm">41 - 25 = 16¢ remaining</div>
+      </div>
+    ),
+  },
+  {
+    description: 'Take 10¢ (largest ≤ 16¢)',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="text-sm">Remaining: <span className="text-green font-bold">16¢</span></div>
+        <div className="flex gap-2">
+          <div className="w-12 h-12 bg-green/30 border-2 border-green rounded-full flex items-center justify-center font-bold">25¢</div>
+          <div className="w-12 h-12 bg-orange/30 border-2 border-orange rounded-full flex items-center justify-center font-bold animate-pulse">10¢</div>
+        </div>
+        <div className="bg-muted/50 px-4 py-2 rounded-lg font-mono text-sm">16 - 10 = 6¢ remaining</div>
+      </div>
+    ),
+  },
+  {
+    description: 'Take 5¢, then 1¢',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="flex gap-2">
+          <div className="w-12 h-12 bg-green/30 border-2 border-green rounded-full flex items-center justify-center font-bold">25¢</div>
+          <div className="w-12 h-12 bg-green/30 border-2 border-green rounded-full flex items-center justify-center font-bold">10¢</div>
+          <div className="w-12 h-12 bg-green/30 border-2 border-green rounded-full flex items-center justify-center font-bold">5¢</div>
+          <div className="w-12 h-12 bg-green/30 border-2 border-green rounded-full flex items-center justify-center font-bold">1¢</div>
+        </div>
+        <div className="bg-muted/50 px-4 py-2 rounded-lg font-mono text-sm">6 - 5 - 1 = 0¢ Done!</div>
+      </div>
+    ),
+  },
+  {
+    description: 'Optimal solution: 4 coins!',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="text-lg font-semibold text-green">Greedy Works!</div>
+        <div className="flex gap-2">
+          {['25¢', '10¢', '5¢', '1¢'].map((coin, i) => (
+            <div key={i} className="w-12 h-12 bg-green/30 border-2 border-green rounded-full flex items-center justify-center font-bold animate-bounce" style={{ animationDelay: `${i * 0.1}s` }}>
+              {coin}
+            </div>
+          ))}
+        </div>
+        <div className="text-2xl font-bold text-green">= 41¢ with 4 coins</div>
+        <div className="text-xs text-muted-foreground">Always choose locally optimal → globally optimal</div>
+      </div>
+    ),
+  },
+];
+
+// Level 5 - Backtracking Animation Steps
+export const backtrackingAnimationSteps = [
+  {
+    description: 'Problem: Place 4 Queens on 4x4 board (no attacks)',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="text-lg font-semibold text-purple">Backtracking: N-Queens</div>
+        <div className="grid grid-cols-4 gap-1">
+          {Array(16).fill(null).map((_, i) => (
+            <div key={i} className={`w-8 h-8 ${(Math.floor(i/4) + i%4) % 2 === 0 ? 'bg-muted' : 'bg-muted/50'} border border-border rounded flex items-center justify-center`}>
+            </div>
+          ))}
+        </div>
+        <div className="text-sm text-muted-foreground">No two queens can attack each other</div>
+      </div>
+    ),
+  },
+  {
+    description: 'Try placing Queen 1 at (0,0)',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="text-sm font-semibold">Row 0: Try column 0</div>
+        <div className="grid grid-cols-4 gap-1">
+          {Array(16).fill(null).map((_, i) => (
+            <div key={i} className={`w-8 h-8 ${i === 0 ? 'bg-purple/30 border-purple' : (Math.floor(i/4) + i%4) % 2 === 0 ? 'bg-muted' : 'bg-muted/50'} border rounded flex items-center justify-center`}>
+              {i === 0 && '♛'}
+            </div>
+          ))}
+        </div>
+        <div className="text-sm text-green">✓ Valid placement</div>
+      </div>
+    ),
+  },
+  {
+    description: 'Row 1: (1,0) and (1,1) invalid, try (1,2)',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="text-sm font-semibold">Row 1: Columns 0,1 blocked</div>
+        <div className="grid grid-cols-4 gap-1">
+          {Array(16).fill(null).map((_, i) => {
+            const row = Math.floor(i/4);
+            const col = i % 4;
+            const isQueen = (row === 0 && col === 0) || (row === 1 && col === 2);
+            const isBlocked = (row === 1 && col < 2);
+            return (
+              <div key={i} className={`w-8 h-8 ${isQueen ? 'bg-purple/30 border-purple' : isBlocked ? 'bg-destructive/20 border-destructive' : (row + col) % 2 === 0 ? 'bg-muted' : 'bg-muted/50'} border rounded flex items-center justify-center`}>
+                {isQueen && '♛'}
+                {isBlocked && '✗'}
+              </div>
+            );
+          })}
+        </div>
+        <div className="text-sm text-green">✓ (1,2) is valid</div>
+      </div>
+    ),
+  },
+  {
+    description: 'BACKTRACK! Row 2 has no valid positions',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="text-lg font-semibold text-destructive">⟲ BACKTRACK!</div>
+        <div className="flex flex-col gap-1 text-sm">
+          <div className="bg-muted/50 px-3 py-1 rounded">Row 2: all columns blocked</div>
+          <div className="text-destructive">Remove queen from (1,2)</div>
+          <div className="text-orange">Try (1,3) instead...</div>
+        </div>
+        <div className="text-xs text-muted-foreground">Undo and try different path</div>
+      </div>
+    ),
+  },
+  {
+    description: 'Solution found after backtracking!',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="text-lg font-semibold text-green">Solution Found!</div>
+        <div className="grid grid-cols-4 gap-1">
+          {Array(16).fill(null).map((_, i) => {
+            const positions = [[0,1], [1,3], [2,0], [3,2]];
+            const row = Math.floor(i/4);
+            const col = i % 4;
+            const isQueen = positions.some(([r,c]) => r === row && c === col);
+            return (
+              <div key={i} className={`w-8 h-8 ${isQueen ? 'bg-green/30 border-green' : (row + col) % 2 === 0 ? 'bg-muted' : 'bg-muted/50'} border rounded flex items-center justify-center animate-pulse`} style={isQueen ? { animationDelay: `${row * 0.2}s` } : {}}>
+                {isQueen && '♛'}
+              </div>
+            );
+          })}
+        </div>
+        <div className="text-sm text-green">All 4 queens placed safely!</div>
+      </div>
+    ),
+  },
+];
+
+// Level 5 - Dynamic Programming Animation Steps
+export const dynamicProgrammingAnimationSteps = [
+  {
+    description: 'Problem: Fibonacci(6) - Calculate 6th Fibonacci number',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="text-lg font-semibold text-orange">Dynamic Programming</div>
+        <div className="text-sm">F(n) = F(n-1) + F(n-2)</div>
+        <div className="flex gap-2">
+          {['F(0)', 'F(1)', 'F(2)', 'F(3)', 'F(4)', 'F(5)', 'F(6)'].map((f, i) => (
+            <div key={i} className={`w-10 h-10 ${i === 6 ? 'bg-orange/30 border-orange' : 'bg-muted border-border'} border-2 rounded flex items-center justify-center text-xs font-bold`}>
+              {i === 6 ? '?' : ''}
+            </div>
+          ))}
+        </div>
+        <div className="text-sm text-muted-foreground">Naive recursion: O(2^n) - too slow!</div>
+      </div>
+    ),
+  },
+  {
+    description: 'Key insight: Overlapping subproblems',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="text-sm font-semibold text-foreground">F(5) calls tree:</div>
+        <div className="flex flex-col items-center gap-1 text-xs">
+          <div className="px-2 py-1 bg-orange/30 border border-orange rounded">F(5)</div>
+          <div className="flex gap-8">
+            <div className="px-2 py-1 bg-purple/30 border border-purple rounded">F(4)</div>
+            <div className="px-2 py-1 bg-destructive/30 border border-destructive rounded">F(3)</div>
+          </div>
+          <div className="flex gap-4">
+            <div className="px-2 py-1 bg-destructive/30 border border-destructive rounded">F(3)</div>
+            <div className="px-2 py-1 bg-muted border-border rounded">F(2)</div>
+            <div className="px-2 py-1 bg-muted border-border rounded">F(2)</div>
+          </div>
+        </div>
+        <div className="text-sm text-destructive">F(3) computed multiple times! Wasteful.</div>
+      </div>
+    ),
+  },
+  {
+    description: 'Solution: Memoization (store results)',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="text-sm font-semibold text-green">Memoization Table</div>
+        <div className="flex gap-1">
+          {[0, 1, 1, 2, 3, 5, '?'].map((val, i) => (
+            <div key={i} className="flex flex-col items-center">
+              <div className={`w-10 h-10 ${i < 6 ? 'bg-green/30 border-green' : 'bg-orange/30 border-orange'} border-2 rounded flex items-center justify-center font-bold`}>
+                {val}
+              </div>
+              <span className="text-xs mt-1">F({i})</span>
+            </div>
+          ))}
+        </div>
+        <div className="text-sm text-green">Look up, don't recompute!</div>
+      </div>
+    ),
+  },
+  {
+    description: 'Bottom-up: Build from base cases',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="text-sm font-semibold text-cyan">Tabulation (Bottom-Up)</div>
+        <div className="flex gap-1">
+          {[0, 1, 1, 2, 3, 5, 8].map((val, i) => (
+            <div key={i} className="flex flex-col items-center">
+              <div className="w-10 h-10 bg-cyan/30 border-2 border-cyan rounded flex items-center justify-center font-bold animate-pulse" style={{ animationDelay: `${i * 0.15}s` }}>
+                {val}
+              </div>
+              <span className="text-xs mt-1">F({i})</span>
+            </div>
+          ))}
+        </div>
+        <div className="font-mono text-xs bg-muted/50 px-3 py-1 rounded">dp[i] = dp[i-1] + dp[i-2]</div>
+      </div>
+    ),
+  },
+  {
+    description: 'Result: F(6) = 8 in O(n) time!',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="text-lg font-semibold text-green">F(6) = 8</div>
+        <div className="flex gap-3">
+          <div className="text-center">
+            <div className="text-3xl font-bold text-destructive">O(2ⁿ)</div>
+            <div className="text-xs text-muted-foreground">Naive</div>
+          </div>
+          <div className="text-3xl">→</div>
+          <div className="text-center">
+            <div className="text-3xl font-bold text-green animate-bounce">O(n)</div>
+            <div className="text-xs text-muted-foreground">DP</div>
+          </div>
+        </div>
+        <div className="bg-green/20 px-4 py-2 rounded-lg text-sm">
+          Store subproblems → Avoid recomputation → Optimal!
         </div>
       </div>
     ),
