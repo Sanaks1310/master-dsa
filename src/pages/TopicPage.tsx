@@ -3,6 +3,8 @@ import { ArrowLeft, Clock, CheckCircle, XCircle, Zap, BookOpen, Code, Play, Wren
 import Navbar from '@/components/Navbar';
 import CodeBlock from '@/components/CodeBlock';
 import ArrayVisualizer from '@/components/ArrayVisualizer';
+import TreeVisualizer from '@/components/TreeVisualizer';
+import GraphVisualizer from '@/components/GraphVisualizer';
 import ArrayAnimation from '@/components/ArrayAnimation';
 import AlgorithmAnimation from '@/components/AlgorithmAnimation';
 import FlowchartDiagram from '@/components/FlowchartDiagram';
@@ -358,7 +360,7 @@ const TopicPage = () => {
                 )}
               </section>
 
-              {/* Interactive Visualizer - Only for arrays */}
+              {/* Interactive Visualizers */}
               {topicId === 'arrays' && (
                 <section>
                   <div className="flex items-center gap-3 mb-6">
@@ -368,6 +370,32 @@ const TopicPage = () => {
                     <h2 className="text-2xl font-bold text-foreground">Build Your Own Array</h2>
                   </div>
                   <ArrayVisualizer />
+                </section>
+              )}
+
+              {/* Tree Visualizer for tree-related topics */}
+              {(topicId === 'binary-tree' || topicId === 'binary-search-trees' || topicId === 'tree-terminology') && (
+                <section>
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="w-10 h-10 rounded-lg bg-orange/20 flex items-center justify-center">
+                      <Wrench className="w-5 h-5 text-orange" />
+                    </div>
+                    <h2 className="text-2xl font-bold text-foreground">Build Your Own Tree</h2>
+                  </div>
+                  <TreeVisualizer />
+                </section>
+              )}
+
+              {/* Graph Visualizer for graph-related topics */}
+              {(topicId === 'graph-basics' || topicId === 'bfs' || topicId === 'dfs' || topicId === 'cycle-detection' || topicId === 'topological-sort') && (
+                <section>
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="w-10 h-10 rounded-lg bg-pink/20 flex items-center justify-center">
+                      <Wrench className="w-5 h-5 text-pink" />
+                    </div>
+                    <h2 className="text-2xl font-bold text-foreground">Build Your Own Graph</h2>
+                  </div>
+                  <GraphVisualizer />
                 </section>
               )}
 
