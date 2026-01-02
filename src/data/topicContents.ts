@@ -62,6 +62,11 @@ import { divideAndConquerContent } from './topics/divideAndConquerContent';
 import { greedyAlgorithmsContent } from './topics/greedyAlgorithmsContent';
 import { backtrackingContent } from './topics/backtrackingContent';
 import { dynamicProgrammingContent } from './topics/dynamicProgrammingContent';
+import { bitManipulationContent } from './topics/bitManipulationContent';
+import { hashingContent } from './topics/hashingContent';
+import { shortestPathContent } from './topics/shortestPathContent';
+import { mstContent } from './topics/mstContent';
+import { disjointSetContent } from './topics/disjointSetContent';
 
 export const topicContents: Record<string, TopicContent> = {
   // Level 0 - Prerequisites
@@ -116,6 +121,12 @@ export const topicContents: Record<string, TopicContent> = {
   'greedy-algorithms': greedyAlgorithmsContent,
   'backtracking': backtrackingContent,
   'dynamic-programming': dynamicProgrammingContent,
+  // Level 6 - Advanced Topics
+  'bit-manipulation': bitManipulationContent,
+  'hashing': hashingContent,
+  'shortest-path': shortestPathContent,
+  'minimum-spanning-tree': mstContent,
+  'disjoint-set': disjointSetContent,
 };
 
 export const getTopicContent = (id: string): TopicContent | undefined => {
