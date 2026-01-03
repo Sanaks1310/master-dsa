@@ -2577,3 +2577,688 @@ export const dynamicProgrammingAnimationSteps = [
   },
 ];
 
+// Level 6 - Bit Manipulation Animation Steps
+export const bitManipulationAnimationSteps = [
+  {
+    description: 'Bit Manipulation: Working with individual bits',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="text-lg font-semibold text-cyan">Binary Representation</div>
+        <div className="text-sm text-muted-foreground">Number 13 in binary:</div>
+        <div className="flex gap-1">
+          {['1', '1', '0', '1'].map((bit, i) => (
+            <div key={i} className={`w-12 h-12 ${bit === '1' ? 'bg-cyan/30 border-cyan' : 'bg-muted border-border'} border-2 rounded flex items-center justify-center text-xl font-bold`}>
+              {bit}
+            </div>
+          ))}
+        </div>
+        <div className="text-sm font-mono">13 = 8 + 4 + 0 + 1 = 1101₂</div>
+      </div>
+    ),
+  },
+  {
+    description: 'AND Operation (&): Both bits must be 1',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="text-sm font-semibold text-foreground">13 & 7 = ?</div>
+        <div className="flex flex-col gap-2 font-mono text-sm">
+          <div className="flex items-center gap-2">
+            <span className="w-12 text-right">13:</span>
+            <div className="flex gap-1">
+              {['1', '1', '0', '1'].map((b, i) => (
+                <div key={i} className="w-8 h-8 bg-cyan/30 border border-cyan rounded flex items-center justify-center">{b}</div>
+              ))}
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="w-12 text-right">7:</span>
+            <div className="flex gap-1">
+              {['0', '1', '1', '1'].map((b, i) => (
+                <div key={i} className="w-8 h-8 bg-purple/30 border border-purple rounded flex items-center justify-center">{b}</div>
+              ))}
+            </div>
+          </div>
+          <div className="border-t border-border my-1"></div>
+          <div className="flex items-center gap-2">
+            <span className="w-12 text-right text-green">AND:</span>
+            <div className="flex gap-1">
+              {['0', '1', '0', '1'].map((b, i) => (
+                <div key={i} className="w-8 h-8 bg-green/30 border border-green rounded flex items-center justify-center animate-pulse" style={{ animationDelay: `${i * 0.1}s` }}>{b}</div>
+              ))}
+            </div>
+            <span className="text-green">= 5</span>
+          </div>
+        </div>
+      </div>
+    ),
+  },
+  {
+    description: 'OR Operation (|): Either bit can be 1',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="text-sm font-semibold text-foreground">13 | 7 = ?</div>
+        <div className="flex flex-col gap-2 font-mono text-sm">
+          <div className="flex items-center gap-2">
+            <span className="w-12 text-right">13:</span>
+            <div className="flex gap-1">
+              {['1', '1', '0', '1'].map((b, i) => (
+                <div key={i} className="w-8 h-8 bg-cyan/30 border border-cyan rounded flex items-center justify-center">{b}</div>
+              ))}
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="w-12 text-right">7:</span>
+            <div className="flex gap-1">
+              {['0', '1', '1', '1'].map((b, i) => (
+                <div key={i} className="w-8 h-8 bg-purple/30 border border-purple rounded flex items-center justify-center">{b}</div>
+              ))}
+            </div>
+          </div>
+          <div className="border-t border-border my-1"></div>
+          <div className="flex items-center gap-2">
+            <span className="w-12 text-right text-orange">OR:</span>
+            <div className="flex gap-1">
+              {['1', '1', '1', '1'].map((b, i) => (
+                <div key={i} className="w-8 h-8 bg-orange/30 border border-orange rounded flex items-center justify-center animate-pulse" style={{ animationDelay: `${i * 0.1}s` }}>{b}</div>
+              ))}
+            </div>
+            <span className="text-orange">= 15</span>
+          </div>
+        </div>
+      </div>
+    ),
+  },
+  {
+    description: 'XOR Operation (^): Bits must differ',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="text-sm font-semibold text-foreground">13 ^ 7 = ?</div>
+        <div className="flex flex-col gap-2 font-mono text-sm">
+          <div className="flex items-center gap-2">
+            <span className="w-12 text-right">13:</span>
+            <div className="flex gap-1">
+              {['1', '1', '0', '1'].map((b, i) => (
+                <div key={i} className="w-8 h-8 bg-cyan/30 border border-cyan rounded flex items-center justify-center">{b}</div>
+              ))}
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="w-12 text-right">7:</span>
+            <div className="flex gap-1">
+              {['0', '1', '1', '1'].map((b, i) => (
+                <div key={i} className="w-8 h-8 bg-purple/30 border border-purple rounded flex items-center justify-center">{b}</div>
+              ))}
+            </div>
+          </div>
+          <div className="border-t border-border my-1"></div>
+          <div className="flex items-center gap-2">
+            <span className="w-12 text-right text-pink">XOR:</span>
+            <div className="flex gap-1">
+              {['1', '0', '1', '0'].map((b, i) => (
+                <div key={i} className="w-8 h-8 bg-pink/30 border border-pink rounded flex items-center justify-center animate-pulse" style={{ animationDelay: `${i * 0.1}s` }}>{b}</div>
+              ))}
+            </div>
+            <span className="text-pink">= 10</span>
+          </div>
+        </div>
+      </div>
+    ),
+  },
+  {
+    description: 'Common trick: Check if power of 2',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="text-sm font-semibold text-foreground">n & (n-1) == 0 → Power of 2</div>
+        <div className="flex gap-6">
+          <div className="flex flex-col items-center gap-2">
+            <div className="text-green font-bold">8 (power of 2)</div>
+            <div className="text-xs font-mono">8: 1000</div>
+            <div className="text-xs font-mono">7: 0111</div>
+            <div className="text-xs font-mono text-green">& = 0000 ✓</div>
+          </div>
+          <div className="flex flex-col items-center gap-2">
+            <div className="text-destructive font-bold">6 (not power)</div>
+            <div className="text-xs font-mono">6: 0110</div>
+            <div className="text-xs font-mono">5: 0101</div>
+            <div className="text-xs font-mono text-destructive">& = 0100 ✗</div>
+          </div>
+        </div>
+      </div>
+    ),
+  },
+];
+
+// Level 6 - Hashing Animation Steps
+export const hashingAnimationSteps = [
+  {
+    description: 'Hashing: Map keys to array indices',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="text-lg font-semibold text-purple">Hash Function</div>
+        <div className="flex items-center gap-4">
+          <div className="px-4 py-2 bg-purple/30 border border-purple rounded-lg font-mono">"apple"</div>
+          <div className="text-2xl">→</div>
+          <div className="px-4 py-2 bg-muted border border-border rounded-lg font-mono">h(key)</div>
+          <div className="text-2xl">→</div>
+          <div className="w-12 h-12 bg-green/30 border-2 border-green rounded flex items-center justify-center font-bold">3</div>
+        </div>
+        <div className="text-sm text-muted-foreground">Convert any key to an array index</div>
+      </div>
+    ),
+  },
+  {
+    description: 'Insert: Hash and store in bucket',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="text-sm font-semibold">Hash Table (size 7)</div>
+        <div className="flex gap-1">
+          {[null, 'cat', null, 'apple', null, 'dog', null].map((val, i) => (
+            <div key={i} className="flex flex-col items-center">
+              <div className={`w-14 h-12 ${val ? 'bg-purple/30 border-purple' : 'bg-muted/50 border-border'} border-2 rounded flex items-center justify-center text-xs font-medium`}>
+                {val || '—'}
+              </div>
+              <span className="text-xs mt-1 text-muted-foreground">[{i}]</span>
+            </div>
+          ))}
+        </div>
+        <div className="text-sm text-green">h("apple") = 3, h("dog") = 5, h("cat") = 1</div>
+      </div>
+    ),
+  },
+  {
+    description: 'Collision! Two keys hash to same index',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="text-sm font-semibold text-destructive">Collision at index 3!</div>
+        <div className="flex items-center gap-4">
+          <div className="flex flex-col items-center">
+            <div className="px-3 py-1 bg-purple/30 border border-purple rounded">"apple"</div>
+            <div className="text-xs mt-1">h() = 3</div>
+          </div>
+          <div className="text-destructive font-bold">💥</div>
+          <div className="flex flex-col items-center">
+            <div className="px-3 py-1 bg-orange/30 border border-orange rounded">"grape"</div>
+            <div className="text-xs mt-1">h() = 3</div>
+          </div>
+        </div>
+        <div className="text-sm text-muted-foreground">Both want slot 3!</div>
+      </div>
+    ),
+  },
+  {
+    description: 'Solution 1: Chaining (linked lists)',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="text-sm font-semibold text-green">Chaining: Store list at each bucket</div>
+        <div className="flex gap-2 items-end">
+          <div className="flex flex-col items-center">
+            <div className="text-xs text-muted-foreground mb-1">[3]</div>
+            <div className="flex items-center gap-1">
+              <div className="px-2 py-1 bg-purple/30 border border-purple rounded text-xs">apple</div>
+              <div className="text-xs">→</div>
+              <div className="px-2 py-1 bg-orange/30 border border-orange rounded text-xs">grape</div>
+            </div>
+          </div>
+        </div>
+        <div className="text-sm text-green">Multiple items in same bucket!</div>
+      </div>
+    ),
+  },
+  {
+    description: 'Lookup: O(1) average time!',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="text-lg font-semibold text-green">O(1) Average Lookup</div>
+        <div className="flex items-center gap-3">
+          <div className="text-center">
+            <div className="text-2xl font-bold text-muted-foreground">Array</div>
+            <div className="text-sm">O(n) search</div>
+          </div>
+          <div className="text-2xl">vs</div>
+          <div className="text-center">
+            <div className="text-2xl font-bold text-green animate-pulse">Hash Table</div>
+            <div className="text-sm text-green">O(1) average</div>
+          </div>
+        </div>
+        <div className="bg-green/20 px-4 py-2 rounded-lg text-sm">
+          Hash → Index → Direct Access!
+        </div>
+      </div>
+    ),
+  },
+];
+
+// Level 6 - Shortest Path Animation Steps
+export const shortestPathAnimationSteps = [
+  {
+    description: 'Dijkstra: Find shortest path from source',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="text-lg font-semibold text-cyan">Dijkstra's Algorithm</div>
+        <div className="relative w-64 h-40">
+          <div className="absolute top-4 left-4 w-10 h-10 bg-green/30 border-2 border-green rounded-full flex items-center justify-center font-bold">A</div>
+          <div className="absolute top-4 right-4 w-10 h-10 bg-muted border-2 border-border rounded-full flex items-center justify-center font-bold">B</div>
+          <div className="absolute bottom-4 left-20 w-10 h-10 bg-muted border-2 border-border rounded-full flex items-center justify-center font-bold">C</div>
+          <div className="absolute bottom-4 right-20 w-10 h-10 bg-muted border-2 border-border rounded-full flex items-center justify-center font-bold">D</div>
+          <div className="absolute top-12 left-20 text-xs text-cyan font-bold">4</div>
+          <div className="absolute top-20 left-10 text-xs text-cyan font-bold">2</div>
+          <div className="absolute top-20 right-16 text-xs text-cyan font-bold">1</div>
+        </div>
+        <div className="text-sm text-muted-foreground">Find shortest path from A to all nodes</div>
+      </div>
+    ),
+  },
+  {
+    description: 'Initialize: Source = 0, others = ∞',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="text-sm font-semibold">Distance from A</div>
+        <div className="flex gap-4">
+          {[{ n: 'A', d: '0', c: 'green' }, { n: 'B', d: '∞', c: 'muted' }, { n: 'C', d: '∞', c: 'muted' }, { n: 'D', d: '∞', c: 'muted' }].map((node, i) => (
+            <div key={i} className="flex flex-col items-center">
+              <div className={`w-12 h-12 bg-${node.c}/30 border-2 border-${node.c === 'green' ? 'green' : 'border'} rounded-full flex items-center justify-center font-bold`}>
+                {node.n}
+              </div>
+              <span className={`text-sm mt-1 ${node.c === 'green' ? 'text-green' : 'text-muted-foreground'}`}>{node.d}</span>
+            </div>
+          ))}
+        </div>
+        <div className="text-xs text-muted-foreground">Start at source, explore neighbors</div>
+      </div>
+    ),
+  },
+  {
+    description: 'Relax edges: Update if shorter path found',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="text-sm font-semibold text-cyan">Relaxation</div>
+        <div className="bg-muted/50 p-3 rounded-lg font-mono text-sm space-y-1">
+          <div className="text-muted-foreground">if dist[A] + weight(A,B) &lt; dist[B]:</div>
+          <div className="text-cyan ml-4">dist[B] = dist[A] + weight(A,B)</div>
+          <div className="text-green ml-4">0 + 4 = 4 &lt; ∞ → Update B!</div>
+        </div>
+        <div className="flex gap-4">
+          <div className="text-center">
+            <div className="text-lg font-bold">∞</div>
+            <div className="text-xs text-muted-foreground">old</div>
+          </div>
+          <div className="text-2xl text-green">→</div>
+          <div className="text-center">
+            <div className="text-lg font-bold text-green animate-pulse">4</div>
+            <div className="text-xs text-muted-foreground">new</div>
+          </div>
+        </div>
+      </div>
+    ),
+  },
+  {
+    description: 'Process nodes by shortest distance',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="text-sm font-semibold">Priority Queue (Min-Heap)</div>
+        <div className="flex gap-2 items-center">
+          {[{ n: 'C', d: 2 }, { n: 'B', d: 4 }, { n: 'D', d: 5 }].map((item, i) => (
+            <div key={i} className={`px-3 py-2 ${i === 0 ? 'bg-green/30 border-green' : 'bg-muted border-border'} border-2 rounded-lg flex flex-col items-center`}>
+              <span className="font-bold">{item.n}</span>
+              <span className="text-xs">{item.d}</span>
+            </div>
+          ))}
+        </div>
+        <div className="text-sm text-green">Always process closest unvisited node</div>
+      </div>
+    ),
+  },
+  {
+    description: 'Complete! All shortest paths found',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="text-lg font-semibold text-green">Shortest Paths from A</div>
+        <div className="flex gap-4">
+          {[{ n: 'A', d: 0 }, { n: 'B', d: 3 }, { n: 'C', d: 2 }, { n: 'D', d: 4 }].map((node, i) => (
+            <div key={i} className="flex flex-col items-center">
+              <div className="w-12 h-12 bg-green/30 border-2 border-green rounded-full flex items-center justify-center font-bold animate-pulse" style={{ animationDelay: `${i * 0.15}s` }}>
+                {node.n}
+              </div>
+              <span className="text-sm mt-1 text-green font-bold">{node.d}</span>
+            </div>
+          ))}
+        </div>
+        <div className="bg-green/20 px-4 py-2 rounded-lg text-sm">
+          Time: O((V + E) log V) with min-heap
+        </div>
+      </div>
+    ),
+  },
+];
+
+// Level 6 - Minimum Spanning Tree Animation Steps
+export const mstAnimationSteps = [
+  {
+    description: 'MST: Connect all vertices with minimum total weight',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="text-lg font-semibold text-orange">Minimum Spanning Tree</div>
+        <div className="relative w-56 h-36">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-10 h-10 bg-orange/30 border-2 border-orange rounded-full flex items-center justify-center font-bold">A</div>
+          <div className="absolute top-12 left-4 w-10 h-10 bg-muted border-2 border-border rounded-full flex items-center justify-center font-bold">B</div>
+          <div className="absolute top-12 right-4 w-10 h-10 bg-muted border-2 border-border rounded-full flex items-center justify-center font-bold">C</div>
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-10 h-10 bg-muted border-2 border-border rounded-full flex items-center justify-center font-bold">D</div>
+        </div>
+        <div className="text-sm text-muted-foreground">Connect all with least total cost</div>
+      </div>
+    ),
+  },
+  {
+    description: 'Kruskal: Sort edges by weight',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="text-sm font-semibold text-foreground">Sorted Edges</div>
+        <div className="flex gap-2">
+          {[{ e: 'B-D', w: 1 }, { e: 'A-B', w: 2 }, { e: 'C-D', w: 3 }, { e: 'A-C', w: 4 }, { e: 'B-C', w: 5 }].map((edge, i) => (
+            <div key={i} className={`px-2 py-1 ${i === 0 ? 'bg-green/30 border-green' : 'bg-muted border-border'} border-2 rounded text-xs`}>
+              <div className="font-bold">{edge.e}</div>
+              <div className="text-center">{edge.w}</div>
+            </div>
+          ))}
+        </div>
+        <div className="text-sm text-green">Start with smallest edge</div>
+      </div>
+    ),
+  },
+  {
+    description: 'Add edge if no cycle formed',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="text-sm font-semibold">Check for cycles with Union-Find</div>
+        <div className="flex gap-6">
+          <div className="flex flex-col items-center">
+            <div className="text-green text-sm">✓ B-D (1)</div>
+            <div className="text-xs text-muted-foreground">No cycle</div>
+          </div>
+          <div className="flex flex-col items-center">
+            <div className="text-green text-sm">✓ A-B (2)</div>
+            <div className="text-xs text-muted-foreground">No cycle</div>
+          </div>
+          <div className="flex flex-col items-center">
+            <div className="text-green text-sm">✓ C-D (3)</div>
+            <div className="text-xs text-muted-foreground">No cycle</div>
+          </div>
+        </div>
+        <div className="text-sm text-muted-foreground">V-1 = 3 edges needed for 4 vertices</div>
+      </div>
+    ),
+  },
+  {
+    description: 'Skip edges that would create cycles',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="text-sm font-semibold text-destructive">Cycle Detection!</div>
+        <div className="flex flex-col gap-2">
+          <div className="flex items-center gap-2">
+            <div className="text-destructive">✗ A-C (4)</div>
+            <div className="text-xs text-muted-foreground">Would create cycle A-B-D-C-A</div>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="text-destructive">✗ B-C (5)</div>
+            <div className="text-xs text-muted-foreground">Would create cycle B-D-C-B</div>
+          </div>
+        </div>
+        <div className="text-sm text-orange">Skip these edges!</div>
+      </div>
+    ),
+  },
+  {
+    description: 'MST Complete! Total weight = 6',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="text-lg font-semibold text-green">MST Found!</div>
+        <div className="flex gap-2">
+          {['B-D:1', 'A-B:2', 'C-D:3'].map((edge, i) => (
+            <div key={i} className="px-3 py-2 bg-green/30 border-2 border-green rounded animate-pulse" style={{ animationDelay: `${i * 0.2}s` }}>
+              {edge}
+            </div>
+          ))}
+        </div>
+        <div className="text-2xl font-bold text-green">Total: 1 + 2 + 3 = 6</div>
+        <div className="bg-green/20 px-4 py-2 rounded-lg text-sm">
+          Kruskal: O(E log E) | Prim: O(E log V)
+        </div>
+      </div>
+    ),
+  },
+];
+
+// Level 6 - Disjoint Set (Union-Find) Animation Steps
+export const disjointSetAnimationSteps = [
+  {
+    description: 'Union-Find: Track disjoint sets efficiently',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="text-lg font-semibold text-purple">Disjoint Set (Union-Find)</div>
+        <div className="flex gap-6">
+          <div className="flex flex-col items-center">
+            <div className="text-sm text-purple mb-2">Set 1</div>
+            <div className="flex gap-1">
+              {[1, 2, 3].map(n => (
+                <div key={n} className="w-10 h-10 bg-purple/30 border-2 border-purple rounded-full flex items-center justify-center font-bold">{n}</div>
+              ))}
+            </div>
+          </div>
+          <div className="flex flex-col items-center">
+            <div className="text-sm text-cyan mb-2">Set 2</div>
+            <div className="flex gap-1">
+              {[4, 5].map(n => (
+                <div key={n} className="w-10 h-10 bg-cyan/30 border-2 border-cyan rounded-full flex items-center justify-center font-bold">{n}</div>
+              ))}
+            </div>
+          </div>
+        </div>
+        <div className="text-sm text-muted-foreground">Which elements belong together?</div>
+      </div>
+    ),
+  },
+  {
+    description: 'Initialize: Each element is its own parent',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="text-sm font-semibold">parent[] array</div>
+        <div className="flex gap-1">
+          {[0, 1, 2, 3, 4].map(i => (
+            <div key={i} className="flex flex-col items-center">
+              <div className="w-12 h-10 bg-muted border-2 border-border rounded flex items-center justify-center font-mono">{i}</div>
+              <span className="text-xs mt-1">[{i}]</span>
+            </div>
+          ))}
+        </div>
+        <div className="text-sm text-green">parent[i] = i initially</div>
+      </div>
+    ),
+  },
+  {
+    description: 'Find: Follow parents to find root',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="text-sm font-semibold text-cyan">find(4) - Who is 4's root?</div>
+        <div className="flex items-center gap-2">
+          <div className="w-10 h-10 bg-cyan/30 border-2 border-cyan rounded-full flex items-center justify-center font-bold">4</div>
+          <div className="text-lg">→</div>
+          <div className="w-10 h-10 bg-muted border-2 border-border rounded-full flex items-center justify-center font-bold">2</div>
+          <div className="text-lg">→</div>
+          <div className="w-10 h-10 bg-green/30 border-2 border-green rounded-full flex items-center justify-center font-bold animate-pulse">1</div>
+        </div>
+        <div className="text-sm text-green">Root of 4 is 1 (parent[1] = 1)</div>
+      </div>
+    ),
+  },
+  {
+    description: 'Union: Merge two sets by connecting roots',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="text-sm font-semibold">union(3, 5) - Merge sets</div>
+        <div className="flex items-center gap-4">
+          <div className="flex flex-col items-center">
+            <div className="w-10 h-10 bg-purple/30 border-2 border-purple rounded-full flex items-center justify-center font-bold">1</div>
+            <div className="flex gap-1 mt-2">
+              <div className="w-8 h-8 bg-muted border border-border rounded-full flex items-center justify-center text-sm">3</div>
+            </div>
+          </div>
+          <div className="text-2xl text-green">→</div>
+          <div className="flex flex-col items-center">
+            <div className="w-10 h-10 bg-green/30 border-2 border-green rounded-full flex items-center justify-center font-bold">1</div>
+            <div className="flex gap-1 mt-2">
+              <div className="w-8 h-8 bg-muted border border-border rounded-full flex items-center justify-center text-sm">3</div>
+              <div className="w-8 h-8 bg-cyan/30 border border-cyan rounded-full flex items-center justify-center text-sm">5</div>
+            </div>
+          </div>
+        </div>
+        <div className="text-sm text-green">Set 5's root to point to 3's root</div>
+      </div>
+    ),
+  },
+  {
+    description: 'Path Compression: Flatten tree for O(α(n))',
+    visual: (
+      <div className="flex flex-col items-center gap-4">
+        <div className="text-sm font-semibold text-orange">Path Compression</div>
+        <div className="flex items-center gap-6">
+          <div className="flex flex-col items-center">
+            <div className="text-xs text-muted-foreground mb-1">Before</div>
+            <div className="flex flex-col items-center gap-1">
+              <div className="w-8 h-8 bg-muted border border-border rounded-full flex items-center justify-center text-sm">1</div>
+              <div className="w-8 h-8 bg-muted border border-border rounded-full flex items-center justify-center text-sm">2</div>
+              <div className="w-8 h-8 bg-muted border border-border rounded-full flex items-center justify-center text-sm">3</div>
+              <div className="w-8 h-8 bg-orange/30 border border-orange rounded-full flex items-center justify-center text-sm">4</div>
+            </div>
+          </div>
+          <div className="text-xl">→</div>
+          <div className="flex flex-col items-center">
+            <div className="text-xs text-muted-foreground mb-1">After</div>
+            <div className="w-8 h-8 bg-green/30 border border-green rounded-full flex items-center justify-center text-sm">1</div>
+            <div className="flex gap-1 mt-2">
+              {[2, 3, 4].map(n => (
+                <div key={n} className="w-8 h-8 bg-muted border border-border rounded-full flex items-center justify-center text-sm">{n}</div>
+              ))}
+            </div>
+          </div>
+        </div>
+        <div className="text-sm text-green">All point directly to root!</div>
+      </div>
+    ),
+  },
+];
+
+// Add Level 6 flowcharts to topicFlowcharts
+Object.assign(topicFlowcharts, {
+  'bit-manipulation': {
+    title: 'Bit Operations Flowchart',
+    description: 'Common bit manipulation operations and their uses',
+    diagram: `flowchart TD
+    A[Bit Operation] --> B{Operation Type?}
+    B -->|AND &| C[Both bits 1 → 1]
+    B -->|OR \\|| D[Either bit 1 → 1]
+    B -->|XOR ^| E[Different bits → 1]
+    B -->|NOT ~| F[Flip all bits]
+    B -->|Left Shift| G[Multiply by 2^n]
+    B -->|Right Shift| H[Divide by 2^n]
+    
+    C --> I[Use: Masking, Clear bits]
+    D --> J[Use: Set bits, Combine flags]
+    E --> K[Use: Toggle, Find unique]
+    G --> L[Use: Fast multiply]
+    H --> M[Use: Fast divide]
+    
+    style A fill:#06b6d4,color:#fff
+    style C fill:#22c55e,color:#fff
+    style D fill:#f97316,color:#fff
+    style E fill:#ec4899,color:#fff`,
+  },
+  'hashing': {
+    title: 'Hash Table Operations Flowchart',
+    description: 'How hash tables handle insertions and collisions',
+    diagram: `flowchart TD
+    A[Insert Key-Value] --> B[Calculate hash]
+    B --> C[index = hash % size]
+    C --> D{Slot empty?}
+    D -->|Yes| E[Store directly]
+    D -->|No| F{Collision Strategy?}
+    F -->|Chaining| G[Add to linked list]
+    F -->|Open Addressing| H{Linear/Quadratic?}
+    H -->|Linear| I[Check next slot]
+    H -->|Quadratic| J[Check slot + i²]
+    I --> K{Slot empty?}
+    J --> K
+    K -->|No| I
+    K -->|Yes| E
+    
+    style A fill:#a855f7,color:#fff
+    style E fill:#22c55e,color:#fff
+    style F fill:#f97316,color:#fff`,
+  },
+  'shortest-path': {
+    title: "Dijkstra's Algorithm Flowchart",
+    description: 'Step-by-step process of finding shortest paths',
+    diagram: `flowchart TD
+    A[Start: Set source dist=0] --> B[All other dist = ∞]
+    B --> C[Add all to priority queue]
+    C --> D{Queue empty?}
+    D -->|No| E[Extract min distance node u]
+    D -->|Yes| L[Done! All shortest paths found]
+    E --> F{All neighbors processed?}
+    F -->|No| G[Get neighbor v]
+    G --> H[newDist = dist[u] + weight]
+    H --> I{newDist < dist[v]?}
+    I -->|Yes| J[Update dist[v] = newDist]
+    I -->|No| F
+    J --> K[Update priority queue]
+    K --> F
+    F -->|Yes| D
+    
+    style A fill:#06b6d4,color:#fff
+    style L fill:#22c55e,color:#fff
+    style I fill:#a855f7,color:#fff`,
+  },
+  'minimum-spanning-tree': {
+    title: "Kruskal's MST Algorithm Flowchart",
+    description: 'Building MST by selecting minimum weight edges',
+    diagram: `flowchart TD
+    A[Start: Sort all edges] --> B[Initialize Union-Find]
+    B --> C[MST edges = 0]
+    C --> D{Edges in MST = V-1?}
+    D -->|Yes| E[MST Complete!]
+    D -->|No| F[Get next smallest edge]
+    F --> G{Creates cycle?}
+    G -->|No| H[Add edge to MST]
+    H --> I[Union the vertices]
+    I --> J[MST edges++]
+    J --> D
+    G -->|Yes| D
+    
+    style A fill:#f97316,color:#fff
+    style E fill:#22c55e,color:#fff
+    style G fill:#a855f7,color:#fff`,
+  },
+  'disjoint-set': {
+    title: 'Union-Find Operations Flowchart',
+    description: 'Find and Union operations with optimizations',
+    diagram: `flowchart TD
+    A[Union-Find Operation] --> B{Find or Union?}
+    B -->|Find| C[Start at element x]
+    C --> D{parent[x] = x?}
+    D -->|Yes| E[x is root, return x]
+    D -->|No| F[x = parent[x]]
+    F --> G[Path compression: point to root]
+    G --> D
+    
+    B -->|Union| H[Find root of x]
+    H --> I[Find root of y]
+    I --> J{Same root?}
+    J -->|Yes| K[Already in same set]
+    J -->|No| L{Union by rank}
+    L --> M[Attach smaller tree to larger]
+    
+    style A fill:#a855f7,color:#fff
+    style E fill:#22c55e,color:#fff
+    style M fill:#06b6d4,color:#fff`,
+  },
+});
+

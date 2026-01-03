@@ -35,6 +35,11 @@ import {
   greedyAnimationSteps,
   backtrackingAnimationSteps,
   dynamicProgrammingAnimationSteps,
+  bitManipulationAnimationSteps,
+  hashingAnimationSteps,
+  shortestPathAnimationSteps,
+  mstAnimationSteps,
+  disjointSetAnimationSteps,
   topicFlowcharts 
 } from '@/data/topicAnimations';
 import { Button } from '@/components/ui/button';
@@ -121,6 +126,12 @@ const getTopicAnimation = (topicId: string) => {
     case 'greedy-algorithms': return greedyAnimationSteps;
     case 'backtracking': return backtrackingAnimationSteps;
     case 'dynamic-programming': return dynamicProgrammingAnimationSteps;
+    // Level 6 - Advanced Topics
+    case 'bit-manipulation': return bitManipulationAnimationSteps;
+    case 'hashing': return hashingAnimationSteps;
+    case 'shortest-path': return shortestPathAnimationSteps;
+    case 'minimum-spanning-tree': return mstAnimationSteps;
+    case 'disjoint-set': return disjointSetAnimationSteps;
     default: return null;
   }
 };
