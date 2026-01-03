@@ -1,5 +1,5 @@
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Clock, CheckCircle, XCircle, Zap, BookOpen, Code, Play, Wrench, GitBranch } from 'lucide-react';
+import { ArrowLeft, Clock, CheckCircle, XCircle, Zap, BookOpen, Code, Play, Wrench, GitBranch, Brain, Terminal } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import CodeBlock from '@/components/CodeBlock';
 import ArrayVisualizer from '@/components/ArrayVisualizer';
@@ -8,9 +8,13 @@ import GraphVisualizer from '@/components/GraphVisualizer';
 import ArrayAnimation from '@/components/ArrayAnimation';
 import AlgorithmAnimation from '@/components/AlgorithmAnimation';
 import FlowchartDiagram from '@/components/FlowchartDiagram';
+import CodePlayground from '@/components/CodePlayground';
+import QuizSection from '@/components/QuizSection';
 import { getTopicById, getCategoryByTopicId } from '@/data/dsaTopics';
 import { getTopicContent } from '@/data/topicContents';
-import { 
+import { getTopicQuiz } from '@/data/topicQuizzes';
+import { getTopicCode } from '@/data/topicCodeSnippets';
+import {
   algorithmAnimationSteps, 
   dataStructureAnimationSteps, 
   pseudoCodeAnimationSteps, 
@@ -410,11 +414,40 @@ const TopicPage = () => {
                 </section>
               )}
 
-              {/* Applications */}
+              {/* Code Playground */}
+              <section>
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-10 h-10 rounded-lg bg-cyan/20 flex items-center justify-center">
+                    <Terminal className="w-5 h-5 text-cyan" />
+                  </div>
+                  <h2 className="text-2xl font-bold text-foreground">Code Playground</h2>
+                </div>
+                <CodePlayground 
+                  initialCode={getTopicCode(topicId || '')}
+                  title={`${topic.title} - Try It Yourself`}
+                  description="Experiment with the code below. Modify it and run to see results!"
+                />
+              </section>
+
+              {/* Quiz Section */}
               <section>
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-10 h-10 rounded-lg bg-purple/20 flex items-center justify-center">
-                    <Zap className="w-5 h-5 text-purple" />
+                    <Brain className="w-5 h-5 text-purple" />
+                  </div>
+                  <h2 className="text-2xl font-bold text-foreground">Test Your Knowledge</h2>
+                </div>
+                <QuizSection 
+                  title={`${topic.title} Quiz`}
+                  questions={getTopicQuiz(topicId || '')}
+                />
+              </section>
+
+              {/* Applications */}
+              <section>
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-10 h-10 rounded-lg bg-green/20 flex items-center justify-center">
+                    <Zap className="w-5 h-5 text-green" />
                   </div>
                   <h2 className="text-2xl font-bold text-foreground">Real-World Applications</h2>
                 </div>
