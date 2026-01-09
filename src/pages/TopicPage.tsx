@@ -5,6 +5,7 @@ import CodeBlock from '@/components/CodeBlock';
 import ArrayVisualizer from '@/components/ArrayVisualizer';
 import TreeVisualizer from '@/components/TreeVisualizer';
 import GraphVisualizer from '@/components/GraphVisualizer';
+import HeapVisualizer from '@/components/HeapVisualizer';
 import ArrayAnimation from '@/components/ArrayAnimation';
 import AlgorithmAnimation from '@/components/AlgorithmAnimation';
 import FlowchartDiagram from '@/components/FlowchartDiagram';
@@ -398,6 +399,19 @@ const TopicPage = () => {
                     <h2 className="text-2xl font-bold text-foreground">Build Your Own Tree</h2>
                   </div>
                   <TreeVisualizer />
+                </section>
+              )}
+
+              {/* Heap Visualizer for heap topic */}
+              {topicId === 'heaps' && (
+                <section>
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="w-10 h-10 rounded-lg bg-purple/20 flex items-center justify-center">
+                      <Wrench className="w-5 h-5 text-purple" />
+                    </div>
+                    <h2 className="text-2xl font-bold text-foreground">Build Your Own Heap</h2>
+                  </div>
+                  <HeapVisualizer />
                 </section>
               )}
 
