@@ -1,12 +1,15 @@
 import { TopicCategory } from '@/data/dsaTopics';
 import TopicCard from './TopicCard';
 import { Badge } from './ui/badge';
+import { useProgress } from '@/hooks/useProgress';
 
 interface CategorySectionProps {
   category: TopicCategory;
 }
 
 const CategorySection = ({ category }: CategorySectionProps) => {
+  const { getTopicProgress } = useProgress();
+
   return (
     <section className="mb-16">
       <div className="mb-8">
@@ -25,7 +28,12 @@ const CategorySection = ({ category }: CategorySectionProps) => {
       
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {category.topics.map((topic, index) => (
-          <TopicCard key={topic.id} topic={topic} index={index} />
+          <TopicCard 
+            key={topic.id} 
+            topic={topic} 
+            index={index} 
+            progress={getTopicProgress(topic.id)}
+          />
         ))}
       </div>
     </section>

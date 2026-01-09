@@ -1,5 +1,5 @@
-import { useState, useMemo } from 'react';
-import { CheckCircle, XCircle, RotateCcw, Trophy, Brain, ChevronRight } from 'lucide-react';
+import { useState, useMemo, useEffect } from 'react';
+import { CheckCircle, XCircle, RotateCcw, Trophy, Brain, ChevronRight, Award } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { toast } from 'sonner';
@@ -14,11 +14,17 @@ export interface QuizQuestion {
 interface QuizSectionProps {
   title?: string;
   questions: QuizQuestion[];
+  topicId?: string;
+  onQuizComplete?: (score: number, total: number) => void;
+  bestScore?: number | null;
 }
 
 const QuizSection = ({ 
   title = "Test Your Knowledge",
-  questions 
+  questions,
+  topicId,
+  onQuizComplete,
+  bestScore
 }: QuizSectionProps) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
@@ -61,6 +67,7 @@ const QuizSection = ({
       setShowResult(false);
     } else {
       setQuizComplete(true);
+      onQuizComplete?.(score, questions.length);
     }
   };
 
@@ -84,6 +91,8 @@ const QuizSection = ({
 
   if (quizComplete) {
     const { emoji, message } = getScoreMessage();
+    const isNewBest = bestScore !== null && bestScore !== undefined && score > bestScore;
+    
     return (
       <div className="bg-card border border-border rounded-xl p-8 text-center">
         <div className="text-6xl mb-4">{emoji}</div>
@@ -94,6 +103,17 @@ const QuizSection = ({
             {score} / {questions.length}
           </span>
         </div>
+        {isNewBest && (
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-green/20 text-green rounded-full text-sm mb-4">
+            <Award className="w-4 h-4" />
+            New Best Score!
+          </div>
+        )}
+        {bestScore !== null && bestScore !== undefined && !isNewBest && (
+          <p className="text-sm text-muted-foreground mb-2">
+            Your best: {bestScore} / {questions.length}
+          </p>
+        )}
         <p className="text-muted-foreground mb-6">{message}</p>
         <Button onClick={resetQuiz} className="gap-2">
           <RotateCcw className="w-4 h-4" />

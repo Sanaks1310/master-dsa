@@ -1,5 +1,6 @@
 import Navbar from '@/components/Navbar';
 import CategorySection from '@/components/CategorySection';
+import ProgressSummary from '@/components/ProgressSummary';
 import { dsaCategories } from '@/data/dsaTopics';
 import { ArrowRight, Code, BookOpen, Play, Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -98,6 +99,8 @@ const Index = () => {
               From basic data structures to advanced algorithms, master each concept with comprehensive guides and interactive visualizations.
             </p>
           </div>
+          
+          <ProgressSummary />
           
           {dsaCategories.map((category) => (
             <CategorySection key={category.id} category={category} />
