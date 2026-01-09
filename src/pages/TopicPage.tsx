@@ -15,6 +15,7 @@ import { getTopicById, getCategoryByTopicId } from '@/data/dsaTopics';
 import { getTopicContent } from '@/data/topicContents';
 import { getTopicQuiz } from '@/data/topicQuizzes';
 import { getTopicCode } from '@/data/topicCodeSnippets';
+import { useProgress } from '@/hooks/useProgress';
 import {
   algorithmAnimationSteps, 
   dataStructureAnimationSteps, 
@@ -146,6 +147,14 @@ const TopicPage = () => {
   const topic = getTopicById(topicId || '');
   const category = getCategoryByTopicId(topicId || '');
   const content = getTopicContent(topicId || '');
+  const { saveQuizScore, getTopicProgress } = useProgress();
+  const topicProgress = getTopicProgress(topicId || '');
+
+  const handleQuizComplete = (score: number, total: number) => {
+    if (topicId) {
+      saveQuizScore(topicId, score, total);
+    }
+  };
 
   if (!topic) {
     return (
@@ -454,6 +463,9 @@ const TopicPage = () => {
                 <QuizSection 
                   title={`${topic.title} Quiz`}
                   questions={getTopicQuiz(topicId || '')}
+                  topicId={topicId}
+                  onQuizComplete={handleQuizComplete}
+                  bestScore={topicProgress?.bestScore}
                 />
               </section>
 
