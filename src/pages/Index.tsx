@@ -2,12 +2,16 @@ import Navbar from '@/components/Navbar';
 import CategorySection from '@/components/CategorySection';
 import ProgressSummary from '@/components/ProgressSummary';
 import ComplexityTable from '@/components/ComplexityTable';
+import BookmarkedTopics from '@/components/BookmarkedTopics';
 import { dsaCategories } from '@/data/dsaTopics';
 import { ArrowRight, Code, BookOpen, Play, Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
+import { useBookmarks } from '@/hooks/useBookmarks';
 
 const Index = () => {
+  const { bookmarks, toggleBookmark, isBookmarked } = useBookmarks();
+
   return (
     <div className="min-h-screen bg-background noise-overlay">
       <Navbar />
@@ -103,8 +107,18 @@ const Index = () => {
           
           <ProgressSummary />
           
+          <BookmarkedTopics 
+            bookmarkedIds={bookmarks} 
+            onToggleBookmark={toggleBookmark} 
+          />
+          
           {dsaCategories.map((category) => (
-            <CategorySection key={category.id} category={category} />
+            <CategorySection 
+              key={category.id} 
+              category={category}
+              isBookmarked={isBookmarked}
+              onToggleBookmark={toggleBookmark}
+            />
           ))}
           
           {/* Complexity Comparison Table */}

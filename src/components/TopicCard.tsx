@@ -2,11 +2,14 @@ import { Link } from 'react-router-dom';
 import { DSATopic } from '@/data/dsaTopics';
 import { ArrowRight, CheckCircle, Trophy } from 'lucide-react';
 import { TopicProgress } from '@/hooks/useProgress';
+import BookmarkButton from './BookmarkButton';
 
 interface TopicCardProps {
   topic: DSATopic;
   index: number;
   progress?: TopicProgress | null;
+  isBookmarked?: boolean;
+  onToggleBookmark?: (topicId: string) => void;
 }
 
 const colorClasses: Record<string, string> = {
@@ -23,9 +26,15 @@ const badgeClasses: Record<string, string> = {
   advanced: 'bg-pink/20 text-pink border-pink/30',
 };
 
-const TopicCard = ({ topic, index, progress }: TopicCardProps) => {
+const TopicCard = ({ topic, index, progress, isBookmarked = false, onToggleBookmark }: TopicCardProps) => {
   const hasQuizScore = progress?.bestScore !== null && progress?.quizTotal !== null;
   const scorePercentage = hasQuizScore ? Math.round((progress!.bestScore! / progress!.quizTotal!) * 100) : 0;
+
+  const handleBookmarkClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    onToggleBookmark?.(topic.id);
+  };
 
   return (
     <Link
@@ -52,9 +61,17 @@ const TopicCard = ({ topic, index, progress }: TopicCardProps) => {
 
       <div className="flex items-start justify-between mb-4">
         <span className="text-4xl">{topic.icon}</span>
-        <span className={`text-xs font-medium px-2 py-1 rounded-full border ${badgeClasses[topic.difficulty]} ${hasQuizScore ? 'mt-6' : ''}`}>
-          {topic.difficulty}
-        </span>
+        <div className="flex items-center gap-2">
+          {onToggleBookmark && (
+            <BookmarkButton
+              isBookmarked={isBookmarked}
+              onToggle={handleBookmarkClick}
+            />
+          )}
+          <span className={`text-xs font-medium px-2 py-1 rounded-full border ${badgeClasses[topic.difficulty]} ${hasQuizScore ? 'mt-6' : ''}`}>
+            {topic.difficulty}
+          </span>
+        </div>
       </div>
       
       <h3 className="text-xl font-bold text-foreground mb-2 group-hover:text-gradient-primary transition-all">
