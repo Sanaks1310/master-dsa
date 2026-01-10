@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Code, Terminal } from 'lucide-react';
+import { Code, Terminal } from 'lucide-react';
+import ThemeToggle from './ThemeToggle';
 
 const Navbar = () => {
   return (
@@ -19,7 +20,7 @@ const Navbar = () => {
             </span>
           </Link>
 
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-4">
             <Link 
               to="/" 
               className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"
@@ -27,6 +28,7 @@ const Navbar = () => {
               <Code className="w-4 h-4" />
               Topics
             </Link>
+            <ThemeToggle />
           </div>
         </div>
       </div>
