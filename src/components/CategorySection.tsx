@@ -5,9 +5,11 @@ import { useProgress } from '@/hooks/useProgress';
 
 interface CategorySectionProps {
   category: TopicCategory;
+  isBookmarked: (topicId: string) => boolean;
+  onToggleBookmark: (topicId: string) => void;
 }
 
-const CategorySection = ({ category }: CategorySectionProps) => {
+const CategorySection = ({ category, isBookmarked, onToggleBookmark }: CategorySectionProps) => {
   const { getTopicProgress } = useProgress();
 
   return (
@@ -33,6 +35,8 @@ const CategorySection = ({ category }: CategorySectionProps) => {
             topic={topic} 
             index={index} 
             progress={getTopicProgress(topic.id)}
+            isBookmarked={isBookmarked(topic.id)}
+            onToggleBookmark={onToggleBookmark}
           />
         ))}
       </div>
