@@ -1,6 +1,7 @@
 import Navbar from '@/components/Navbar';
 import CategorySection from '@/components/CategorySection';
 import ProgressSummary from '@/components/ProgressSummary';
+import ComplexityTable from '@/components/ComplexityTable';
 import { dsaCategories } from '@/data/dsaTopics';
 import { ArrowRight, Code, BookOpen, Play, Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -105,6 +106,11 @@ const Index = () => {
           {dsaCategories.map((category) => (
             <CategorySection key={category.id} category={category} />
           ))}
+          
+          {/* Complexity Comparison Table */}
+          <div className="mt-16">
+            <ComplexityTable />
+          </div>
         </div>
       </section>
 
