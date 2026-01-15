@@ -1,17 +1,40 @@
+import { useState, useMemo } from 'react';
 import Navbar from '@/components/Navbar';
 import CategorySection from '@/components/CategorySection';
 import ProgressSummary from '@/components/ProgressSummary';
 import ComplexityTable from '@/components/ComplexityTable';
 import BookmarkedTopics from '@/components/BookmarkedTopics';
-import { dsaCategories } from '@/data/dsaTopics';
-import { ArrowRight, Code, BookOpen, Play, Sparkles } from 'lucide-react';
+import SearchInput from '@/components/SearchInput';
+import { dsaCategories, TopicCategory } from '@/data/dsaTopics';
+import { Code, BookOpen, Play, Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useBookmarks } from '@/hooks/useBookmarks';
 
 const Index = () => {
   const { bookmarks, toggleBookmark, isBookmarked } = useBookmarks();
+  const [searchQuery, setSearchQuery] = useState('');
 
+  const filteredCategories = useMemo(() => {
+    if (!searchQuery.trim()) return dsaCategories;
+    
+    const query = searchQuery.toLowerCase();
+    return dsaCategories
+      .map((category): TopicCategory => ({
+        ...category,
+        topics: category.topics.filter(
+          (topic) =>
+            topic.title.toLowerCase().includes(query) ||
+            topic.description.toLowerCase().includes(query) ||
+            topic.id.toLowerCase().includes(query)
+        ),
+      }))
+      .filter((category) => category.topics.length > 0);
+  }, [searchQuery]);
+
+  const totalResults = useMemo(() => {
+    return filteredCategories.reduce((acc, cat) => acc + cat.topics.length, 0);
+  }, [filteredCategories]);
   return (
     <div className="min-h-screen bg-background noise-overlay">
       <Navbar />
@@ -100,26 +123,51 @@ const Index = () => {
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
               Explore All <span className="text-gradient-primary">Topics</span>
             </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-muted-foreground max-w-2xl mx-auto mb-8">
               From basic data structures to advanced algorithms, master each concept with comprehensive guides and interactive visualizations.
             </p>
+            <SearchInput 
+              value={searchQuery}
+              onChange={setSearchQuery}
+              placeholder="Search topics by name or keyword..."
+            />
+            {searchQuery && (
+              <p className="text-sm text-muted-foreground mt-4">
+                Found {totalResults} topic{totalResults !== 1 ? 's' : ''} matching "{searchQuery}"
+              </p>
+            )}
           </div>
           
-          <ProgressSummary />
+          {!searchQuery && <ProgressSummary />}
           
-          <BookmarkedTopics 
-            bookmarkedIds={bookmarks} 
-            onToggleBookmark={toggleBookmark} 
-          />
-          
-          {dsaCategories.map((category) => (
-            <CategorySection 
-              key={category.id} 
-              category={category}
-              isBookmarked={isBookmarked}
-              onToggleBookmark={toggleBookmark}
+          {!searchQuery && (
+            <BookmarkedTopics 
+              bookmarkedIds={bookmarks} 
+              onToggleBookmark={toggleBookmark} 
             />
-          ))}
+          )}
+          
+          {filteredCategories.length > 0 ? (
+            filteredCategories.map((category) => (
+              <CategorySection 
+                key={category.id} 
+                category={category}
+                isBookmarked={isBookmarked}
+                onToggleBookmark={toggleBookmark}
+              />
+            ))
+          ) : (
+            <div className="text-center py-16">
+              <p className="text-muted-foreground text-lg">No topics found matching "{searchQuery}"</p>
+              <Button 
+                variant="outline" 
+                className="mt-4"
+                onClick={() => setSearchQuery('')}
+              >
+                Clear Search
+              </Button>
+            </div>
+          )}
           
           {/* Complexity Comparison Table */}
           <div className="mt-16">
