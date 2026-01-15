@@ -1,19 +1,35 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import Navbar from '@/components/Navbar';
 import CategorySection from '@/components/CategorySection';
 import ProgressSummary from '@/components/ProgressSummary';
 import ComplexityTable from '@/components/ComplexityTable';
 import BookmarkedTopics from '@/components/BookmarkedTopics';
 import SearchInput from '@/components/SearchInput';
+import KeyboardShortcutsHelp from '@/components/KeyboardShortcutsHelp';
 import { dsaCategories, TopicCategory } from '@/data/dsaTopics';
 import { Code, BookOpen, Play, Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useBookmarks } from '@/hooks/useBookmarks';
+import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
 
 const Index = () => {
   const { bookmarks, toggleBookmark, isBookmarked } = useBookmarks();
   const [searchQuery, setSearchQuery] = useState('');
+  const [showShortcutsHelp, setShowShortcutsHelp] = useState(false);
+
+  const clearSearch = useCallback(() => {
+    setSearchQuery('');
+  }, []);
+
+  const toggleShortcutsHelp = useCallback(() => {
+    setShowShortcutsHelp((prev) => !prev);
+  }, []);
+
+  const { shortcuts } = useKeyboardShortcuts({
+    onClearSearch: clearSearch,
+    onToggleShortcutsHelp: toggleShortcutsHelp,
+  });
 
   const filteredCategories = useMemo(() => {
     if (!searchQuery.trim()) return dsaCategories;
@@ -35,9 +51,15 @@ const Index = () => {
   const totalResults = useMemo(() => {
     return filteredCategories.reduce((acc, cat) => acc + cat.topics.length, 0);
   }, [filteredCategories]);
+
   return (
     <div className="min-h-screen bg-background noise-overlay">
       <Navbar />
+      <KeyboardShortcutsHelp 
+        open={showShortcutsHelp} 
+        onOpenChange={setShowShortcutsHelp}
+        shortcuts={shortcuts}
+      />
       
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 overflow-hidden">

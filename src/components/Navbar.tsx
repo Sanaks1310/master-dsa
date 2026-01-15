@@ -1,6 +1,12 @@
 import { Link } from 'react-router-dom';
-import { Code, Terminal } from 'lucide-react';
+import { Code, Terminal, Keyboard } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
+import { Button } from './ui/button';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from './ui/tooltip';
 
 const Navbar = () => {
   return (
@@ -20,14 +26,32 @@ const Navbar = () => {
             </span>
           </Link>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2">
             <Link 
               to="/" 
-              className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"
+              className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2 px-3 py-2"
             >
               <Code className="w-4 h-4" />
-              Topics
+              <span className="hidden sm:inline">Topics</span>
             </Link>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="w-9 h-9"
+                  onClick={() => {
+                    window.dispatchEvent(new KeyboardEvent('keydown', { key: '?', shiftKey: true }));
+                  }}
+                >
+                  <Keyboard className="w-4 h-4" />
+                  <span className="sr-only">Keyboard shortcuts</span>
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Keyboard shortcuts (Shift + ?)</p>
+              </TooltipContent>
+            </Tooltip>
             <ThemeToggle />
           </div>
         </div>
