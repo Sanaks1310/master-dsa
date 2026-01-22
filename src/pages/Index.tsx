@@ -6,6 +6,7 @@ import ComplexityTable from '@/components/ComplexityTable';
 import BookmarkedTopics from '@/components/BookmarkedTopics';
 import SearchInput from '@/components/SearchInput';
 import KeyboardShortcutsHelp from '@/components/KeyboardShortcutsHelp';
+import StudyStreak from '@/components/StudyStreak';
 import { dsaCategories, TopicCategory } from '@/data/dsaTopics';
 import { Code, BookOpen, Play, Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -160,6 +161,7 @@ const Index = () => {
             )}
           </div>
           
+          {!searchQuery && <StudyStreak />}
           {!searchQuery && <ProgressSummary />}
           
           {!searchQuery && (
