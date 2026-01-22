@@ -27,8 +27,8 @@ const badgeClasses: Record<string, string> = {
 };
 
 const TopicCard = ({ topic, index, progress, isBookmarked = false, onToggleBookmark }: TopicCardProps) => {
-  const hasQuizScore = progress?.bestScore !== null && progress?.quizTotal !== null;
-  const scorePercentage = hasQuizScore ? Math.round((progress!.bestScore! / progress!.quizTotal!) * 100) : 0;
+  const hasQuizScore = progress != null && progress.bestScore != null && progress.quizTotal != null;
+  const scorePercentage = hasQuizScore ? Math.round((progress.bestScore / progress.quizTotal) * 100) : 0;
 
   const handleBookmarkClick = (e: React.MouseEvent) => {
     e.preventDefault();
