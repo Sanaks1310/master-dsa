@@ -7,6 +7,7 @@ import BookmarkedTopics from '@/components/BookmarkedTopics';
 import SearchInput from '@/components/SearchInput';
 import KeyboardShortcutsHelp from '@/components/KeyboardShortcutsHelp';
 import StudyStreak from '@/components/StudyStreak';
+import DifficultyFilter, { DifficultyLevel } from '@/components/DifficultyFilter';
 import { dsaCategories, TopicCategory } from '@/data/dsaTopics';
 import { Code, BookOpen, Play, Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -18,6 +19,7 @@ const Index = () => {
   const { bookmarks, toggleBookmark, isBookmarked } = useBookmarks();
   const [searchQuery, setSearchQuery] = useState('');
   const [showShortcutsHelp, setShowShortcutsHelp] = useState(false);
+  const [difficultyFilter, setDifficultyFilter] = useState<DifficultyLevel>('all');
 
   const clearSearch = useCallback(() => {
     setSearchQuery('');
@@ -33,21 +35,26 @@ const Index = () => {
   });
 
   const filteredCategories = useMemo(() => {
-    if (!searchQuery.trim()) return dsaCategories;
+    const query = searchQuery.toLowerCase().trim();
     
-    const query = searchQuery.toLowerCase();
     return dsaCategories
       .map((category): TopicCategory => ({
         ...category,
-        topics: category.topics.filter(
-          (topic) =>
+        topics: category.topics.filter((topic) => {
+          const matchesSearch = !query || 
             topic.title.toLowerCase().includes(query) ||
             topic.description.toLowerCase().includes(query) ||
-            topic.id.toLowerCase().includes(query)
-        ),
+            topic.id.toLowerCase().includes(query);
+          
+          const matchesDifficulty = difficultyFilter === 'all' || topic.difficulty === difficultyFilter;
+          
+          return matchesSearch && matchesDifficulty;
+        }),
       }))
       .filter((category) => category.topics.length > 0);
-  }, [searchQuery]);
+  }, [searchQuery, difficultyFilter]);
+
+  const hasActiveFilters = searchQuery || difficultyFilter !== 'all';
 
   const totalResults = useMemo(() => {
     return filteredCategories.reduce((acc, cat) => acc + cat.topics.length, 0);
@@ -149,22 +156,30 @@ const Index = () => {
             <p className="text-muted-foreground max-w-2xl mx-auto mb-8">
               From basic data structures to advanced algorithms, master each concept with comprehensive guides and interactive visualizations.
             </p>
-            <SearchInput 
-              value={searchQuery}
-              onChange={setSearchQuery}
-              placeholder="Search topics by name or keyword..."
-            />
-            {searchQuery && (
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <SearchInput 
+                value={searchQuery}
+                onChange={setSearchQuery}
+                placeholder="Search topics by name or keyword..."
+              />
+              <DifficultyFilter 
+                value={difficultyFilter}
+                onChange={setDifficultyFilter}
+              />
+            </div>
+            {hasActiveFilters && (
               <p className="text-sm text-muted-foreground mt-4">
-                Found {totalResults} topic{totalResults !== 1 ? 's' : ''} matching "{searchQuery}"
+                Found {totalResults} topic{totalResults !== 1 ? 's' : ''}
+                {searchQuery && ` matching "${searchQuery}"`}
+                {difficultyFilter !== 'all' && ` at ${difficultyFilter} level`}
               </p>
             )}
           </div>
           
-          {!searchQuery && <StudyStreak />}
-          {!searchQuery && <ProgressSummary />}
+          {!hasActiveFilters && <StudyStreak />}
+          {!hasActiveFilters && <ProgressSummary />}
           
-          {!searchQuery && (
+          {!hasActiveFilters && (
             <BookmarkedTopics 
               bookmarkedIds={bookmarks} 
               onToggleBookmark={toggleBookmark} 
@@ -182,13 +197,19 @@ const Index = () => {
             ))
           ) : (
             <div className="text-center py-16">
-              <p className="text-muted-foreground text-lg">No topics found matching "{searchQuery}"</p>
+              <p className="text-muted-foreground text-lg">
+                No topics found{searchQuery && ` matching "${searchQuery}"`}
+                {difficultyFilter !== 'all' && ` at ${difficultyFilter} level`}
+              </p>
               <Button 
                 variant="outline" 
                 className="mt-4"
-                onClick={() => setSearchQuery('')}
+                onClick={() => {
+                  setSearchQuery('');
+                  setDifficultyFilter('all');
+                }}
               >
-                Clear Search
+                Clear Filters
               </Button>
             </div>
           )}
