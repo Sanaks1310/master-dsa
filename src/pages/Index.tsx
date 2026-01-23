@@ -10,6 +10,7 @@ import StudyStreak from '@/components/StudyStreak';
 import SpacedRepetitionReminder from '@/components/SpacedRepetitionReminder';
 import DifficultyFilter, { DifficultyLevel } from '@/components/DifficultyFilter';
 import DailyGoalTracker from '@/components/DailyGoalTracker';
+import AchievementBadges from '@/components/AchievementBadges';
 import { dsaCategories, TopicCategory } from '@/data/dsaTopics';
 import { Code, BookOpen, Play, Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -180,6 +181,7 @@ const Index = () => {
           
           {!hasActiveFilters && <DailyGoalTracker />}
           {!hasActiveFilters && <StudyStreak />}
+          {!hasActiveFilters && <AchievementBadges />}
           {!hasActiveFilters && <SpacedRepetitionReminder />}
           {!hasActiveFilters && <ProgressSummary />}
           
