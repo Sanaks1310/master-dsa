@@ -9,6 +9,7 @@ import KeyboardShortcutsHelp from '@/components/KeyboardShortcutsHelp';
 import StudyStreak from '@/components/StudyStreak';
 import SpacedRepetitionReminder from '@/components/SpacedRepetitionReminder';
 import DifficultyFilter, { DifficultyLevel } from '@/components/DifficultyFilter';
+import DailyGoalTracker from '@/components/DailyGoalTracker';
 import { dsaCategories, TopicCategory } from '@/data/dsaTopics';
 import { Code, BookOpen, Play, Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -177,6 +178,7 @@ const Index = () => {
             )}
           </div>
           
+          {!hasActiveFilters && <DailyGoalTracker />}
           {!hasActiveFilters && <StudyStreak />}
           {!hasActiveFilters && <SpacedRepetitionReminder />}
           {!hasActiveFilters && <ProgressSummary />}
