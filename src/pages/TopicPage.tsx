@@ -1,5 +1,5 @@
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Clock, CheckCircle, XCircle, Zap, BookOpen, Code, Play, Wrench, GitBranch, Brain, Terminal } from 'lucide-react';
+import { ArrowLeft, Clock, CheckCircle, XCircle, Zap, BookOpen, Code, Play, Wrench, GitBranch, Brain, Terminal, Check } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import CodeBlock from '@/components/CodeBlock';
 import ArrayVisualizer from '@/components/ArrayVisualizer';
@@ -16,6 +16,7 @@ import { getTopicContent } from '@/data/topicContents';
 import { getTopicQuiz } from '@/data/topicQuizzes';
 import { getTopicCode } from '@/data/topicCodeSnippets';
 import { useProgress } from '@/hooks/useProgress';
+import { useDailyGoal } from '@/hooks/useDailyGoal';
 import {
   algorithmAnimationSteps, 
   dataStructureAnimationSteps, 
@@ -50,6 +51,7 @@ import {
 } from '@/data/topicAnimations';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { cn } from '@/lib/utils';
 
 const insertionAnimationSteps = [
   {
@@ -147,12 +149,21 @@ const TopicPage = () => {
   const topic = getTopicById(topicId || '');
   const category = getCategoryByTopicId(topicId || '');
   const content = getTopicContent(topicId || '');
-  const { saveQuizScore, getTopicProgress } = useProgress();
+  const { saveQuizScore, getTopicProgress, markTopicCompleted } = useProgress();
+  const { incrementTopicsCompleted } = useDailyGoal();
   const topicProgress = getTopicProgress(topicId || '');
+  const isCompleted = topicProgress?.completed ?? false;
 
   const handleQuizComplete = (score: number, total: number) => {
     if (topicId) {
       saveQuizScore(topicId, score, total);
+    }
+  };
+
+  const handleMarkComplete = () => {
+    if (topicId && !isCompleted) {
+      markTopicCompleted(topicId);
+      incrementTopicsCompleted();
     }
   };
 
@@ -187,7 +198,7 @@ const TopicPage = () => {
             
             <div className="flex items-start gap-6">
               <span className="text-6xl">{topic.icon}</span>
-              <div>
+              <div className="flex-1">
                 <div className="flex items-center gap-3 mb-2">
                   <span className="text-sm text-muted-foreground">{category?.name}</span>
                   <span className={`text-xs font-medium px-2 py-1 rounded-full ${
@@ -197,13 +208,41 @@ const TopicPage = () => {
                   }`}>
                     {topic.difficulty}
                   </span>
+                  {isCompleted && (
+                    <span className="flex items-center gap-1 text-xs font-medium px-2 py-1 rounded-full bg-green/20 text-green">
+                      <Check className="w-3 h-3" />
+                      Completed
+                    </span>
+                  )}
                 </div>
                 <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-3">
                   {topic.title}
                 </h1>
-                <p className="text-lg text-muted-foreground max-w-3xl">
+                <p className="text-lg text-muted-foreground max-w-3xl mb-4">
                   {topic.description}
                 </p>
+                <Button
+                  onClick={handleMarkComplete}
+                  disabled={isCompleted}
+                  className={cn(
+                    'transition-all',
+                    isCompleted
+                      ? 'bg-green/20 text-green border border-green/30 hover:bg-green/20 cursor-default'
+                      : 'bg-primary text-primary-foreground hover:bg-primary/90'
+                  )}
+                >
+                  {isCompleted ? (
+                    <>
+                      <Check className="w-4 h-4 mr-2" />
+                      Topic Completed
+                    </>
+                  ) : (
+                    <>
+                      <CheckCircle className="w-4 h-4 mr-2" />
+                      Mark as Complete
+                    </>
+                  )}
+                </Button>
               </div>
             </div>
           </div>

@@ -29,6 +29,7 @@ const badgeClasses: Record<string, string> = {
 const TopicCard = ({ topic, index, progress, isBookmarked = false, onToggleBookmark }: TopicCardProps) => {
   const hasQuizScore = progress != null && progress.bestScore != null && progress.quizTotal != null;
   const scorePercentage = hasQuizScore ? Math.round((progress.bestScore / progress.quizTotal) * 100) : 0;
+  const isCompleted = progress?.completed ?? false;
 
   const handleBookmarkClick = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -43,9 +44,15 @@ const TopicCard = ({ topic, index, progress, isBookmarked = false, onToggleBookm
       style={{ animationDelay: `${index * 50}ms` }}
     >
       {/* Progress indicator */}
-      {hasQuizScore && (
-        <div className="absolute top-3 right-3 flex items-center gap-1">
-          {scorePercentage === 100 ? (
+      <div className="absolute top-3 right-3 flex items-center gap-1">
+        {isCompleted && !hasQuizScore && (
+          <div className="flex items-center gap-1 px-2 py-1 bg-green/20 text-green rounded-full text-xs font-medium">
+            <CheckCircle className="w-3 h-3" />
+            Done
+          </div>
+        )}
+        {hasQuizScore && (
+          scorePercentage === 100 ? (
             <div className="flex items-center gap-1 px-2 py-1 bg-green/20 text-green rounded-full text-xs font-medium">
               <CheckCircle className="w-3 h-3" />
               Mastered
@@ -55,9 +62,9 @@ const TopicCard = ({ topic, index, progress, isBookmarked = false, onToggleBookm
               <Trophy className="w-3 h-3" />
               {scorePercentage}%
             </div>
-          )}
-        </div>
-      )}
+          )
+        )}
+      </div>
 
       <div className="flex items-start justify-between mb-4">
         <span className="text-4xl">{topic.icon}</span>
@@ -68,7 +75,7 @@ const TopicCard = ({ topic, index, progress, isBookmarked = false, onToggleBookm
               onToggle={handleBookmarkClick}
             />
           )}
-          <span className={`text-xs font-medium px-2 py-1 rounded-full border ${badgeClasses[topic.difficulty]} ${hasQuizScore ? 'mt-6' : ''}`}>
+          <span className={`text-xs font-medium px-2 py-1 rounded-full border ${badgeClasses[topic.difficulty]} ${(hasQuizScore || isCompleted) ? 'mt-6' : ''}`}>
             {topic.difficulty}
           </span>
         </div>
