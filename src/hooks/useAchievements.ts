@@ -1,6 +1,8 @@
-import { useMemo } from 'react';
+import { useMemo, useEffect, useRef } from 'react';
 import { useProgress } from './useProgress';
 import { useStreak } from './useStreak';
+import { useConfetti } from './useConfetti';
+import { toast } from 'sonner';
 
 export interface Achievement {
   id: string;
@@ -13,14 +15,26 @@ export interface Achievement {
   progress: number;
 }
 
+const UNLOCKED_ACHIEVEMENTS_KEY = 'dsa-unlocked-achievements';
+
+const getStoredUnlockedIds = (): Set<string> => {
+  try {
+    const stored = localStorage.getItem(UNLOCKED_ACHIEVEMENTS_KEY);
+    return stored ? new Set(JSON.parse(stored)) : new Set();
+  } catch {
+    return new Set();
+  }
+};
+
 export const useAchievements = () => {
   const { getCompletedTopicsCount, getQuizzesTakenCount, getAverageScore } = useProgress();
   const { streak } = useStreak();
+  const { triggerConfetti } = useConfetti();
+  const previousUnlockedRef = useRef<Set<string>>(getStoredUnlockedIds());
 
   const completedTopics = getCompletedTopicsCount();
   const quizzesTaken = getQuizzesTakenCount();
   const averageScore = getAverageScore();
-  const currentStreak = streak.currentStreak;
   const longestStreak = streak.longestStreak;
 
   const achievements = useMemo((): Achievement[] => {
@@ -168,6 +182,34 @@ export const useAchievements = () => {
   const lockedAchievements = useMemo(() => {
     return achievements.filter((a) => !a.isUnlocked);
   }, [achievements]);
+
+  // Detect newly unlocked achievements and trigger confetti
+  useEffect(() => {
+    const currentUnlockedIds = new Set(unlockedAchievements.map((a) => a.id));
+    const previousUnlockedIds = previousUnlockedRef.current;
+
+    // Find newly unlocked achievements
+    const newlyUnlocked = unlockedAchievements.filter(
+      (a) => !previousUnlockedIds.has(a.id)
+    );
+
+    if (newlyUnlocked.length > 0) {
+      // Trigger confetti and show toast for each new achievement
+      newlyUnlocked.forEach((achievement, index) => {
+        setTimeout(() => {
+          triggerConfetti('achievement');
+          toast.success(`🏆 Achievement Unlocked!`, {
+            description: `${achievement.icon} ${achievement.title}: ${achievement.description}`,
+            duration: 5000,
+          });
+        }, index * 500);
+      });
+
+      // Update stored unlocked achievements
+      localStorage.setItem(UNLOCKED_ACHIEVEMENTS_KEY, JSON.stringify([...currentUnlockedIds]));
+      previousUnlockedRef.current = currentUnlockedIds;
+    }
+  }, [unlockedAchievements, triggerConfetti]);
 
   const totalAchievements = achievements.length;
   const unlockedCount = unlockedAchievements.length;
