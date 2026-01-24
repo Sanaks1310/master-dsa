@@ -150,13 +150,14 @@ const TopicPage = () => {
   const category = getCategoryByTopicId(topicId || '');
   const content = getTopicContent(topicId || '');
   const { saveQuizScore, getTopicProgress, markTopicCompleted } = useProgress();
-  const { incrementTopicsCompleted } = useDailyGoal();
+  const { incrementTopicsCompleted, incrementQuizzesTaken } = useDailyGoal();
   const topicProgress = getTopicProgress(topicId || '');
   const isCompleted = topicProgress?.completed ?? false;
 
   const handleQuizComplete = (score: number, total: number) => {
     if (topicId) {
       saveQuizScore(topicId, score, total);
+      incrementQuizzesTaken();
     }
   };
 
