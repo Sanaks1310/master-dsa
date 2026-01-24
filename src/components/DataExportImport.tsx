@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { Download, Upload, FileJson, CheckCircle, AlertCircle } from 'lucide-react';
+import { Download, Upload, FileJson, CheckCircle, AlertCircle, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -9,6 +9,17 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
 import { toast } from 'sonner';
 
 interface ExportData {
@@ -25,6 +36,7 @@ const STORAGE_KEYS = {
   bookmarks: 'dsa-bookmarks',
   streak: 'dsa-study-streak',
   dailyGoal: 'dsa-daily-goal',
+  unlockedAchievements: 'dsa-unlocked-achievements',
 };
 
 const DataExportImport = () => {
@@ -114,6 +126,25 @@ const DataExportImport = () => {
     fileInputRef.current?.click();
   };
 
+  const handleResetProgress = () => {
+    try {
+      // Clear all learning data from localStorage
+      Object.values(STORAGE_KEYS).forEach((key) => {
+        localStorage.removeItem(key);
+      });
+
+      toast.success('All progress has been reset. Refreshing...');
+      
+      // Reload the page to apply reset
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500);
+    } catch (error) {
+      console.error('Reset error:', error);
+      toast.error('Failed to reset progress');
+    }
+  };
+
   return (
     <div className="mb-8">
       <div className="bg-card/50 backdrop-blur-sm border border-border rounded-xl p-6">
@@ -195,6 +226,41 @@ const DataExportImport = () => {
                 </div>
               </DialogContent>
             </Dialog>
+
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button variant="outline" className="gap-2 text-destructive hover:text-destructive hover:bg-destructive/10 border-destructive/30">
+                  <Trash2 className="w-4 h-4" />
+                  Reset
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Reset All Progress?</AlertDialogTitle>
+                  <AlertDialogDescription className="space-y-2">
+                    <p>This will permanently delete all your learning data:</p>
+                    <ul className="list-disc list-inside text-sm space-y-1 mt-2">
+                      <li>Topic completion status</li>
+                      <li>Quiz scores and history</li>
+                      <li>Study streak data</li>
+                      <li>Daily goal progress</li>
+                      <li>Bookmarked topics</li>
+                      <li>Achievement progress</li>
+                    </ul>
+                    <p className="font-medium mt-3">This action cannot be undone.</p>
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction
+                    onClick={handleResetProgress}
+                    className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                  >
+                    Reset Everything
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </div>
         </div>
       </div>
