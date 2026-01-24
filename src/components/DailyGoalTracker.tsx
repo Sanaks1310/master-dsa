@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Target, BookOpen, Brain, Settings, Check, ChevronDown, ChevronUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
@@ -12,7 +12,9 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { useDailyGoal } from '@/hooks/useDailyGoal';
+import { useConfetti } from '@/hooks/useConfetti';
 import { cn } from '@/lib/utils';
+import { toast } from 'sonner';
 
 const DailyGoalTracker = () => {
   const {
@@ -25,11 +27,32 @@ const DailyGoalTracker = () => {
     isQuizzesGoalMet,
     isDailyGoalComplete,
   } = useDailyGoal();
+  const { triggerConfetti } = useConfetti();
 
   const [isExpanded, setIsExpanded] = useState(true);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [tempTopicsGoal, setTempTopicsGoal] = useState(goalData.topicsGoal);
   const [tempQuizzesGoal, setTempQuizzesGoal] = useState(goalData.quizzesGoal);
+  
+  // Track if we've already celebrated today's completion
+  const hasTriggeredConfettiRef = useRef(false);
+
+  // Trigger confetti when daily goal is completed
+  useEffect(() => {
+    if (isDailyGoalComplete && !hasTriggeredConfettiRef.current) {
+      hasTriggeredConfettiRef.current = true;
+      triggerConfetti('goal');
+      toast.success('🎉 Daily Goal Complete!', {
+        description: "Amazing work! You've crushed your learning goals for today!",
+        duration: 5000,
+      });
+    }
+    
+    // Reset the flag when goal is no longer complete (new day)
+    if (!isDailyGoalComplete) {
+      hasTriggeredConfettiRef.current = false;
+    }
+  }, [isDailyGoalComplete, triggerConfetti]);
 
   const handleSaveSettings = () => {
     setTopicsGoal(tempTopicsGoal);
