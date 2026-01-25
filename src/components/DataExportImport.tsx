@@ -39,6 +39,9 @@ const STORAGE_KEYS = {
   streak: 'dsa-study-streak',
   dailyGoal: 'dsa-daily-goal',
   unlockedAchievements: 'dsa-unlocked-achievements',
+  studyTime: 'dsa-study-time',
+  progressHistory: 'dsa-progress-history',
+  settings: 'dsa-settings',
 };
 
 const DataExportImport = () => {

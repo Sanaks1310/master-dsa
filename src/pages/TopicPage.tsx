@@ -17,6 +17,8 @@ import { getTopicQuiz } from '@/data/topicQuizzes';
 import { getTopicCode } from '@/data/topicCodeSnippets';
 import { useProgress } from '@/hooks/useProgress';
 import { useDailyGoal } from '@/hooks/useDailyGoal';
+import { useStudyTime } from '@/hooks/useStudyTime';
+import { useProgressHistory } from '@/hooks/useProgressHistory';
 import {
   algorithmAnimationSteps, 
   dataStructureAnimationSteps, 
@@ -151,6 +153,11 @@ const TopicPage = () => {
   const content = getTopicContent(topicId || '');
   const { saveQuizScore, getTopicProgress, markTopicCompleted } = useProgress();
   const { incrementTopicsCompleted, incrementQuizzesTaken } = useDailyGoal();
+  const { recordTopicCompleted, recordQuizTaken } = useProgressHistory();
+  
+  // Track study time for this topic
+  useStudyTime(topicId);
+  
   const topicProgress = getTopicProgress(topicId || '');
   const isCompleted = topicProgress?.completed ?? false;
 
@@ -158,6 +165,7 @@ const TopicPage = () => {
     if (topicId) {
       saveQuizScore(topicId, score, total);
       incrementQuizzesTaken();
+      recordQuizTaken(topicId, score, total);
     }
   };
 
@@ -165,6 +173,7 @@ const TopicPage = () => {
     if (topicId && !isCompleted) {
       markTopicCompleted(topicId);
       incrementTopicsCompleted();
+      recordTopicCompleted(topicId);
     }
   };
 

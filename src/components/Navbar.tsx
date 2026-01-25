@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Code, Terminal, Keyboard } from 'lucide-react';
+import { Code, Terminal, Keyboard, BarChart3 } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
 import { Button } from './ui/button';
 import {
@@ -33,6 +33,13 @@ const Navbar = () => {
             >
               <Code className="w-4 h-4" />
               <span className="hidden sm:inline">Topics</span>
+            </Link>
+            <Link 
+              to="/stats" 
+              className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2 px-3 py-2"
+            >
+              <BarChart3 className="w-4 h-4" />
+              <span className="hidden sm:inline">Stats</span>
             </Link>
             <Tooltip>
               <TooltipTrigger asChild>
