@@ -1,8 +1,13 @@
 import { useCallback } from 'react';
 import confetti from 'canvas-confetti';
+import { useSoundEffects } from './useSoundEffects';
 
 export const useConfetti = () => {
+  const { playSound } = useSoundEffects();
+
   const triggerConfetti = useCallback((type: 'achievement' | 'goal' = 'achievement') => {
+    // Play corresponding sound effect
+    playSound(type);
     if (type === 'achievement') {
       // Burst of confetti from both sides for achievements
       const count = 200;
@@ -78,9 +83,10 @@ export const useConfetti = () => {
         });
       }, 250);
     }
-  }, []);
+  }, [playSound]);
 
   const triggerStars = useCallback(() => {
+    playSound('celebration');
     // Star-shaped celebration
     const defaults = {
       spread: 360,
@@ -112,7 +118,7 @@ export const useConfetti = () => {
     setTimeout(shoot, 0);
     setTimeout(shoot, 100);
     setTimeout(shoot, 200);
-  }, []);
+  }, [playSound]);
 
   return { triggerConfetti, triggerStars };
 };
