@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { Download, Upload, FileJson, CheckCircle, AlertCircle, Trash2 } from 'lucide-react';
+import { Download, Upload, FileJson, CheckCircle, AlertCircle, Trash2, Settings } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -21,6 +21,8 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import { toast } from 'sonner';
+import SoundToggle from './SoundToggle';
+import { Separator } from '@/components/ui/separator';
 
 interface ExportData {
   version: string;
@@ -147,11 +149,28 @@ const DataExportImport = () => {
 
   return (
     <div className="mb-8">
-      <div className="bg-card/50 backdrop-blur-sm border border-border rounded-xl p-6">
+      <div className="bg-card/50 backdrop-blur-sm border border-border rounded-xl p-6 space-y-4">
+        {/* Settings Section */}
         <div className="flex items-center justify-between flex-wrap gap-4">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center">
-              <FileJson className="w-5 h-5 text-primary" />
+              <Settings className="w-5 h-5 text-primary" />
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold text-foreground">Settings</h3>
+              <p className="text-sm text-muted-foreground">Customize your learning experience</p>
+            </div>
+          </div>
+          <SoundToggle />
+        </div>
+
+        <Separator />
+
+        {/* Backup & Restore Section */}
+        <div className="flex items-center justify-between flex-wrap gap-4">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-lg bg-secondary/50 flex items-center justify-center">
+              <FileJson className="w-5 h-5 text-secondary-foreground" />
             </div>
             <div>
               <h3 className="text-lg font-semibold text-foreground">Backup & Restore</h3>
