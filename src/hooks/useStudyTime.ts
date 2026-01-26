@@ -175,6 +175,53 @@ export const useStudyTime = (topicId?: string) => {
       .reduce((sum, s) => sum + s.durationMinutes, 0);
   }, [data.sessions]);
 
+  const getLastWeekMinutes = useCallback((): number => {
+    const today = new Date();
+    const weekAgo = new Date(today);
+    weekAgo.setDate(weekAgo.getDate() - 7);
+    const twoWeeksAgo = new Date(today);
+    twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
+    
+    return data.sessions
+      .filter((s) => {
+        const sessionDate = new Date(s.date);
+        return sessionDate >= twoWeeksAgo && sessionDate < weekAgo;
+      })
+      .reduce((sum, s) => sum + s.durationMinutes, 0);
+  }, [data.sessions]);
+
+  const getWeeklyComparison = useCallback((): { day: string; thisWeek: number; lastWeek: number }[] => {
+    const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const result: { day: string; thisWeek: number; lastWeek: number }[] = [];
+    const today = new Date();
+    
+    for (let i = 6; i >= 0; i--) {
+      const thisWeekDate = new Date(today);
+      thisWeekDate.setDate(thisWeekDate.getDate() - i);
+      const thisWeekStr = getDateString(thisWeekDate);
+      
+      const lastWeekDate = new Date(today);
+      lastWeekDate.setDate(lastWeekDate.getDate() - i - 7);
+      const lastWeekStr = getDateString(lastWeekDate);
+      
+      const thisWeekMinutes = data.sessions
+        .filter((s) => s.date === thisWeekStr)
+        .reduce((sum, s) => sum + s.durationMinutes, 0);
+      
+      const lastWeekMinutes = data.sessions
+        .filter((s) => s.date === lastWeekStr)
+        .reduce((sum, s) => sum + s.durationMinutes, 0);
+      
+      result.push({
+        day: dayNames[thisWeekDate.getDay()],
+        thisWeek: thisWeekMinutes,
+        lastWeek: lastWeekMinutes,
+      });
+    }
+    
+    return result;
+  }, [data.sessions]);
+
   const getAverageSessionLength = useCallback((): number => {
     if (data.sessions.length === 0) return 0;
     return Math.round(data.totalMinutes / data.sessions.length);
@@ -189,6 +236,8 @@ export const useStudyTime = (topicId?: string) => {
     getTimeByDate,
     getTodayMinutes,
     getWeekMinutes,
+    getLastWeekMinutes,
+    getWeeklyComparison,
     getAverageSessionLength,
   };
 };

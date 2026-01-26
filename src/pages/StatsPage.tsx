@@ -8,7 +8,10 @@ import {
   TrendingUp, 
   Calendar,
   Target,
-  Award
+  Award,
+  ArrowUpRight,
+  ArrowDownRight,
+  Minus
 } from 'lucide-react';
 import { 
   AreaChart, 
@@ -61,11 +64,21 @@ const StatsPage = () => {
   const [timePeriod, setTimePeriod] = useState<TimePeriod>('14');
   const days = parseInt(timePeriod);
   
-  const { getTimeByDate, getTodayMinutes, getWeekMinutes, getAverageSessionLength, totalMinutes } = useStudyTime();
-  const { getTopicsCompletedByDate, getQuizScoresByDate, getRecentQuizzes, getTotalTopicsCompletedThisWeek, getTotalQuizzesTakenThisWeek } = useProgressHistory();
+  const { getTimeByDate, getTodayMinutes, getWeekMinutes, getLastWeekMinutes, getWeeklyComparison, getAverageSessionLength, totalMinutes } = useStudyTime();
+  const { getTopicsCompletedByDate, getQuizScoresByDate, getRecentQuizzes, getTotalTopicsCompletedThisWeek, getTotalQuizzesTakenThisWeek, getWeeklyQuizComparison } = useProgressHistory();
   const { getCompletedTopicsCount, getAverageScore } = useProgress();
   const { streak } = useStreak();
   const { unlockedCount, totalAchievements } = useAchievements();
+
+  // Week-over-week comparison data
+  const studyTimeComparison = useMemo(() => getWeeklyComparison(), [getWeeklyComparison]);
+  const quizScoreComparison = useMemo(() => getWeeklyQuizComparison(), [getWeeklyQuizComparison]);
+  
+  const thisWeekTotal = getWeekMinutes();
+  const lastWeekTotal = getLastWeekMinutes();
+  const weekOverWeekChange = lastWeekTotal > 0 
+    ? Math.round(((thisWeekTotal - lastWeekTotal) / lastWeekTotal) * 100) 
+    : thisWeekTotal > 0 ? 100 : 0;
 
   const timeData = useMemo(() => 
     getTimeByDate(days).map((d) => ({
@@ -187,9 +200,167 @@ const StatsPage = () => {
           </CardContent>
         </Card>
 
+        {/* Week-over-Week Comparison Section */}
+        <h2 className="text-xl font-semibold text-foreground mb-4">Week-over-Week Comparison</h2>
+        <div className="grid lg:grid-cols-2 gap-6 mb-8">
+          {/* Study Time Comparison Chart */}
+          <Card className="bg-card/50 backdrop-blur-sm border-border">
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <CardTitle className="flex items-center gap-2 text-lg">
+                  <Clock className="w-5 h-5 text-cyan" />
+                  Study Time Comparison
+                </CardTitle>
+                <div className={`flex items-center gap-1 text-sm font-medium ${
+                  weekOverWeekChange > 0 ? 'text-green-500' : weekOverWeekChange < 0 ? 'text-red-500' : 'text-muted-foreground'
+                }`}>
+                  {weekOverWeekChange > 0 ? (
+                    <ArrowUpRight className="w-4 h-4" />
+                  ) : weekOverWeekChange < 0 ? (
+                    <ArrowDownRight className="w-4 h-4" />
+                  ) : (
+                    <Minus className="w-4 h-4" />
+                  )}
+                  {Math.abs(weekOverWeekChange)}%
+                </div>
+              </div>
+              <CardDescription>This week vs last week (minutes per day)</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="h-64">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={studyTimeComparison} barCategoryGap="20%">
+                    <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                    <XAxis 
+                      dataKey="day" 
+                      stroke="hsl(var(--muted-foreground))"
+                      fontSize={12}
+                      tickLine={false}
+                    />
+                    <YAxis 
+                      stroke="hsl(var(--muted-foreground))"
+                      fontSize={12}
+                      tickLine={false}
+                      axisLine={false}
+                    />
+                    <Tooltip 
+                      contentStyle={{ 
+                        backgroundColor: 'hsl(var(--card))', 
+                        border: '1px solid hsl(var(--border))',
+                        borderRadius: '8px',
+                      }}
+                      labelStyle={{ color: 'hsl(var(--foreground))' }}
+                      formatter={(value: number, name: string) => [
+                        `${value} min`, 
+                        name === 'thisWeek' ? 'This Week' : 'Last Week'
+                      ]}
+                    />
+                    <Bar 
+                      dataKey="lastWeek" 
+                      fill="hsl(var(--muted-foreground))" 
+                      radius={[4, 4, 0, 0]}
+                      opacity={0.5}
+                      name="lastWeek"
+                    />
+                    <Bar 
+                      dataKey="thisWeek" 
+                      fill="hsl(var(--cyan))" 
+                      radius={[4, 4, 0, 0]}
+                      name="thisWeek"
+                    />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+              <div className="flex items-center justify-center gap-6 mt-4 text-sm">
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded bg-cyan" />
+                  <span className="text-muted-foreground">This Week ({formatMinutes(thisWeekTotal)})</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded bg-muted-foreground/50" />
+                  <span className="text-muted-foreground">Last Week ({formatMinutes(lastWeekTotal)})</span>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Quiz Score Comparison Chart */}
+          <Card className="bg-card/50 backdrop-blur-sm border-border">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-lg">
+                <Brain className="w-5 h-5 text-purple" />
+                Quiz Score Comparison
+              </CardTitle>
+              <CardDescription>This week vs last week (average score %)</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="h-64">
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart data={quizScoreComparison}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                    <XAxis 
+                      dataKey="day" 
+                      stroke="hsl(var(--muted-foreground))"
+                      fontSize={12}
+                      tickLine={false}
+                    />
+                    <YAxis 
+                      stroke="hsl(var(--muted-foreground))"
+                      fontSize={12}
+                      tickLine={false}
+                      axisLine={false}
+                      domain={[0, 100]}
+                    />
+                    <Tooltip 
+                      contentStyle={{ 
+                        backgroundColor: 'hsl(var(--card))', 
+                        border: '1px solid hsl(var(--border))',
+                        borderRadius: '8px',
+                      }}
+                      labelStyle={{ color: 'hsl(var(--foreground))' }}
+                      formatter={(value: number, name: string) => [
+                        `${value}%`, 
+                        name === 'thisWeek' ? 'This Week' : 'Last Week'
+                      ]}
+                    />
+                    <Line 
+                      type="monotone" 
+                      dataKey="lastWeek" 
+                      stroke="hsl(var(--muted-foreground))" 
+                      strokeWidth={2}
+                      strokeDasharray="5 5"
+                      dot={{ fill: 'hsl(var(--muted-foreground))', strokeWidth: 0, r: 3 }}
+                      name="lastWeek"
+                    />
+                    <Line 
+                      type="monotone" 
+                      dataKey="thisWeek" 
+                      stroke="hsl(var(--purple))" 
+                      strokeWidth={2}
+                      dot={{ fill: 'hsl(var(--purple))', strokeWidth: 0, r: 4 }}
+                      activeDot={{ r: 6 }}
+                      name="thisWeek"
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
+              </div>
+              <div className="flex items-center justify-center gap-6 mt-4 text-sm">
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded bg-purple" />
+                  <span className="text-muted-foreground">This Week</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-6 h-0.5 bg-muted-foreground/50 border-dashed" style={{ borderStyle: 'dashed', borderWidth: '1px' }} />
+                  <span className="text-muted-foreground">Last Week</span>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
         {/* Time Period Toggle */}
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-xl font-semibold text-foreground">Charts</h2>
+          <h2 className="text-xl font-semibold text-foreground">Trend Charts</h2>
           <ToggleGroup 
             type="single" 
             value={timePeriod} 
