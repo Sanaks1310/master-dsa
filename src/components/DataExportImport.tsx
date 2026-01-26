@@ -38,6 +38,7 @@ const STORAGE_KEYS = {
   bookmarks: 'dsa-bookmarks',
   streak: 'dsa-study-streak',
   dailyGoal: 'dsa-daily-goal',
+  weeklyStudyGoal: 'dsa-weekly-study-goal',
   unlockedAchievements: 'dsa-unlocked-achievements',
   studyTime: 'dsa-study-time',
   progressHistory: 'dsa-progress-history',
