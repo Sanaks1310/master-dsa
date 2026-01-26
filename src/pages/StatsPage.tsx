@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   ArrowLeft, 
@@ -26,11 +26,20 @@ import {
 import Navbar from '@/components/Navbar';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { useStudyTime } from '@/hooks/useStudyTime';
 import { useProgressHistory } from '@/hooks/useProgressHistory';
 import { useProgress } from '@/hooks/useProgress';
 import { useStreak } from '@/hooks/useStreak';
 import { useAchievements } from '@/hooks/useAchievements';
+
+type TimePeriod = '7' | '14' | '30';
+
+const periodLabels: Record<TimePeriod, string> = {
+  '7': 'Last 7 Days',
+  '14': 'Last 14 Days',
+  '30': 'Last 30 Days',
+};
 
 const formatMinutes = (minutes: number): string => {
   if (minutes < 60) return `${minutes}m`;
@@ -39,12 +48,19 @@ const formatMinutes = (minutes: number): string => {
   return mins > 0 ? `${hours}h ${mins}m` : `${hours}h`;
 };
 
-const formatDateLabel = (dateStr: string): string => {
+const formatDateLabel = (dateStr: string, period: number): string => {
   const date = new Date(dateStr);
-  return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  if (period <= 14) {
+    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  }
+  // For 30 days, show shorter format
+  return date.toLocaleDateString('en-US', { day: 'numeric' });
 };
 
 const StatsPage = () => {
+  const [timePeriod, setTimePeriod] = useState<TimePeriod>('14');
+  const days = parseInt(timePeriod);
+  
   const { getTimeByDate, getTodayMinutes, getWeekMinutes, getAverageSessionLength, totalMinutes } = useStudyTime();
   const { getTopicsCompletedByDate, getQuizScoresByDate, getRecentQuizzes, getTotalTopicsCompletedThisWeek, getTotalQuizzesTakenThisWeek } = useProgressHistory();
   const { getCompletedTopicsCount, getAverageScore } = useProgress();
@@ -52,27 +68,27 @@ const StatsPage = () => {
   const { unlockedCount, totalAchievements } = useAchievements();
 
   const timeData = useMemo(() => 
-    getTimeByDate(14).map((d) => ({
+    getTimeByDate(days).map((d) => ({
       ...d,
-      label: formatDateLabel(d.date),
+      label: formatDateLabel(d.date, days),
     })), 
-    [getTimeByDate]
+    [getTimeByDate, days]
   );
 
   const topicsData = useMemo(() => 
-    getTopicsCompletedByDate(14).map((d) => ({
+    getTopicsCompletedByDate(days).map((d) => ({
       ...d,
-      label: formatDateLabel(d.date),
+      label: formatDateLabel(d.date, days),
     })), 
-    [getTopicsCompletedByDate]
+    [getTopicsCompletedByDate, days]
   );
 
   const quizData = useMemo(() => 
-    getQuizScoresByDate(14).map((d) => ({
+    getQuizScoresByDate(days).map((d) => ({
       ...d,
-      label: formatDateLabel(d.date),
+      label: formatDateLabel(d.date, days),
     })), 
-    [getQuizScoresByDate]
+    [getQuizScoresByDate, days]
   );
 
   const recentQuizzes = useMemo(() => getRecentQuizzes(5), [getRecentQuizzes]);
@@ -171,6 +187,27 @@ const StatsPage = () => {
           </CardContent>
         </Card>
 
+        {/* Time Period Toggle */}
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-xl font-semibold text-foreground">Charts</h2>
+          <ToggleGroup 
+            type="single" 
+            value={timePeriod} 
+            onValueChange={(value) => value && setTimePeriod(value as TimePeriod)}
+            className="bg-muted/50 rounded-lg p-1"
+          >
+            <ToggleGroupItem value="7" className="px-3 py-1.5 text-sm data-[state=on]:bg-primary data-[state=on]:text-primary-foreground">
+              7 Days
+            </ToggleGroupItem>
+            <ToggleGroupItem value="14" className="px-3 py-1.5 text-sm data-[state=on]:bg-primary data-[state=on]:text-primary-foreground">
+              14 Days
+            </ToggleGroupItem>
+            <ToggleGroupItem value="30" className="px-3 py-1.5 text-sm data-[state=on]:bg-primary data-[state=on]:text-primary-foreground">
+              30 Days
+            </ToggleGroupItem>
+          </ToggleGroup>
+        </div>
+
         {/* Charts Grid */}
         <div className="grid lg:grid-cols-2 gap-6 mb-8">
           {/* Study Time Chart */}
@@ -178,7 +215,7 @@ const StatsPage = () => {
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-lg">
                 <Clock className="w-5 h-5 text-cyan" />
-                Study Time (Last 14 Days)
+                Study Time ({periodLabels[timePeriod]})
               </CardTitle>
               <CardDescription>Minutes spent learning each day</CardDescription>
             </CardHeader>
@@ -232,7 +269,7 @@ const StatsPage = () => {
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-lg">
                 <BookOpen className="w-5 h-5 text-purple" />
-                Topics Completed (Last 14 Days)
+                Topics Completed ({periodLabels[timePeriod]})
               </CardTitle>
               <CardDescription>Number of topics completed each day</CardDescription>
             </CardHeader>
@@ -279,7 +316,7 @@ const StatsPage = () => {
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-lg">
                 <Brain className="w-5 h-5 text-green-500" />
-                Quiz Performance (Last 14 Days)
+                Quiz Performance ({periodLabels[timePeriod]})
               </CardTitle>
               <CardDescription>Average quiz score percentage</CardDescription>
             </CardHeader>
