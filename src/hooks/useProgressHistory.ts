@@ -154,6 +154,44 @@ export const useProgressHistory = () => {
     ).length;
   }, [data.events]);
 
+  const getWeeklyQuizComparison = useCallback((): { day: string; thisWeek: number; lastWeek: number }[] => {
+    const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const result: { day: string; thisWeek: number; lastWeek: number }[] = [];
+    const today = new Date();
+    
+    for (let i = 6; i >= 0; i--) {
+      const thisWeekDate = new Date(today);
+      thisWeekDate.setDate(thisWeekDate.getDate() - i);
+      const thisWeekStr = getDateString(thisWeekDate);
+      
+      const lastWeekDate = new Date(today);
+      lastWeekDate.setDate(lastWeekDate.getDate() - i - 7);
+      const lastWeekStr = getDateString(lastWeekDate);
+      
+      const thisWeekQuizzes = data.events.filter(
+        (e) => e.type === 'quiz_taken' && e.date === thisWeekStr && e.score !== undefined && e.total !== undefined
+      );
+      const thisWeekAvg = thisWeekQuizzes.length > 0
+        ? Math.round(thisWeekQuizzes.reduce((sum, q) => sum + ((q.score! / q.total!) * 100), 0) / thisWeekQuizzes.length)
+        : 0;
+      
+      const lastWeekQuizzes = data.events.filter(
+        (e) => e.type === 'quiz_taken' && e.date === lastWeekStr && e.score !== undefined && e.total !== undefined
+      );
+      const lastWeekAvg = lastWeekQuizzes.length > 0
+        ? Math.round(lastWeekQuizzes.reduce((sum, q) => sum + ((q.score! / q.total!) * 100), 0) / lastWeekQuizzes.length)
+        : 0;
+      
+      result.push({
+        day: dayNames[thisWeekDate.getDay()],
+        thisWeek: thisWeekAvg,
+        lastWeek: lastWeekAvg,
+      });
+    }
+    
+    return result;
+  }, [data.events]);
+
   return {
     data,
     events: data.events,
@@ -164,5 +202,6 @@ export const useProgressHistory = () => {
     getRecentQuizzes,
     getTotalTopicsCompletedThisWeek,
     getTotalQuizzesTakenThisWeek,
+    getWeeklyQuizComparison,
   };
 };
