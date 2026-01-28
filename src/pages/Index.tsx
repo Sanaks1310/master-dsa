@@ -12,6 +12,7 @@ import DifficultyFilter, { DifficultyLevel } from '@/components/DifficultyFilter
 import DailyGoalTracker from '@/components/DailyGoalTracker';
 import WeeklyStudyGoalTracker from '@/components/WeeklyStudyGoalTracker';
 import AchievementBadges from '@/components/AchievementBadges';
+import ProgressReport from '@/components/ProgressReport';
 import DataExportImport from '@/components/DataExportImport';
 import { dsaCategories, TopicCategory } from '@/data/dsaTopics';
 import { Code, BookOpen, Play, Sparkles } from 'lucide-react';
@@ -187,6 +188,7 @@ const Index = () => {
           {!hasActiveFilters && <AchievementBadges />}
           {!hasActiveFilters && <SpacedRepetitionReminder />}
           {!hasActiveFilters && <ProgressSummary />}
+          {!hasActiveFilters && <ProgressReport />}
           {!hasActiveFilters && <DataExportImport />}
           
           {!hasActiveFilters && (
