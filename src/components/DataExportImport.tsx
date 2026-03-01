@@ -44,6 +44,7 @@ const STORAGE_KEYS = {
   progressHistory: 'dsa-progress-history',
   settings: 'dsa-settings',
   studyReminders: 'dsa-study-reminders',
+  pomodoro: 'dsa-pomodoro',
 };
 
 const DataExportImport = () => {

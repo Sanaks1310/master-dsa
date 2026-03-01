@@ -11,6 +11,7 @@ import AlgorithmAnimation from '@/components/AlgorithmAnimation';
 import FlowchartDiagram from '@/components/FlowchartDiagram';
 import CodePlayground from '@/components/CodePlayground';
 import QuizSection from '@/components/QuizSection';
+import PomodoroTimer from '@/components/PomodoroTimer';
 import { getTopicById, getCategoryByTopicId } from '@/data/dsaTopics';
 import { getTopicContent } from '@/data/topicContents';
 import { getTopicQuiz } from '@/data/topicQuizzes';
@@ -255,6 +256,11 @@ const TopicPage = () => {
                 </Button>
               </div>
             </div>
+          </div>
+
+          {/* Pomodoro Timer */}
+          <div className="mb-12 max-w-sm">
+            <PomodoroTimer topicId={topicId} />
           </div>
 
           {content ? (
