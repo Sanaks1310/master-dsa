@@ -43,6 +43,7 @@ const STORAGE_KEYS = {
   studyTime: 'dsa-study-time',
   progressHistory: 'dsa-progress-history',
   settings: 'dsa-settings',
+  studyReminders: 'dsa-study-reminders',
 };
 
 const DataExportImport = () => {

@@ -12,6 +12,7 @@ import DifficultyFilter, { DifficultyLevel } from '@/components/DifficultyFilter
 import DailyGoalTracker from '@/components/DailyGoalTracker';
 import WeeklyStudyGoalTracker from '@/components/WeeklyStudyGoalTracker';
 import AchievementBadges from '@/components/AchievementBadges';
+import StudyReminders from '@/components/StudyReminders';
 import ProgressReport from '@/components/ProgressReport';
 import DataExportImport from '@/components/DataExportImport';
 import { dsaCategories, TopicCategory } from '@/data/dsaTopics';
@@ -189,6 +190,7 @@ const Index = () => {
           {!hasActiveFilters && <SpacedRepetitionReminder />}
           {!hasActiveFilters && <ProgressSummary />}
           {!hasActiveFilters && <ProgressReport />}
+          {!hasActiveFilters && <StudyReminders />}
           {!hasActiveFilters && <DataExportImport />}
           
           {!hasActiveFilters && (
