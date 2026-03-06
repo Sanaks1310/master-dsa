@@ -39,6 +39,16 @@ const getRankIcon = (rank: number) => {
   return <span className="text-sm font-bold text-muted-foreground">#{rank}</span>;
 };
 
+type SortField = 'score' | 'topicsCompleted' | 'avgQuizScore' | 'streak' | 'studyHours';
+
+const SORT_OPTIONS: { value: SortField; label: string }[] = [
+  { value: 'score', label: 'Overall Score' },
+  { value: 'topicsCompleted', label: 'Topics Completed' },
+  { value: 'avgQuizScore', label: 'Quiz Score' },
+  { value: 'streak', label: 'Streak' },
+  { value: 'studyHours', label: 'Study Hours' },
+];
+
 const calculateScore = (entry: Omit<LeaderboardEntry, 'rank' | 'isCurrentUser'>) => {
   return (
     entry.topicsCompleted * 10 +
