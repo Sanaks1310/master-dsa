@@ -1,6 +1,7 @@
-import { useMemo } from 'react';
-import { Trophy, Medal, Crown, Flame, BookOpen, Brain, TrendingUp, Star } from 'lucide-react';
+import { useMemo, useState } from 'react';
+import { Trophy, Medal, Crown, Flame, BookOpen, Brain, TrendingUp, Star, ArrowUpDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useProgress } from '@/hooks/useProgress';
 import { useStreak } from '@/hooks/useStreak';
 import { useStudyTime } from '@/hooks/useStudyTime';
