@@ -1,6 +1,7 @@
-import { useMemo } from 'react';
-import { Trophy, Medal, Crown, Flame, BookOpen, Brain, TrendingUp, Star } from 'lucide-react';
+import { useMemo, useState } from 'react';
+import { Trophy, Medal, Crown, Flame, BookOpen, Brain, TrendingUp, Star, ArrowUpDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useProgress } from '@/hooks/useProgress';
 import { useStreak } from '@/hooks/useStreak';
 import { useStudyTime } from '@/hooks/useStudyTime';
@@ -38,6 +39,16 @@ const getRankIcon = (rank: number) => {
   return <span className="text-sm font-bold text-muted-foreground">#{rank}</span>;
 };
 
+type SortField = 'score' | 'topicsCompleted' | 'avgQuizScore' | 'streak' | 'studyHours';
+
+const SORT_OPTIONS: { value: SortField; label: string }[] = [
+  { value: 'score', label: 'Overall Score' },
+  { value: 'topicsCompleted', label: 'Topics Completed' },
+  { value: 'avgQuizScore', label: 'Quiz Score' },
+  { value: 'streak', label: 'Streak' },
+  { value: 'studyHours', label: 'Study Hours' },
+];
+
 const calculateScore = (entry: Omit<LeaderboardEntry, 'rank' | 'isCurrentUser'>) => {
   return (
     entry.topicsCompleted * 10 +
@@ -51,6 +62,8 @@ const Leaderboard = () => {
   const { getCompletedTopicsCount, getAverageScore } = useProgress();
   const { streak } = useStreak();
   const { totalMinutes } = useStudyTime();
+
+  const [sortBy, setSortBy] = useState<SortField>('score');
 
   const leaderboard = useMemo((): LeaderboardEntry[] => {
     const currentUser = {
@@ -67,10 +80,13 @@ const Leaderboard = () => {
       { ...currentUser, isCurrentUser: true },
     ];
 
-    allEntries.sort((a, b) => calculateScore(b) - calculateScore(a));
+    allEntries.sort((a, b) => {
+      if (sortBy === 'score') return calculateScore(b) - calculateScore(a);
+      return (b[sortBy] as number) - (a[sortBy] as number);
+    });
 
     return allEntries.map((entry, i) => ({ ...entry, rank: i + 1 }));
-  }, [getCompletedTopicsCount, getAverageScore, streak.currentStreak, totalMinutes]);
+  }, [getCompletedTopicsCount, getAverageScore, streak.currentStreak, totalMinutes, sortBy]);
 
   const currentUserEntry = leaderboard.find(e => e.isCurrentUser)!;
 
@@ -79,20 +95,33 @@ const Leaderboard = () => {
       <div className="rounded-xl border border-border bg-card/50 overflow-hidden">
         {/* Header */}
         <div className="p-4 border-b border-border/50 bg-gradient-to-r from-primary/5 to-accent/5">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center">
-              <Trophy className="w-5 h-5 text-primary" />
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center">
+                <Trophy className="w-5 h-5 text-primary" />
+              </div>
+              <div>
+                <h3 className="font-semibold text-foreground">Community Leaderboard</h3>
+                <p className="text-sm text-muted-foreground">
+                  You're ranked <span className="font-bold text-primary">#{currentUserEntry.rank}</span> of {leaderboard.length} learners
+                </p>
+              </div>
             </div>
-            <div>
-              <h3 className="font-semibold text-foreground">Community Leaderboard</h3>
-              <p className="text-sm text-muted-foreground">
-                You're ranked <span className="font-bold text-primary">#{currentUserEntry.rank}</span> of {leaderboard.length} learners
-              </p>
-            </div>
+            <Select value={sortBy} onValueChange={(v) => setSortBy(v as SortField)}>
+              <SelectTrigger className="w-[150px] h-8 text-xs">
+                <ArrowUpDown className="w-3 h-3 mr-1 shrink-0" />
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {SORT_OPTIONS.map(opt => (
+                  <SelectItem key={opt.value} value={opt.value} className="text-xs">
+                    {opt.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
         </div>
-
-        {/* Your Stats Summary */}
         <div className="grid grid-cols-4 gap-px bg-border/30">
           {[
             { icon: BookOpen, label: 'Topics', value: currentUserEntry.topicsCompleted, color: 'text-primary' },
