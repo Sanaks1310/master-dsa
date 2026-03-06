@@ -140,6 +140,7 @@ export const usePomodoro = (topicId?: string) => {
       }
     } else {
       // Break ended
+      playSound('breakComplete');
       setMode('work');
       setSecondsLeft(getTotalSeconds('work'));
 
