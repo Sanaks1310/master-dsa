@@ -106,6 +106,7 @@ export const usePomodoro = (topicId?: string) => {
     setTimerState('idle');
 
     if (mode === 'work') {
+      playSound('pomodoroComplete');
       // End study session tracking
       if (studySessionActiveRef.current) {
         endSession();
