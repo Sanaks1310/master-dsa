@@ -95,20 +95,33 @@ const Leaderboard = () => {
       <div className="rounded-xl border border-border bg-card/50 overflow-hidden">
         {/* Header */}
         <div className="p-4 border-b border-border/50 bg-gradient-to-r from-primary/5 to-accent/5">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center">
-              <Trophy className="w-5 h-5 text-primary" />
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center">
+                <Trophy className="w-5 h-5 text-primary" />
+              </div>
+              <div>
+                <h3 className="font-semibold text-foreground">Community Leaderboard</h3>
+                <p className="text-sm text-muted-foreground">
+                  You're ranked <span className="font-bold text-primary">#{currentUserEntry.rank}</span> of {leaderboard.length} learners
+                </p>
+              </div>
             </div>
-            <div>
-              <h3 className="font-semibold text-foreground">Community Leaderboard</h3>
-              <p className="text-sm text-muted-foreground">
-                You're ranked <span className="font-bold text-primary">#{currentUserEntry.rank}</span> of {leaderboard.length} learners
-              </p>
-            </div>
+            <Select value={sortBy} onValueChange={(v) => setSortBy(v as SortField)}>
+              <SelectTrigger className="w-[150px] h-8 text-xs">
+                <ArrowUpDown className="w-3 h-3 mr-1 shrink-0" />
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {SORT_OPTIONS.map(opt => (
+                  <SelectItem key={opt.value} value={opt.value} className="text-xs">
+                    {opt.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
         </div>
-
-        {/* Your Stats Summary */}
         <div className="grid grid-cols-4 gap-px bg-border/30">
           {[
             { icon: BookOpen, label: 'Topics', value: currentUserEntry.topicsCompleted, color: 'text-primary' },
