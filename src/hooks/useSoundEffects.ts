@@ -1,7 +1,7 @@
 import { useCallback, useRef } from 'react';
 import { useSettings } from './useSettings';
 
-type SoundType = 'achievement' | 'goal' | 'celebration';
+type SoundType = 'achievement' | 'goal' | 'celebration' | 'pomodoroComplete' | 'breakComplete' | 'tick';
 
 // Web Audio API based sound generation for lightweight celebration sounds
 const createAudioContext = (): AudioContext | null => {
@@ -71,6 +71,33 @@ const playCelebrationSound = (ctx: AudioContext) => {
   });
 };
 
+const playPomodoroCompleteSound = (ctx: AudioContext) => {
+  const now = ctx.currentTime;
+  // Warm bell-like chime: descending then resolving up
+  playTone(ctx, 880, 0.3, now, 'sine', 0.3);
+  playTone(ctx, 698.46, 0.3, now + 0.15, 'sine', 0.25);
+  playTone(ctx, 523.25, 0.4, now + 0.3, 'sine', 0.3);
+  playTone(ctx, 1046.5, 0.5, now + 0.5, 'triangle', 0.2);
+  // Harmonic shimmer
+  playTone(ctx, 659.25, 0.4, now + 0.5, 'sine', 0.15);
+  playTone(ctx, 783.99, 0.4, now + 0.5, 'sine', 0.15);
+};
+
+const playBreakCompleteSound = (ctx: AudioContext) => {
+  const now = ctx.currentTime;
+  // Gentle ascending nudge
+  playTone(ctx, 440, 0.15, now, 'sine', 0.2);
+  playTone(ctx, 554.37, 0.15, now + 0.12, 'sine', 0.2);
+  playTone(ctx, 659.25, 0.2, now + 0.24, 'sine', 0.25);
+  playTone(ctx, 880, 0.3, now + 0.36, 'triangle', 0.2);
+};
+
+const playTickSound = (ctx: AudioContext) => {
+  const now = ctx.currentTime;
+  // Subtle single tick
+  playTone(ctx, 1200, 0.03, now, 'square', 0.08);
+};
+
 export const useSoundEffects = () => {
   const { soundEnabled } = useSettings();
   const audioContextRef = useRef<AudioContext | null>(null);
@@ -94,15 +121,12 @@ export const useSoundEffects = () => {
       if (!ctx) return;
 
       switch (type) {
-        case 'achievement':
-          playAchievementSound(ctx);
-          break;
-        case 'goal':
-          playGoalSound(ctx);
-          break;
-        case 'celebration':
-          playCelebrationSound(ctx);
-          break;
+        case 'achievement': playAchievementSound(ctx); break;
+        case 'goal': playGoalSound(ctx); break;
+        case 'celebration': playCelebrationSound(ctx); break;
+        case 'pomodoroComplete': playPomodoroCompleteSound(ctx); break;
+        case 'breakComplete': playBreakCompleteSound(ctx); break;
+        case 'tick': playTickSound(ctx); break;
       }
     },
     [soundEnabled, getAudioContext]

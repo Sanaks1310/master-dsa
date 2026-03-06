@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useStudyTime } from './useStudyTime';
+import { useSoundEffects } from './useSoundEffects';
 
 export type TimerMode = 'work' | 'shortBreak' | 'longBreak';
 export type TimerState = 'idle' | 'running' | 'paused';
@@ -60,6 +61,7 @@ export const usePomodoro = (topicId?: string) => {
   const [completedSessions, setCompletedSessions] = useState(0);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const { startSession, endSession } = useStudyTime(topicId);
+  const { playSound } = useSoundEffects();
   const studySessionActiveRef = useRef(false);
 
   // Save to localStorage
@@ -104,6 +106,7 @@ export const usePomodoro = (topicId?: string) => {
     setTimerState('idle');
 
     if (mode === 'work') {
+      playSound('pomodoroComplete');
       // End study session tracking
       if (studySessionActiveRef.current) {
         endSession();
@@ -137,6 +140,7 @@ export const usePomodoro = (topicId?: string) => {
       }
     } else {
       // Break ended
+      playSound('breakComplete');
       setMode('work');
       setSecondsLeft(getTotalSeconds('work'));
 
