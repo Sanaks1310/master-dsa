@@ -1,7 +1,7 @@
 import { useCallback, useRef } from 'react';
 import { useSettings } from './useSettings';
 
-type SoundType = 'achievement' | 'goal' | 'celebration';
+type SoundType = 'achievement' | 'goal' | 'celebration' | 'pomodoroComplete' | 'breakComplete' | 'tick';
 
 // Web Audio API based sound generation for lightweight celebration sounds
 const createAudioContext = (): AudioContext | null => {
