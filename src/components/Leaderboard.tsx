@@ -80,10 +80,13 @@ const Leaderboard = () => {
       { ...currentUser, isCurrentUser: true },
     ];
 
-    allEntries.sort((a, b) => calculateScore(b) - calculateScore(a));
+    allEntries.sort((a, b) => {
+      if (sortBy === 'score') return calculateScore(b) - calculateScore(a);
+      return (b[sortBy] as number) - (a[sortBy] as number);
+    });
 
     return allEntries.map((entry, i) => ({ ...entry, rank: i + 1 }));
-  }, [getCompletedTopicsCount, getAverageScore, streak.currentStreak, totalMinutes]);
+  }, [getCompletedTopicsCount, getAverageScore, streak.currentStreak, totalMinutes, sortBy]);
 
   const currentUserEntry = leaderboard.find(e => e.isCurrentUser)!;
 
