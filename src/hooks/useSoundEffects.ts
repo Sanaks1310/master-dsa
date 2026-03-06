@@ -121,15 +121,12 @@ export const useSoundEffects = () => {
       if (!ctx) return;
 
       switch (type) {
-        case 'achievement':
-          playAchievementSound(ctx);
-          break;
-        case 'goal':
-          playGoalSound(ctx);
-          break;
-        case 'celebration':
-          playCelebrationSound(ctx);
-          break;
+        case 'achievement': playAchievementSound(ctx); break;
+        case 'goal': playGoalSound(ctx); break;
+        case 'celebration': playCelebrationSound(ctx); break;
+        case 'pomodoroComplete': playPomodoroCompleteSound(ctx); break;
+        case 'breakComplete': playBreakCompleteSound(ctx); break;
+        case 'tick': playTickSound(ctx); break;
       }
     },
     [soundEnabled, getAudioContext]
