@@ -61,6 +61,7 @@ export const usePomodoro = (topicId?: string) => {
   const [completedSessions, setCompletedSessions] = useState(0);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const { startSession, endSession } = useStudyTime(topicId);
+  const { playSound } = useSoundEffects();
   const studySessionActiveRef = useRef(false);
 
   // Save to localStorage
