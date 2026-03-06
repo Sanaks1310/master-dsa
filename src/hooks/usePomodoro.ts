@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useStudyTime } from './useStudyTime';
+import { useSoundEffects } from './useSoundEffects';
 
 export type TimerMode = 'work' | 'shortBreak' | 'longBreak';
 export type TimerState = 'idle' | 'running' | 'paused';
