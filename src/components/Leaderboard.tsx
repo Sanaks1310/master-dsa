@@ -63,6 +63,8 @@ const Leaderboard = () => {
   const { streak } = useStreak();
   const { totalMinutes } = useStudyTime();
 
+  const [sortBy, setSortBy] = useState<SortField>('score');
+
   const leaderboard = useMemo((): LeaderboardEntry[] => {
     const currentUser = {
       name: 'You',
